@@ -2,11 +2,11 @@
 header('Content-type: application/json');
 
 include("db_connect.php");
-if(!isset($_POST['action'])) {
+if(!isset($_GET['action'])) {
 	echo "No action set.\n\n";
-	echo "POST parameter 'action' (required): \n 'select' or 'insert'\n\n";
-	echo "POST parameter 'quizName' (required at inserts): \n Name of the quiz\n\n";
-	echo "POST parameter 'prettyPrint' (optional): \n anything\n\n";
+	echo "GET parameter 'action' (required): \n 'select' or 'insert'\n\n";
+	echo "GET parameter 'quizName' (required at inserts): \n Name of the quiz\n\n";
+	echo "GET parameter 'prettyPrint' (optional): \n anything\n\n";
 	die();
 }
 switch($_GET['action']){
@@ -29,13 +29,14 @@ switch($_GET['action']){
 	break;
 	
 	case 'insert':
-		$quizName = $_POST['quizName'];
+		$quizName = $_GET['quizName'];
 
 		if($stmt = $mysqli -> prepare("INSERT INTO quiz(QuizName) VALUES(?)")) {
-		  $stmt -> bind_param("s", $quizName);
+			$stmt -> bind_param("s", $quizName);
 
-		  $stmt -> execute();
-		  $stmt -> close();
+			$stmt -> execute();
+			$stmt -> close();
+			echo "Quiz inserted";
 		}else{
 			echo "Failed to prepare statement";
 		}
