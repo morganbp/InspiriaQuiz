@@ -1,9 +1,9 @@
 <?php
 // Database info
-$host="localhost";
-$username="root";
-$password="";
-$db_name="inspiria_quiz";
+$host="frigg.hiof.no";
+$username="bo15g21";
+$password="bo15g21QUIZ";
+$db_name="bo15g21";
 
 // Connect to mysql and select the database
 $mysqli = new mysqli("$host", "$username", "$password", "$db_name"); 
