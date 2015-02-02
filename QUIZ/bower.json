@@ -1,0 +1,21 @@
+{
+  "name": "InspiriaQuiz",
+  "version": "0.0.0",
+  "homepage": "https://github.com/morganbp/InspiriaQuiz",
+  "authors": [
+    "morganbp <morgibp@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.2",
+    "ember": "~1.9.1",
+    "ember-data": "~0.0.14"
+  }
+}
