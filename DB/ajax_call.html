@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<script src="jquery-2.1.3.js"></script>
+		<script>
+		function getQuestion() {
+			var questionNumber = $("#InputQuestionNumber").val();
+			
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange=function()
+			{
+				if (xmlhttp.readyState==4 && xmlhttp.status==200)
+				{
+					var result = JSON.parse(xmlhttp.responseText);
+					$("#Question").html(result[questionNumber].QuestionText);
+					
+					$("#Alternatives").empty();
+					var alternativeArray = result[questionNumber].Alternatives;
+					for(var i=0; i<alternativeArray.length; i++){
+						addAlternative(alternativeArray[i].AlternativeText, i);
+					}
+				}
+			}
+			
+			xmlhttp.open("GET", "question_get.php?action=select&QuizID=1", true);
+			xmlhttp.send();
+		}
+		function addAlternative(alt, altID) {
+			$("#Alternatives").append("<div id='alternative" + altID + "'>" + alt + "</div>");
+		}
+		
+		</script>
+	</head>
+	<body>
+		<h1 id="Question">Question</h1>
+		<div id="Alternatives"></div>
+		<input id="InputQuestionNumber" type="text" placeholder="Question number.."></input>
+		<button onclick="getQuestion()">Load question</button>
+	</body>
+</html>

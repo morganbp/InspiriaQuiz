@@ -6,7 +6,7 @@ if(!isset($_GET['action'])) {
 	echo "No action set.\n\n";
 	echo "GET parameter 'action' (required): \n 'select' or 'insert'\n\n";
 	echo "GET parameter 'quizName' (required at inserts): \n Name of the quiz\n\n";
-	echo "GET parameter 'prettyPrint' (optional): \n anything\n\n";
+	echo "GET parameter 'prettyPrint' (optional): \n true\n\n";
 	die();
 }
 switch($_GET['action']){
