@@ -44,10 +44,13 @@
 					}
 				}
 			}
-			
-			xmlhttp.open("GET", "http://frigg.hiof.no/bo15-g21/API/question_get.php?action=select&QuizID=1", true);
+			// Morgan: 
+			// Laget en relativ sti til php fila
+			xmlhttp.open("GET", "../../DB/question_get.php?action=select&QuizID=1", true);
 			xmlhttp.send();
 		}
+			
+			
 		function addAlternative(alt, altID) {
 			$("#Alternatives").append("<div id='Alternative" + altID + "' class='Alternative' onclick='answerOnClick(" + altID + ")'>" + alt + "</div>");
 		}
