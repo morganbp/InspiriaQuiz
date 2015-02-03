@@ -2,8 +2,18 @@ function connectToServer(data) {
      
     var xmlhttp = new XMLHttpRequest();
  	
-    xmlhttp.open("POST", "127.0.0.0:1338", true);
-    xmlhttp.send();
+	xmlhttp.onreadystatechange = function(){
+		if(xmlhttp.readyState === 4 && xmlhttp.status === 200){
+			alert(xmlhttp.responseText);	
+		}
+	};
+	
+	var jsonData = "{username:"+data+"}";
+    xmlhttp.open("POST", "http://localhost:1338", true);
+	xmlhttp.setRequestHeader("Content-type", "application/json");
+	
+	
+    xmlhttp.send(jsonData);
 }
 
 function sendUsername(){
