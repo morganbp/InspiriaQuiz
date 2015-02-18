@@ -1,5 +1,7 @@
 function initializeQuiz(){
-    $("body").pagecontainer("change", "#quiz");
+    if($('#txtInputQuizId').val == 'undefined' || $('#txtInputQuizId').empty);
+        
+    changePage("#pageQuiz");
 }
 
 var resultJSON;
