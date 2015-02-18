@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<form name="quizCreate">
+			<input type="text" name="quizId" placeholder="quiz id"/>
+			<button onclick="createQuiz()" type="button">Lag quiz</button>
+		</form>
+		<hr/>
+		<form name="quizNext">
+			<button onclick="nextQuestion()" type="button">Hei</button>
+		</form>
+		<hr/>
+		<form name="quizRequest">
+			<input type="text" name="quizKey" placeholder="key" />
+			<input type="text" name="username" placeholder="username" />
+			<button onclick="requestQuiz()" type="button">Hei</button>
+		</form>
+		
+		<script>
+			window.CREATE_QUIZ_SESSION = "CREATE_QUIZ_SESSION_SESSION";
+			window.CONNECT_TO_QUIZ = "CONNECT_TO_QUIZ";
+			window.NEXT_QUESTION = "NEXT_QUESTION";
+			window.ANSWERE_QUESTION = "ANSWERE_QUESTION";
+			window.DELETE_QUIZ_SESSION = "DELETE_QUIZ_SESSION";
+			window.INIT_QUIZ = "INIT_QUIZ";
+			
+			window.curentQuestion;
+			window.quizData;
+		</script>
+		<script>
+			
+			
+			var conn = new WebSocket('ws://localhost:8080');
+			conn.onopen = function(e) {
+				console.log("Connection established!");	
+			};
+			
+			conn.onmessage = function(e){
+				var jsonResp = JSON.parse(e.data);
+				console.log("message received" + JSON.stringify(jsonResp));
+				switch(jsonResp["request-type"]){
+					case window.NEXT_QUESTION:
+						setupNextQuestion();
+						break;
+					case window.INIT_QUIZ:
+						window.quizData = jsonResp.data;
+						window.currentQuestion = -1;
+						break;
+				}
+					
+			}
+			
+			
+			function requestQuiz(){
+				var key = document.forms['quizRequest']['quizKey'].value;
+				var username = document.forms['quizRequest']['username'].value;
+				conn.send('{"quiz-key":' + key +', "request-type":"'+window.CONNECT_TO_QUIZ+'", "username":"' + username + '"}');	
+			}
+			
+			
+			function createQuiz(){
+				var id = document.forms['quizCreate']['quizId'].value;
+				conn.send('{"quiz-id":"'+ id +'", "request-type":"' + window.CREATE_QUIZ_SESSION + '"}');
+				
+			}
+			
+			function nextQuestion(){
+				console.log('{"request-type":"'+window.NEXT_QUESTION+'", "quiz-key":"'+ window.quizData["quiz-key"]+'"}');
+				conn.send('{"request-type":"'+window.NEXT_QUESTION+'", "quiz-key":"'+ window.quizData["quiz-key"]+'"}');
+			}
+			
+			function setupNextQuestion(){
+				window.currentQuestion++;
+				console.log("Question " + window.currentQuestion);
+				console.log(window.quizData.quiz[window.currentQuestion]);
+				
+			}
+		</script>
+	</body>
+</html>
