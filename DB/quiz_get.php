@@ -3,12 +3,14 @@ header('Content-type: application/json; charset=utf-8;');
 
 include("db_connect.php"); // Make connection as $stmt
 
+
 if(!isset($_POST['QuizID'])){
     http_response_code(404);
     die();
 }
 $quizID = $_POST['QuizID'];
-		
+
+
 if($stmt = $mysqli -> prepare("SELECT Question.QuestionID, QuestionText, AlternativeText, AlternativeCorrect FROM Question 
     JOIN Alternative ON Question.QuestionID = Alternative.QuestionID
     WHERE Question.QuizID = ?")) {
@@ -22,7 +24,7 @@ if($stmt = $mysqli -> prepare("SELECT Question.QuestionID, QuestionText, Alterna
     }
     $stmt -> free_result();
     $stmt -> close();
-
+	
     if(empty($mysql_data)){
         http_response_code(404);
         die();
