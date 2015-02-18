@@ -17,9 +17,10 @@ if(!isset($_POST['Alternative'])){
     http_response_code(404);
     die();
 }
-$quizID = $_POST['QuizID'];
+$quizID = intval($_POST['QuizID']);
 $questionText = $_POST['QuestionText'];
-
+$alternatives = $_POST['Alternative'];
+$correctID = intval($_POST['Correct']);
 
 //die();
 
@@ -36,5 +37,19 @@ VALUES(?, 1, ?, 1);')) {
     http_response_code(500);
     die();
 }
+
+if($stmt = $mysqli -> prepare('INSERT INTO Alternative(AlternativeText, AlternativeCorrect, QuestionID) VALUES(?, ?, ?);')) {
+    
+    foreach($alternatives as $key => $alternative){
+        if($correctID == $key)
+            $correct = 1;
+        else
+            $correct = 0;
+        
+        $stmt -> bind_param("sii", $alternative, $correct, $questionID);
+        $stmt -> execute();
+    }
+}
+
 
 ?>
