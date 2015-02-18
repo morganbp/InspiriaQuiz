@@ -121,11 +121,11 @@ class Quiz {
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		
 		$data = curl_exec($curl);
-		
 		curl_close($curl);
-		echo "data {$data}";
-		$this->quiz = "{\"quiz-key\":\"{$this->quizKey}\", \"quiz\":{$data}}";
-		echo $this->quiz;
+		
+		if($data != NULL){
+			$this->quiz = "{\"quiz-key\":\"{$this->quizKey}\", \"quiz\":{$data}}";
+		}
 	}
 	
 	public function broadcastParticipants($requestType){

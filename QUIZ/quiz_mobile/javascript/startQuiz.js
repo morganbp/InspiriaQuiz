@@ -15,7 +15,7 @@ function getQuiz() {
             getQuestion(0);
 		}
 	}
-    xmlhttp.open("GET", "php/question_get.php", true);
+    xmlhttp.open("GET", "../php/question_get.php", true);
 	//xmlhttp.open("GET", "http://frigg.hiof.no/bo15-g21/API/question_get.php?action=select&QuizID=1", true);
 	xmlhttp.send();
 }

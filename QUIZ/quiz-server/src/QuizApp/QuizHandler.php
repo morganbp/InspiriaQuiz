@@ -23,7 +23,13 @@ class QuizHandler {
 		$key = $this->generateQuizKey();
 		$newQuiz = new Quiz($id, $host, $key);
 		$this->quizzes->attach($newQuiz);
-		return '{"request-type":"'.QuizHandler::$INIT_QUIZ.'","data":'.$newQuiz->getQuiz().'}';
+		$response = "";
+		if($newQuiz->getQuiz() == NULL){
+			$response = $this->genErr("Couldn't find quiz with ID: {$newQuiz->getId()}");
+		}else{
+			$response = '{"request-type":"'.QuizHandler::$INIT_QUIZ.'","data":'.$newQuiz->getQuiz().'}';
+		}
+		return $response;
 	}
 	
 	public function getQuizSession($quizKey, $username, $conn){
