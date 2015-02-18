@@ -1,46 +1,60 @@
 <?php
-header('Content-type: application/json');
+header('Content-type: application/json; charset=utf-8;');
 
-include("db_connect.php");
-if(!isset($_GET['action'])) {
-	echo "No action set.\n\n";
-	echo "GET parameter 'action' (required): \n 'select' or 'insert'\n\n";
-	echo "GET parameter 'quizName' (required at inserts): \n Name of the quiz\n\n";
-	echo "GET parameter 'prettyPrint' (optional): \n true\n\n";
-	die();
+include("db_connect.php"); // Make connection as $stmt
+
+if(!isset($_POST['QuizID'])){
+    http_response_code(404);
+    die();
 }
-switch($_GET['action']){
-	case 'select':
-		if($stmt = $mysqli -> prepare("SELECT QuizID, QuizName FROM Quiz")) {
-			$stmt -> execute();
+$quizID = $_POST['QuizID'];
+		
+if($stmt = $mysqli -> prepare("SELECT Question.QuestionID, QuestionText, AlternativeText, AlternativeCorrect FROM Question 
+    JOIN Alternative ON Question.QuestionID = Alternative.QuestionID
+    WHERE Question.QuizID = ?")) {
+    $stmt -> bind_param("i", $quizID);
+    $stmt -> execute();
 
-			$result = $stmt -> get_result();
-			// Bind results to output-variable
-			while($row = $result -> fetch_assoc()){
-				$output[] = $row;
-			}
-			$stmt -> free_result();
-			$stmt -> close();
+    $result = $stmt -> get_result();
+    // Bind results to output-variable
+    while($row = $result -> fetch_assoc()){
+        $mysql_data[] = $row;
+    }
+    $stmt -> free_result();
+    $stmt -> close();
 
-			echo json_encode($output, (isset($_GET['prettyPrint'])?JSON_PRETTY_PRINT:0));
-		}else{
-			echo "Failed to prepare statement";
-		}
-	break;
-	
-	case 'insert':
-		$quizName = $_GET['quizName'];
+    if(empty($mysql_data)){
+        http_response_code(404);
+        die();
+    }
 
-		if($stmt = $mysqli -> prepare("INSERT INTO Quiz(QuizName) VALUES(?)")) {
-			$stmt -> bind_param("s", $quizName);
+    //var_dump($mysql_data);
 
-			$stmt -> execute();
-			$stmt -> close();
-			echo "Quiz inserted.";
-		}else{
-			echo "Failed to prepare statement";
-		}
-		$mysqli -> close();
-	break;
+    // Structure the JSON based on QuestionID
+    foreach($mysql_data as $key => $alternative){
+        $temporary_data[$alternative['QuestionID']] = array(
+            'QuestionID' => $alternative['QuestionID'], 
+            'QuestionText' => $alternative['QuestionText']);
+    }
+    foreach($mysql_data as $key => $alternative){
+        $temporary_data[$alternative['QuestionID']]['Alternatives'][] = array(
+                'AlternativeText' => $alternative['AlternativeText'],
+                'AlternativeCorrect' => $alternative['AlternativeCorrect']);
+    }
+
+    // Remove unwanted indexes used for structuring the JSON.
+    foreach($temporary_data as $temp){
+        $output[] = $temp;
+    }
+
+    if(isset($_GET['prettyPrint']))
+        echo json_encode($output, JSON_PRETTY_PRINT);
+    else
+        echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    
+    http_response_code(200);
+}else{
+    echo "Failed to prepare statement";
+    http_response_code(500);
 }
 ?>
