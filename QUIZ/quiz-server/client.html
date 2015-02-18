@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<form name="quizRequest">
+			<input type="text" name="quizKey" placeholder="key" />
+			<input type="text" name="username" placeholder="username" />
+			<button onclick="requestQuiz()" type="button">Hei</button>
+		</form>
+		
+		
+		<script type="text/javascript" src="./js/variables.js"></script>
+		<script type="text/javascript" src="./js/connect.js"></script>
+		<script type="text/javascript" src="./js/quiz.js"></script>
+		<script type="text/javascript" >			
+			function requestQuiz(){
+				var key = document.forms['quizRequest']['quizKey'].value;
+				var username = document.forms['quizRequest']['username'].value;
+				conn.send('{"quiz-key":' + key +', "request-type":"'+window.CONNECT_TO_QUIZ+'", "username":"' + username + '"}');	
+			}
+			
+			
+			function setupNextQuestion(){
+				window.currentQuestion++;
+				var data = JSON.parse(window.quizData);
+			}
+		</script>
+		
+		<script type="text/javascript">
+			
+			/**
+			*
+			*	Response from server
+			*
+			*/
+			conn.onmessage = function(e){
+				
+				var resp = JSON.parse(e.data);
+				
+				console.log(resp);
+				switch(resp["request-type"]){
+					case window.NEXT_QUESTION:
+						setupNextQuestion();
+						break;
+					case window.INIT_QUIZ:
+						initData(resp);
+						break;
+					case window.UPDATED_PARTICIPANTS:
+						updateParticipants(resp);
+						break;
+				}
+					
+			}
+		</script>
+	</body>
+</html>

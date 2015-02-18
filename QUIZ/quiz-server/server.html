@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<div id="content">
+			<h1>Quiz admin</h1>
+			<h2 id="quizKey"></h2>
+			<form name="quizCreate">
+				<input type="text" name="quizId" placeholder="quiz id"/>
+				<button onclick="createQuiz()" type="button">Lag quiz</button>
+			</form>
+			<ul id="users">
+			</ul>
+			
+		</div>
+		<hr/>
+		<form name="quizNext">
+			<button onclick="nextQuestion()" type="button">Hei</button>
+		</form>
+		
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="./js/variables.js"></script>
+		<script type="text/javascript" src="./js/connect.js"></script>
+		<script type="text/javascript" src="./js/quiz.js"></script>
+		<script type="text/javascript">
+			
+
+			
+			function createQuiz(){
+				var id = document.forms['quizCreate']['quizId'].value;
+				conn.send('{"quiz-id":"'+ id +'", "request-type":"' + window.CREATE_QUIZ_SESSION + '"}');
+				
+			}
+			
+			function nextQuestion(){
+				conn.send('{"request-type":"'+window.NEXT_QUESTION+'", "quiz-key":"'+ window.quizData["quiz-key"]+'"}');
+			}
+			
+			function updateUserList(){
+				var part = participants.participants;
+				$("#users").empty();
+				for(var i = 0; i < part.length; i++){
+					
+					$("#users").append("<li>" + part[i].username + "</li>");
+				}
+			}
+			
+		</script>
+		<script type="text/javascript">
+			
+			/**
+			*
+			*	Response from server
+			*
+			*/
+			conn.onmessage = function(e){
+				
+				var resp = JSON.parse(e.data);
+				
+				console.log(resp);
+				switch(resp["request-type"]){
+					case window.NEXT_QUESTION:
+						
+						break;
+					case window.INIT_QUIZ:
+						initData(resp);
+						$("#quizKey").html(window.quizData["quiz-key"]);
+						break;
+					case window.UPDATED_PARTICIPANTS:
+						updateParticipants(resp);
+						if(window.currentQuestion < 0){
+							updateUserList();
+						}
+						
+						break;
+				}
+					
+			}
+		</script>
+	</body>
+</html>
