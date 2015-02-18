@@ -5,7 +5,7 @@ function getQuizByID(quizID) {
         data: {QuizID: quizID},
         type: 'post',
         error: function(XMLHttpRequest, textStatus, errorThrown){
-            return XMLHttpRequest.status;
+            return false; //No quiz found, or QuizID invalid.
         },
         success: function(data){
             //getQuestionByNumber(data, 0);
