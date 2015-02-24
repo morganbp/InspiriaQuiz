@@ -1,0 +1,77 @@
+{
+    "quiz-key": "92173",
+    "quiz": [
+        {
+            "QuestionID": 2,
+            "QuestionText": "Hvor ligger HiØ?",
+            "Alternatives": [
+                {
+                    "AlternativeText": "Sarpsborg",
+                    "AlternativeCorrect": 0
+                },
+                {
+                    "AlternativeText": "Askim",
+                    "AlternativeCorrect": 0
+                },
+                {
+                    "AlternativeText": "Halden",
+                    "AlternativeCorrect": 1
+                },
+                {
+                    "AlternativeText": "Oslo",
+                    "AlternativeCorrect": 0
+                }
+            ]
+        },
+        {
+            "QuestionID": 3,
+            "QuestionText": "I hvilket land finner vi Halden?",
+            "Alternatives": [
+                {
+                    "AlternativeText": "Sverige",
+                    "AlternativeCorrect": 0
+                },
+                {
+                    "AlternativeText": "Norge",
+                    "AlternativeCorrect": 1
+                },
+                {
+                    "AlternativeText": "Finland",
+                    "AlternativeCorrect": 0
+                }
+            ]
+        },
+        {
+            "QuestionID": 22,
+            "QuestionText": "Spm?",
+            "Alternatives": [
+                {
+                    "AlternativeText": "Alt en",
+                    "AlternativeCorrect": 1
+                },
+                {
+                    "AlternativeText": "Alt to",
+                    "AlternativeCorrect": 0
+                }
+            ]
+        },
+        {
+            "QuestionID": 23,
+            "QuestionText": "Spm test nummer to?",
+            "Alternatives": [
+                {
+                    "AlternativeText": "Alt en",
+                    "AlternativeCorrect": 0
+                },
+                {
+                    "AlternativeText": "Alt to",
+                    "AlternativeCorrect": 0
+                },
+                {
+                    "AlternativeText": "Alt tre",
+                    "AlternativeCorrect": 1
+                }
+            ]
+        }
+    ]
+}

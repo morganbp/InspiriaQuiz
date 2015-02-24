@@ -10,8 +10,7 @@
 		</form>
 		
 		
-		<script type="text/javascript" src="./js/variables.js"></script>
-		<script type="text/javascript" src="./js/connect.js"></script>
+		
 		<script type="text/javascript" src="./js/quiz.js"></script>
 		<script type="text/javascript" >			
 			function requestQuiz(){
@@ -26,32 +25,6 @@
 				var data = JSON.parse(window.quizData);
 			}
 		</script>
-		
-		<script type="text/javascript">
-			
-			/**
-			*
-			*	Response from server
-			*
-			*/
-			conn.onmessage = function(e){
-				
-				var resp = JSON.parse(e.data);
-				
-				console.log(resp);
-				switch(resp["request-type"]){
-					case window.NEXT_QUESTION:
-						setupNextQuestion();
-						break;
-					case window.INIT_QUIZ:
-						initData(resp);
-						break;
-					case window.UPDATED_PARTICIPANTS:
-						updateParticipants(resp);
-						break;
-				}
-					
-			}
-		</script>
+		<script type="text/javascript" src="./js/connect.js"></script>
 	</body>
 </html>
