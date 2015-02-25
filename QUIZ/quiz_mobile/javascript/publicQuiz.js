@@ -18,8 +18,11 @@ function Quiz(){
 	}
 	this.getQuestion = function(number){
 		this.questionNumber = number + 1;
-		console.log(quiz);
-		return this.quiz.quiz[number];	
+		if(number < this.quiz.quiz.length){
+			return this.quiz.quiz[number];
+		}else{
+			return null;
+		}
 	}
 	
 	/**
