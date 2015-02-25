@@ -1,134 +1,55 @@
-var MAX_POINTS = 1000;
+function Quiz(){
 
-var MIN_POINTS = 500;
-
-var QUESTION_TIME = 15;
-
-
-// true if the user have answered, false if not
-var hasAnswered; 
-
-// Users answere for current question
-var answere;
-
-// Object of current question
-var currentQuestion;
-
-// users total score in quiz
-var totalScore = 0;
-
-// start time when each question starts
-var startTime;
-
-// time used on current question
-var timeUsed;
-
-// letters used to grid view
-var letters = ['a','b'];
-
-/**
-*
-*	Populate GUI with a question
-*
-*/
-function populateQuestion(){
-	//Clear the div
-	$("#alternatives").empty();
-	$("#alternatives").removeClass("ui-grid-a ui-grid-b");
-	
-	// get next question in quiz
-	currentQuestion = window.quiz.getNextQuestion();
-	
-	if(currentQuestion == null){
-		endOfQuiz();	
-		return;
+	var fetchQuiz = function(){
+		$.getJSON("tmp/jsonQuizExample.json", function(data){
+			quiz.setQuiz(data);
+			populateQuestion();
+		});
 	}
 	
-	// Initialize variables before question setup
-	hasAnswered = false;
-	answere = -1;
+	fetchQuiz();
+	this.quiz = null;
+	this.questionNumber = 0;
 	
-	// SETUP QUESTION
-	$("#quizQuestion").text(currentQuestion.QuestionText);
-	
-	// SETUP ALTERNATIVES
-	var alternatives = currentQuestion.Alternatives;
-	
-	//determain how many rows there is
-	var gridType = letters[Math.ceil((alternatives.length / 2)-1)];
-	var className = "ui-grid-" + gridType;
-	
-	
-	$("#alternatives").addClass(className);
-	
-	// set up each alternative block
-	
-	
-	for(var i = 0; i < alternatives.length; i++){
-		
-		// set the class name of each block.
-		className = "ui-block-" + letters[i%2];
-		
-		// append the box
-		$("#alternatives").append('<div id="' + i + '" class="'+ className +' centerHorizontal alternative" style="width:49%;" onclick="chooseAlternative(this);"><span>'+alternatives[i].AlternativeText +'</span></div>');
+	this.setQuiz = function(quiz){
+		this.quiz = quiz;	
 	}
-	
-	initializeCountdown();
-}
-
-function initializeCountdown(){
-	$("#countdown").css("display","flex");
-	$("#countdown").countdown360({
-		radius      : 25,
-		seconds     : QUESTION_TIME,
-		strokeWidth : 4,
-		fillStyle   : '#888',
-		strokeStyle : '#666',
-		fontSize    : 25,
-		fontColor   : '#FFF',
-		autostart: false,
-		label: false,
-		onComplete  : showCorrectAnswers
-		}).start()
-	
-	startTime = Date.now();
-}
-
-function chooseAlternative(alternative){
-	if(!hasAnswered){
-		timeUsed = Date.now() - startTime;
-		hasAnswered = true;
-		answere = alternative.getAttribute("id");
-		alternative.className += " answere";
-	}
-}
-
-function endOfQuiz(){
-	$("#quizQuestion").text("Resultat");
-	$("#alternatives").css("display","none");
-	$("#score").css("display","block");
-	$("#score").html('<h3>Din poengsum:</h3> <div id="totalScore">' + totalScore + '</div>');
-}
-
-function showCorrectAnswers(){
-	$("#countdown").css("display","none");
-	for(var i = 0; i < currentQuestion.Alternatives.length; i++){
-		if(currentQuestion.Alternatives[i].AlternativeCorrect === 1){
-			$("#"+i).addClass("correct");
-			if(answere == i){
-				computePoints();
-			}
+	this.getQuestion = function(number){
+		this.questionNumber = number + 1;
+		if(number < this.quiz.quiz.length){
+			return this.quiz.quiz[number];
 		}else{
-			if(answere == i){
-				$("#"+i).addClass("wrong");	
-			}
+			return null;
 		}
 	}
-	setTimeout(populateQuestion, 2000);
-}
+	
+	/**
+	*	Gets the next question based on where in the quiz you are located
+	*/
+	this.getNextQuestion = function(){
+		return this.getQuestion(this.questionNumber);	
+	}
 
-function computePoints(){
-	var timeUsedSec = timeUsed / 1000;
-	var points = MAX_POINTS - (MIN_POINTS/QUESTION_TIME * timeUsedSec);	
-	totalScore += Math.round(points);
+
+	/**
+	*	Gets the question by which number it is located in the quiz
+	*/
+	this.getQuestionByNumber = function(number){
+		return this.getQuestion(number);
+	}
+
+	/**
+	*	Gets the quiz by the id of the question
+	*/
+	this.getQuestionById = function(questionId){
+		if(window.quiz === null) return null;	
+
+		for(var i = 0; i < window.quiz.quiz.length; i++){
+			if(window.quiz.quiz[i].QuestionId === questionId){
+				window.questionNumber = i + 1;
+				return this.getQuestion(i);	
+			}
+		}
+		return null;
+	}
 }

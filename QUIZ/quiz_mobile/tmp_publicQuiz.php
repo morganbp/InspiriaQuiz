@@ -15,7 +15,8 @@
 		<link rel="stylesheet" href="css/quiz.css" />
         <!--imported javascript-->
         <script src="javascript/quizmodeFunctions.js"></script>
-		<script src="javascript/quiz.js"></script>
+		<script src="javascript/Quiz.js"></script>
+		
     </head>
     <body>
         <div data-role="page" data-theme="a" id="homescreen">
@@ -29,7 +30,7 @@
 					<div id="alternatives"></div>
 				</div>
             </div>
-			<script src="javascript/publicQuiz.js"></script>	
+			<script src="javascript/quizScript.js"></script>	
         </div>
     </body>
 </html>

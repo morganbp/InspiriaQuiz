@@ -6,7 +6,7 @@
             "QuestionText": "Hvor ligger HiØ?",
             "Alternatives": [
                 {
-                    "AlternativeText": "Sarspborg håper jeg inderlig at det ikke er",
+                    "AlternativeText": "Sarspborg er det vel ikke, men Inspiria er der",
                     "AlternativeCorrect": 0
                 },
                 {
@@ -43,32 +43,32 @@
         },
         {
             "QuestionID": 22,
-            "QuestionText": "Spm?",
+            "QuestionText": "Er Inspiria i Sarpsborg",
             "Alternatives": [
                 {
-                    "AlternativeText": "Alt en",
+                    "AlternativeText": "Ja",
                     "AlternativeCorrect": 1
                 },
                 {
-                    "AlternativeText": "Alt to",
+                    "AlternativeText": "Nei",
                     "AlternativeCorrect": 0
                 }
             ]
         },
         {
             "QuestionID": 23,
-            "QuestionText": "Spm test nummer to?",
+            "QuestionText": "Hva er nettsiden til Inspiria?",
             "Alternatives": [
                 {
-                    "AlternativeText": "Alt en",
+                    "AlternativeText": "http://www.insbiria.no",
                     "AlternativeCorrect": 0
                 },
                 {
-                    "AlternativeText": "Alt to",
+                    "AlternativeText": "http://www.inspyria.no",
                     "AlternativeCorrect": 0
                 },
                 {
-                    "AlternativeText": "Alt tre",
+                    "AlternativeText": "http://www.inspiria.no",
                     "AlternativeCorrect": 1
                 }
             ]
