@@ -23,15 +23,55 @@ var startTime;
 // Time used on current question
 var timeUsed;
 
+// The spinner which runs when page is loading
+var spinner;
+
+var countdown;
 // Letters used to grid view
 var letters = ['a','b'];
 
-window.quiz = new Quiz();
+window.quiz;
+
+startUpScreen();
+
+/**
+* Event to choose which quiz we want to play
+*/
+function chooseQuiz(event){
+	if(event.keyCode === 13 || event instanceof MouseEvent){
+		var id = $("#basic").val();
+		if(/[0-9]/.test(id)){
+			quiz = new Quiz(Number(id));
+			setUpSpinner();
+		}else{
+			popup("#invalidInput");
+		}
+	}
+}
+
+function startQuiz(){
+	$("#getQuiz").css("display","none");
+	setTimeout(populateQuestion, 2000);
+}
+
+function quizNotFound(){
+	popup("#quizNotFound");
+	removeSpinner();
+}
+
+function popup(id){
+	$(id).popup("open");	
+	setTimeout(function(){
+		$(id).popup("close");
+	},1500); 
+		$("#basic").val('');
+}
 
 /**
 *	Populate GUI with a question
 */
 function populateQuestion(){
+	removeSpinner();
 	//Clear the div
 	$("#alternatives").empty();
 	$("#alternatives").removeClass("ui-grid-a ui-grid-b");
@@ -40,7 +80,7 @@ function populateQuestion(){
 	currentQuestion = window.quiz.getNextQuestion();
 	
 	if(currentQuestion == null){
-		endOfQuiz();	
+		showScore(true);	
 		return;
 	}
 	
@@ -87,7 +127,7 @@ function populateQuestion(){
 */
 function initializeCountdown(){
 	$("#countdown").css("display","flex");
-	$("#countdown").countdown360({
+	countdown = $("#countdown").countdown360({
 		radius      : 25,
 		seconds     : QUESTION_TIME,
 		strokeWidth : 4,
@@ -98,7 +138,9 @@ function initializeCountdown(){
 		autostart: false,
 		label: false,
 		onComplete  : showCorrectAnswers
-		}).start()
+		});
+	
+	countdown.start();
 	// get start time for calculation of points
 	startTime = Date.now();
 }
@@ -112,15 +154,18 @@ function chooseAlternative(alternative){
 		hasAnswered = true;
 		answere = alternative.getAttribute("id");
 		alternative.className += " answere";
+		countdown.stop();
+		setTimeout(showCorrectAnswers, 400);
 	}
 }
-/**
-* 	Runs when the quiz has ended
-*/
-function endOfQuiz(){
-	showScore(true);
-}
+
 	
+function startUpScreen(){
+	$("#score").css("display", "none");
+	$("#getQuiz").css("display", "block");
+	$("#quizQuestion").html("Velg Quiz");
+}
+
 function showScore(isEnd){
 	//Toggle alternatives and score visibility
 	$("#alternatives").css("display","none");
@@ -128,12 +173,13 @@ function showScore(isEnd){
 	var title;
 	if(isEnd){
 		title = "Sluttresultat";
+		setTimeout(startUpScreen, 2000);
 	}else{
 		title = "Resultat";
 		setTimeout(populateQuestion, 2000);
 	}
-	$("#quizQuestion").text(title);
-		$("#score").html('<h3>Din poengsum:</h3> <div id="totalScore">' + totalScore + '</div>');
+	$("#quizQuestion").html(title);
+	$("#totalScore").html(totalScore);
 }
 
 /*
@@ -142,6 +188,7 @@ function showScore(isEnd){
 */
 function showCorrectAnswers(){
 	$("#countdown").css("display","none");
+	
 	for(var i = 0; i < currentQuestion.Alternatives.length; i++){
 		if(currentQuestion.Alternatives[i].AlternativeCorrect === 1){
 			$("#"+i).addClass("correct");
@@ -154,7 +201,7 @@ function showCorrectAnswers(){
 			}
 		}
 	}
-	setTimeout(showScore, 2000);
+	setTimeout(function(){showScore(!window.quiz.isMoreQuestions());}, 2000);
 }
 /**
 *	Compute how many points the player gets based on time he has used.
@@ -163,4 +210,32 @@ function computePoints(){
 	var timeUsedSec = timeUsed / 1000;
 	var points = MAX_POINTS - (MIN_POINTS/QUESTION_TIME * timeUsedSec);	
 	totalScore += Math.round(points);
+}
+
+function setUpSpinner(){
+	var opts = {
+		  lines: 15, // The number of lines to draw
+		  length: 7, // The length of each line
+		  width: 3, // The line thickness
+		  radius: 10, // The radius of the inner circle
+		  corners: 1, // Corner roundness (0..1)
+		  rotate: 0, // The rotation offset
+		  direction: 1, // 1: clockwise, -1: counterclockwise
+		  color: '#000', // #rgb or #rrggbb or array of colors
+		  speed: 2, // Rounds per second
+		  trail: 60, // Afterglow percentage
+		  shadow: false, // Whether to render a shadow
+		  hwaccel: false, // Whether to use hardware acceleration
+		  className: 'spinner', // The CSS class to assign to the spinner
+		  zIndex: 2e9, // The z-index (defaults to 2000000000)
+		  top: '50%', // Top position relative to parent
+		  left: '50%' // Left position relative to parent
+	};
+	var target = document.getElementById('questionScreen');
+	spinner = new Spinner(opts).spin(target);
+
+}
+
+function removeSpinner(){
+	spinner.stop();
 }

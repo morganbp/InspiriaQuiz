@@ -1,23 +1,44 @@
-function Quiz(){
-
-	var fetchQuiz = function(){
-		$.getJSON("tmp/jsonQuizExample.json", function(data){
-			quiz.setQuiz(data);
-			populateQuestion();
+function Quiz(id){
+	// GET data from database
+	var fetchQuiz = function(quizId){
+		"use strict";
+		$.ajax({
+			url: "http://frigg.hiof.no/bo15-g21/API/quiz_get.php", 
+			data: {QuizID: quizId},
+			type: 'POST',
+			error: function(XMLHttpRequest, textStatus, errorThrown){
+				quizNotFound(); //No quiz found, or QuizID invalid.
+			},
+			success: function(data){
+				saveData(data);
+			}
 		});
 	}
 	
-	fetchQuiz();
+	var saveData = function(data){
+		window.quiz.setQuiz(JSON.parse(JSON.stringify(data.Questions)));
+		window.quiz.setTitle(JSON.stringify(data.QuizName));
+		startQuiz();
+	}
+	
+	fetchQuiz(id);
 	this.quiz = null;
+	this.title = "";
 	this.questionNumber = 0;
 	
 	this.setQuiz = function(quiz){
 		this.quiz = quiz;	
 	}
+	
+	this.setTitle = function(title){
+		this.title = title;	
+	}
+	
 	this.getQuestion = function(number){
 		this.questionNumber = number + 1;
-		if(number < this.quiz.quiz.length){
-			return this.quiz.quiz[number];
+		
+		if(number < this.quiz.length){
+			return this.quiz[number];
 		}else{
 			return null;
 		}
@@ -42,14 +63,26 @@ function Quiz(){
 	*	Gets the quiz by the id of the question
 	*/
 	this.getQuestionById = function(questionId){
-		if(window.quiz === null) return null;	
+		if(this.quiz === null) return null;	
 
-		for(var i = 0; i < window.quiz.quiz.length; i++){
-			if(window.quiz.quiz[i].QuestionId === questionId){
-				window.questionNumber = i + 1;
+		for(var i = 0; i < window.quiz.length; i++){
+			if(this.quiz[i].QuestionId === questionId){
+				this.questionNumber = i + 1;
 				return this.getQuestion(i);	
 			}
 		}
 		return null;
+	}
+	
+	this.getTitle = function(){
+		return this.title;	
+	}
+	
+	this.isMoreQuestions = function(){
+		if(this.questionNumber < this.quiz.length){
+			return true;
+		}else{
+			return false;	
+		}
 	}
 }

@@ -16,6 +16,7 @@
         <!--imported javascript-->
         <script src="javascript/quizmodeFunctions.js"></script>
 		<script src="javascript/Quiz.js"></script>
+		<script src="javascript/spin.min.js"></script>
 		
     </head>
     <body>
@@ -24,9 +25,19 @@
             <div data-role="content" id="content">
                 <div id="questionScreen">
 					<!-- Title -->
-					<h2 id="quizQuestion" class="centerHorizontal">Question?</h2>				
+					<h2 id="quizQuestion" class="centerHorizontal"></h2>
+					<div id="getQuiz">
+						<div data-role="popup" id="invalidInput"><p>Please type in  a number</p></div>
+						<div data-role="popup" id="quizNotFound"><p>Couldn't find Quiz</p></div>
+						<input type="number" name="name" id="basic" onkeypress="chooseQuiz(event)" placeholder="ID" />
+						<button type="button" onclick="chooseQuiz(event)">Hent Quiz</button>
+					</div>
+					<div id="spinner"></div>
 					<div id="countdown"></div>
-					<div id="score"></div>
+					<div id="score" style="display:none;">
+						<h3>Din poengsum:</h3>
+						<div id="totalScore"></div>
+					</div>
 					<div id="alternatives"></div>
 				</div>
             </div>

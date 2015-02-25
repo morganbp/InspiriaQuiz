@@ -3,7 +3,6 @@ header('Content-type: application/json; charset=utf-8;');
 
 include("db_connect.php"); // Make connection as $stmt
 
-
 if(!isset($_POST['QuizID'])){
     http_response_code(404);
     die();
@@ -11,8 +10,9 @@ if(!isset($_POST['QuizID'])){
 $quizID = $_POST['QuizID'];
 
 
-if($stmt = $mysqli -> prepare("SELECT Question.QuestionID, QuestionText, AlternativeText, AlternativeCorrect FROM Question 
-    JOIN Alternative ON Question.QuestionID = Alternative.QuestionID
+if($stmt = $mysqli -> prepare("SELECT Quiz.QuizName, Question.QuestionID, QuestionText, AlternativeText, AlternativeCorrect FROM Question 
+    JOIN Alternative ON Question.QuestionID = Alternative.QuestionID  
+	JOIN Quiz ON Quiz.QuizID = Question.QuizID
     WHERE Question.QuizID = ?")) {
     $stmt -> bind_param("i", $quizID);
     $stmt -> execute();
@@ -31,6 +31,8 @@ if($stmt = $mysqli -> prepare("SELECT Question.QuestionID, QuestionText, Alterna
     }
 
     //var_dump($mysql_data);
+	// Add the the quizname
+	$output["QuizName"] = $mysql_data[0]['QuizName'];
 
     // Structure the JSON based on QuestionID
     foreach($mysql_data as $key => $alternative){
@@ -38,17 +40,19 @@ if($stmt = $mysqli -> prepare("SELECT Question.QuestionID, QuestionText, Alterna
             'QuestionID' => $alternative['QuestionID'], 
             'QuestionText' => $alternative['QuestionText']);
     }
+	
     foreach($mysql_data as $key => $alternative){
         $temporary_data[$alternative['QuestionID']]['Alternatives'][] = array(
                 'AlternativeText' => $alternative['AlternativeText'],
                 'AlternativeCorrect' => $alternative['AlternativeCorrect']);
     }
-
+	
     // Remove unwanted indexes used for structuring the JSON.
     foreach($temporary_data as $temp){
-        $output[] = $temp;
+        $output["Questions"][] = $temp;
     }
-
+	
+	
     if(isset($_GET['prettyPrint']))
         echo json_encode($output, JSON_PRETTY_PRINT);
     else
