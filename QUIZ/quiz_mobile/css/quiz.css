@@ -1,0 +1,51 @@
+.centerHorizontal{
+			text-align:center;
+		}
+			
+		#alternatives{			
+			margin-bottom: 5px;
+			margin-left: -5px;
+			position: absolute;
+			bottom: 0px;
+			heigth: 300px;
+			width: 95%;
+		}
+			
+		.alternative{
+			margin: 1px;
+			border-radius: 3px;
+			display: flex;
+			justify-content: center; /* align horizontal */
+			align-items: center; /* align vertical */
+			height: 90px;
+			background: #CCC;
+			text-shadow:none;
+			font: bold 16px arial; 
+		}	
+		.answere{
+			background: yellow;
+		}
+		.wrong{
+			background : red;
+		}
+		.correct{
+			background: green;	
+		}
+			
+		#countdown{
+			margin: auto 0px;	
+			position: absolute;
+			top: 20px;
+			right: 20px;
+		}
+			
+		#score{
+			display:none;
+			text-align:center;
+			display: block;
+			margin-top:20%;
+		}
+		#totalScore{
+			font-style: bold;
+			font-size: 50px;
+		}

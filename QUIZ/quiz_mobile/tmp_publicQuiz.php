@@ -12,40 +12,7 @@
         <!--stylesheets-->
         <link rel="stylesheet" href="css/sidepanelStyle.css" />
         <link rel="stylesheet" href="css/contentListviewStyle.css" />
-		<style>
-		.centerHorizontal{
-			text-align:center;
-		}
-			
-		#alternatives{			
-			margin-bottom: 5px;
-			margin-left: -5px;
-			position: absolute;
-			bottom: 0px;
-			heigth: 300px;
-			width: 95%;
-		}
-			
-		.alternative{
-			margin: 1px;
-			border-radius: 3px;
-			display: flex;
-			justify-content: center; /* align horizontal */
-			align-items: center; /* align vertical */
-			height: 150px;
-			background: #CCC;
-		}	
-		.answere{
-			background: #4F4;
-		}
-			
-		#countdown{
-			margin: auto 0px;	
-			justify-content: center; /* align horizontal */
-			align-items: center; /* align vertical */
-		}
-			
-		</style>
+		<link rel="stylesheet" href="css/quiz.css" />
         <!--imported javascript-->
         <script src="javascript/quizmodeFunctions.js"></script>
 		<script src="javascript/quiz.js"></script>
@@ -58,6 +25,7 @@
 					<!-- Title -->
 					<h2 id="quizQuestion" class="centerHorizontal">Question?</h2>				
 					<div id="countdown"></div>
+					<div id="score"></div>
 					<div id="alternatives"></div>
 				</div>
             </div>

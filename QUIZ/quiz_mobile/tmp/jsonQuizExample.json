@@ -6,19 +6,19 @@
             "QuestionText": "Hvor ligger HiØ?",
             "Alternatives": [
                 {
-                    "AlternativeText": "Sarpsborg",
+                    "AlternativeText": "Sarspborg håper jeg inderlig at det ikke er",
                     "AlternativeCorrect": 0
                 },
                 {
-                    "AlternativeText": "Askim",
+                    "AlternativeText": "Askim er det kanskje. Eller?",
                     "AlternativeCorrect": 0
                 },
                 {
-                    "AlternativeText": "Halden",
+                    "AlternativeText": "Halden er jo den fineste byen i østfold, så der håper jeg det er",
                     "AlternativeCorrect": 1
                 },
                 {
-                    "AlternativeText": "Oslo",
+                    "AlternativeText": "Oslo -_-",
                     "AlternativeCorrect": 0
                 }
             ]
