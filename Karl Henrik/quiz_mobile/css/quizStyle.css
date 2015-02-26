@@ -1,0 +1,81 @@
+@media all and (orientation:landscape){
+    #quiz #content{
+        position:fixed;
+        height:100%;
+        width:100%;
+        float:left;
+        overflow-y: scroll;
+    }
+}
+
+@media all and (orientation:portrait){
+
+    #quiz #content{
+        position:fixed;
+        height:100%;
+        width:100%;
+        float:left;
+        overflow-y: scroll;
+    }
+    
+}
+
+#quiz #upperHalf{
+    width:100%;
+    height:50%;
+}
+
+#quiz #lowerHalf{
+    width:100%;
+    height:50%;
+}
+
+#quiz #listAlt{
+    text-align: center;
+    height:100%;
+    width:100%;
+}
+
+#quiz #listAlt li{
+    display: inline-block;
+    background-color:grey;
+    width:45%;
+    height:45%;
+    border-radius: 15px;
+    border:1px solid black;
+}
+
+#quiz #listAlt li a{
+    text-align: center;
+    color: white;
+    height:100%;
+    font-size: 11pt;
+    font-weight: normal;
+    background-color: transparent;
+    border:none;
+    padding:0;
+    vertical-align: center;
+    white-space: normal;
+}
+
+#quiz #listAlt li:hover{
+    background-color:black;
+}
+
+#quiz #liAlt0{
+    margin:0;
+    margin-right:0.5%;
+    margin-bottom:1%;
+}
+#quiz #liAlt1{
+    margin-left:0.5%;
+    margin-bottom:1%;
+}
+#quiz #liAlt2{
+    margin-right:0.5%;
+    margin-top:0.5%;
+}
+#quiz #liAlt3{
+    margin-left:0.5%;
+    margin-top:0.5%;
+}

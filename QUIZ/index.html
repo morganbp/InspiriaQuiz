@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="question">
+                I hvilken kommune ligger HIØ?
+            </div>
+            <div id="answers">
+                <div id="answer1" class="answer" onclick="answerOnClick(1)">Halden</div>
+                <div id="answer2" class="answer" onclick="answerOnClick(2)">Skiptvet</div>
+                <div id="answer3" class="answer" onclick="answerOnClick(3)">Askim</div>
+                <div id="answer4" class="answer" onclick="answerOnClick(4)">Sarpsborg</div>
+            </div>
+        </div>
+    </body>
+    <script>
+        
+        function answerOnClick(answered){
+            if(document.getElementById("answer"+answered).innerHTML=="Halden"){
+                alert("Riktig");
+            }
+            else{
+                alert("feil");
+            }
+        }
+        
+    </script>
+</html>
