@@ -1,0 +1,19 @@
+body{
+    margin: 0 auto;
+}
+
+#content{
+    position: absolute;
+    /*border: 1px solid red;*/
+    left: 270px;
+    right: 20px;
+    top: 20px;
+    bottom: 20px;
+}
+
+.login{
+    height:100px;
+    width:100px;
+    /*border: 1px solid black;*/
+    display:block;
+}
