@@ -1,6 +1,5 @@
 <?php
 // Database info
-//$host="localhost";
 $host="frigg.hiof.no";
 $username="bo15g21";
 $password="bo15g21QUIZ";

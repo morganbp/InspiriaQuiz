@@ -5,10 +5,12 @@
         <title>Inspiria quiz</title>
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!--jQuery-->
+		<link rel="stylesheet" href="jquery-mobile/jquery.mobile-1.4.5.min.css" />
         <script src="jquery-mobile/jquery-1.11.1.min.js"></script>
         <script src="jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
-        <link rel="stylesheet" href="jquery-mobile/jquery.mobile-1.4.5.min.css" />
-		<script src="jquery-mobile/jquery.countdown360.min.js"></script>
+		<!-- UI -->
+		<link rel="stylesheet" href="jquery-ui/jquery-ui.css"/>
+		<script src="jquery-ui/jquery-ui.min.js"></script>
         <!--stylesheets-->
         <link rel="stylesheet" href="css/sidepanelStyle.css" />
         <link rel="stylesheet" href="css/contentListviewStyle.css" />
@@ -17,10 +19,11 @@
         <script src="javascript/quizmodeFunctions.js"></script>
 		<script src="javascript/Quiz.js"></script>
 		<script src="javascript/QuizSession.js"></script>
+		<script src="javascript/Countdown.js"></script>
 		<script src="javascript/spin.min.js"></script>
 		
     </head>
-    <body>
+    <body onload="getCookie()" onbeforeunload="saveCookies()">
         <div data-role="page" data-theme="a" id="homescreen">
             <?php include 'menuAndHeader.php'; ?>
             <div data-role="content" id="content">

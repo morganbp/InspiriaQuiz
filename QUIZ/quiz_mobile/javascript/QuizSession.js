@@ -23,12 +23,6 @@ function QuizSession(quizId){
 
 	// Players total score in quiz
 	var totalScore = 0;
-
-	// Start time when each question starts
-	var startTime;
-
-	// Time used on current question
-	var timeUsed;
 	
 	// if the quiz is in "Quiz mode" or "Score mode"
 	var mode = this.QUIZ_MODE;
@@ -119,24 +113,11 @@ function QuizSession(quizId){
 		countdown = countd;	
 	}
 	
-	this.setStartTime = function(time){
-		startTime = time;	
-	}
-	
-	this.computeTimeUsed = function(){
-		if(startTime != null){
-			var timeUsed = Date.now() - startTime;
-			startTime = null;
-			return timeUsed;
-		}
-		return null;
-	}
 	/**
 	*	Compute how many points the player gets based on time he has used.
 	*/
 	this.computePoints = function(){
-		var timeUsed = this.computeTimeUsed();
-		if(timeUsed == null) return -1; // If the time haven't started
+		var timeUsed = this.getCountdown().computeTimeUsed();
 		var timeUsedSec = timeUsed / 1000;
 		var points = this.getMaxPoints() - (this.getMinPoints()/this.getQuestionTime() * timeUsedSec);	
 		this.addTotalScore(Math.round(points));
@@ -175,6 +156,7 @@ function QuizSession(quizId){
 	*	Start the quiz
 	*/
 	this.startQuiz = function(){
+		$("#countdown").css("display", "block");
 		$("#getQuiz").css("display","none");
 		totalScore = 0;
 		setTimeout(function(){quizSession.populateQuestion();}, 2000);
@@ -185,8 +167,6 @@ function QuizSession(quizId){
 	* 	if the answere is wrong
 	*/
 	this.showCorrectAnswers = function(){
-		$("#countdown").css("display","none");
-
 		for(var i = 0; i < currentQuestion.Alternatives.length; i++){
 			if(currentQuestion.Alternatives[i].AlternativeCorrect === 1){
 				$("#"+i).addClass("correct");
@@ -221,32 +201,14 @@ function QuizSession(quizId){
 	*	Start the Countdown clock
 	*/
 	this.initializeCountdown = function(){
-		$("#countdown").css("display","flex");
-		var countdown = $("#countdown").countdown360({
-			radius      : 25,
-			seconds     : quizSession.getQuestionTime(),
-			strokeWidth : 4,
-			fillStyle   : '#888',
-			strokeStyle : '#666',
-			fontSize    : 25,
-			fontColor   : '#FFF',
-			autostart: false,
-			label: false,
-			onComplete  : quizSession.showCorrectAnswers
-			});
-		this.startCountdown(countdown);
+		this.startCountdown(new Countdown(function(){quizSession.showCorrectAnswers();}, quizSession.getQuestionTime()*1000));
 	}
 	
-	this.quizNotFound = function(){
-		popup("#quizNotFound");
-		removeSpinner();
-	}
+	
 	
 	this.startCountdown = function(countdown){
 		this.setCountdown(countdown);
-		this.getCountdown().start();
-		// set start time for calculation of points
-		quizSession.setStartTime(Date.now());
+		this.getCountdown().start(100);
 	}
 	
 	this.userAnswers= function(answere){
@@ -308,5 +270,6 @@ function QuizSession(quizId){
 			$("#alternatives").append('<div id="' + i + '" class="'+ className +' centerHorizontal alternative" style="width:49%;" onclick="chooseAlternative(this);"><span>'+alternatives[i].AlternativeText +'</span></div>');
 		}
 	}
-
+	
+	
 }
