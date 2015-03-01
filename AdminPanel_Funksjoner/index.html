@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-witdh, initial-scale=1">
+        <title>Inspiria quiz adminpanel</title>
+        <link rel="stylesheet" href="CSS/bootstrap/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="CSS/simple-sidebar.css">
+        <link rel="stylesheet" href="CSS/content.css">
+        
+        <script src="jquery-2.1.3.js"></script>
+        
+        <script>
+            var alternativeNumber = 2;
+            function newAlternative(){
+                alternativeNumber++;
+                $('#questionForm').append('<p>Alternative '+alternativeNumber+' <input type="text" name="alternative[]"/><input type="checkbox" name="Correct[]"/></p>');
+            }
+            function removeAlternative(){
+                alternativeNumber--;
+                $('#questionForm p:last-child').remove();
+            }
+        </script>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a href="#">
+                            Inspiria adminpanel
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#">Profile</a>
+                    </li>
+                </ul>
+            </div>
+            <div id="content">
+                <div class="login">
+                    <form id="questionForm" method="post" action="http://localhost/InspiriaQuiz/API/question_insert.php">
+                        <p>Quiz ID: <input type="text" name="QuizID"/></p>
+                        <p>Spørsmål: <input type="text" name="QuestionText"/></p>
+                        <p>Alternativ 1 <input type="text" name="Alternative[]"/><input type="checkbox" name="Correct[]"/></p>
+                        <p>Alternativ 2 <input type="text" name="Alternative[]"/><input type="checkbox" name="Correct[]"/></p>
+                        <input type="submit" value="Legg til spørsmålet"/>
+                    </form>
+                    <button type="button" onclick="newAlternative()">Nytt alternativ</button>
+                    <button type="button" onclick="removeAlternative()">Fjern alternativ</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,13 @@
+div#sidepanel{
+    width: 200px;
+}
+
+ul li#btnCloseSidepanel{
+    width:40px;
+    margin-left:160px;
+}
+
+ul li#btnCloseSidepanel a{
+    padding: 15px 0 15px 0;
+    background-color: transparent;
+}
