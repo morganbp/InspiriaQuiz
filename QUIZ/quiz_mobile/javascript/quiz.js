@@ -1,27 +1,5 @@
 function Quiz(id){
-	// GET data from database
-	var fetchQuiz = function(quizId){
-		"use strict";
-		$.ajax({
-			url: "http://frigg.hiof.no/bo15-g21/API/quiz_get.php", 
-			data: {QuizID: quizId},
-			type: 'POST',
-			error: function(XMLHttpRequest, textStatus, errorThrown){
-				quizNotFound(); //No quiz found, or QuizID invalid.
-			},
-			success: function(data){
-				saveData(data);
-			}
-		});
-	}
 	
-	var saveData = function(data){
-		window.quiz.setQuiz(JSON.parse(JSON.stringify(data.Questions)));
-		window.quiz.setTitle(JSON.stringify(data.QuizName));
-		startQuiz();
-	}
-	
-	fetchQuiz(id);
 	this.quiz = null;
 	this.title = "";
 	this.questionNumber = 0;
@@ -85,4 +63,29 @@ function Quiz(id){
 			return false;	
 		}
 	}
+	
+	// GET data from database
+	this.fetchQuiz = function(quizId){
+		var quiz = this;
+		"use strict";
+		$.ajax({
+			url: /*"http://frigg.hiof.no/bo15-g21/API/quiz_get.php"*/ "http://localhost/inspiriaQuiz/DB/quiz_get.php", 
+			data: {QuizID: quizId},
+			type: 'POST',
+			error: function(XMLHttpRequest, textStatus, errorThrown){
+				quizNotFound(); //No quiz found, or QuizID invalid.
+			},
+			success: function(data){
+				quiz.saveData(data);
+			}
+		});
+	}
+	// save data to object
+	this.saveData = function(data){
+		this.setQuiz(JSON.parse(JSON.stringify(data.Questions)));
+		this.setTitle(JSON.stringify(data.QuizName));
+		window.quizSession.startQuiz();
+	}
+	
+	this.fetchQuiz(id);
 }

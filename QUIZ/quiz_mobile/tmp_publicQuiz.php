@@ -16,6 +16,7 @@
         <!--imported javascript-->
         <script src="javascript/quizmodeFunctions.js"></script>
 		<script src="javascript/Quiz.js"></script>
+		<script src="javascript/QuizSession.js"></script>
 		<script src="javascript/spin.min.js"></script>
 		
     </head>
