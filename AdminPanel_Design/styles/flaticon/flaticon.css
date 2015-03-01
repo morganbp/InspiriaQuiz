@@ -13,13 +13,23 @@
 	font-family: Flaticon;
         font-size: 20px;
 font-style: normal;
-/*margin-left: 20px;*/
-}.flaticon-home63:before {
-	content: "\e000";
+margin-left: 0px;
 }
-.flaticon-log:before {
+
+.flaticon-cross93:before {
+	content: "\e000";
+    margin-left: 5px;
+}
+.flaticon-home63:before {
 	content: "\e001";
 }
-.flaticon-question1:before {
+.flaticon-log:before {
 	content: "\e002";
+}
+.flaticon-plus24:before {
+	content: "\e003";
+    margin-left: 5px;
+}
+.flaticon-question1:before {
+	content: "\e004";
 }

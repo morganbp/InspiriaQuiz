@@ -6,19 +6,14 @@
     <link rel='stylesheet' type='text/css' href='styles/flaticon/flaticon.css'/>
 </head>
 <body>
-    <header>
-        <div class='logo'>
-            <a href='index.html'>Inspiria Quiz Admin Panel</a>
-        </div>
-    </header>
+    <?php include 'header.php'; ?>
 
     <div id='container'>
         <div class='sidebar'>
             <nav>
                 <ul id='nav'>
-                    <li><a class='selected' href='#'><i class='flaticon-home63'></i>Dashboard</a></li>
-                    <li><a href='#'><i class='flaticon-log'></i>Quizer</a></li>
-                    <li><a href='#'><i class='flaticon-question1'></i>Logg ut</a></li>
+                    <?php $activepage = 'index.php'; ?>
+                    <?php include 'nav.php'; ?>
                 </ul>
             </nav>
         </div>
@@ -26,14 +21,14 @@
             <h1>Dashboard</h1>
             <p>Velkommen til admin-panelet for Inspirias Quizer!</p>
             
-            <div id='panel'>
+            <div class='panel'>
                 <div class='panel-header'>Nyeste quiz</div>
                 <div class='panel-body'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum molestie risus quis cursus. Aenean aliquam massa vel massa ullamcorper, sit amet pellentesque diam consequat. In sit amet enim quis dui facilisis interdum. Cras ut varius dui. Etiam ullamcorper in ligula nec pulvinar. 
                 </div>
             </div>
             
-            <div id='panel'>
+            <div class='panel'>
                 <div class='panel-header'>Nyeste quiz</div>
                 <div class='panel-body'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum molestie risus quis cursus. Aenean aliquam massa vel massa ullamcorper, sit amet pellentesque diam consequat. In sit amet enim quis dui facilisis interdum. Cras ut varius dui. Etiam ullamcorper in ligula nec pulvinar. 
@@ -41,7 +36,7 @@
                 </div>
             </div>
             
-            <div id='panel'>
+            <div class='panel'>
                 <div class='panel-header'>Nyeste quiz</div>
                 <div class='panel-body'>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum molestie risus quis cursus. Aenean aliquam massa vel massa ullamcorper, sit amet pellentesque diam consequat. In sit amet enim quis dui facilisis interdum. Cras ut varius dui. Etiam ullamcorper in ligula nec pulvinar. 
