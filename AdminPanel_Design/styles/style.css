@@ -196,3 +196,10 @@ ul#nav li a:hover{
 .panel #question-list input.alternative-text[type="text"] {
     width: 300px;
 }
+
+.correct-checkbox{
+    margin-right: 10px;
+}
+.correct-checkbox:checked + input.alternative-text{
+    font-weight: bold;
+}
