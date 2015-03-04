@@ -204,8 +204,6 @@ function QuizSession(quizId){
 		this.startCountdown(new Countdown(function(){quizSession.showCorrectAnswers();}, quizSession.getQuestionTime()*1000));
 	}
 	
-	
-	
 	this.startCountdown = function(countdown){
 		this.setCountdown(countdown);
 		this.getCountdown().start(100);

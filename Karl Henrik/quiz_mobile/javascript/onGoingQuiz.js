@@ -1,4 +1,5 @@
 var isAltClicked = false;
+var isQuizDone = false;
 
 function onAlternativeClick(alt){
     if(isAltClicked==false){
@@ -24,15 +25,19 @@ function questionAnswered(alt){
 }
 
 function showScore(alt){
+    $.mobile.changePage("#scoreDialog",{role: "page"});
     if(alt==correctAlternative){
-        updateScore(timer);
+        computeScore(timer);
     }
     else{
-        updateScore(0);
+        computeScore(0);
     }
-    $.mobile.changePage("#scoreDialog",{role: "dialog"});
-    setupNextQuestion();
-    setTimeout(function(){ $.mobile.changePage("#quiz", {role: "page"}); },2000);
+    updateScoreDialog();
+    setTimeout(function(){
+        updateScore();
+        $.mobile.changePage("#quiz", {role: "page"});
+        setupNextQuestion();
+    },2000);
 }
 
 function setupNextQuestion(){
@@ -40,3 +45,5 @@ function setupNextQuestion(){
     buildQuiz();
     isAltClicked = false;
 }
+
+function 

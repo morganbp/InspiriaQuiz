@@ -1,31 +1,6 @@
 var questionNumber = 0;
 var correctAlternative;
 
-function initializeQuiz(){
-    /*$(window).on("beforeunload",function(){
-        alert("OK");
-        $.cookie("questionNumber",questionNumber,{expires : 1});
-        $.cookie("answers",answers,{expires : 1});
-    });
-    $(window).load(function(){
-        var isRefreshed = $.cookie("isRefreshed");
-        if(isRefreshed!=null && isRefreshed!=""){
-            var quizId = $("#txtInputQuizId").val();
-            if(checkIfQuizIdIsNumber(quizId)){
-                getQuiz(quizId);
-            }
-            else{
-                displayErrorMessage();
-            }
-        }
-        else{
-            resultJSON = $.cookie("quiz");
-            buildQuiz();
-        }
-    });*/
-    
-}
-
 function buildQuiz(){
     resetQuiz();
     setQuestion();
@@ -35,7 +10,12 @@ function buildQuiz(){
 }
 
 function setQuestion(){
-    $('#question').text(getQuestion(questionNumber));
+    var question = getQuestion(questionNumber)
+    if(question == undefined){
+        quizDone = true;
+        return;
+    }
+    $('#question').text(question);
 }
 
 function resetQuiz(){
