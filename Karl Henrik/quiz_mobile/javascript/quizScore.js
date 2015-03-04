@@ -5,7 +5,7 @@ var maxScore = 1000;
 function updateScore(timeLeft){
     score = Math.floor(timeLeft/(maxTime)*maxScore);
     sumScore += score;
-    $("#score").text(score);
+    $("#score").text(sumScore);
     $("#scoreDialog #score").text(score);
     $("#scoreDialog #totalScore").text(sumScore);
 }

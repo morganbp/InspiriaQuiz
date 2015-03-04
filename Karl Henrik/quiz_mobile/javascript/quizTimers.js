@@ -1,5 +1,5 @@
 var maxTime = 15;
-var timer = maxTime;
+var timer;
 var timerClock;
 
 function questionTimerGoing(){
@@ -14,6 +14,7 @@ function questionTimerGoing(){
 }
 
 function startTimer(functionForTimer){
+    timer = maxTime;
     timerClock = setInterval(functionForTimer, 10);
 }
 

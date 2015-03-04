@@ -19,14 +19,24 @@ function editAltColors(alt){
 
 function questionAnswered(alt){
     stopTimer();
+    editAltColors(alt)
+    setTimeout(function(){showScore(alt);},2000);
+}
+
+function showScore(alt){
     if(alt==correctAlternative){
         updateScore(timer);
-        setTimeout(function(){
-            $.mobile.changePage("#scoreDialog",{role: "dialog"});
-        },1000);
     }
     else{
-        
+        updateScore(0);
     }
-    editAltColors(alt)
+    $.mobile.changePage("#scoreDialog",{role: "dialog"});
+    setupNextQuestion();
+    setTimeout(function(){ $.mobile.changePage("#quiz", {role: "page"}); },2000);
+}
+
+function setupNextQuestion(){
+    questionNumber++;
+    buildQuiz();
+    isAltClicked = false;
 }

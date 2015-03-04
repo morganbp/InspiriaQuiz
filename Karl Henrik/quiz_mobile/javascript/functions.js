@@ -49,6 +49,7 @@ function getQuiz() {
 }*/
 
 function getQuestion(qNum){
+    alert(resultJSON[qNum].QuestionText);
     return resultJSON[qNum].QuestionText;
 }
 

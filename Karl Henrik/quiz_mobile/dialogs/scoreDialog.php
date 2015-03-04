@@ -8,6 +8,5 @@
         <br>
         <label>Poengsum: </label>
         <div id="totalScore" ></div>
-        <a href="#" data-rel="back" class="ui-btn ui-corner-all" >Lukk</a>
     </div>
 </div>

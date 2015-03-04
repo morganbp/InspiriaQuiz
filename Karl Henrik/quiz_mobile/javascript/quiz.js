@@ -26,8 +26,8 @@ function initializeQuiz(){
     
 }
 
-
 function buildQuiz(){
+    resetQuiz();
     setQuestion();
     setTimer(timer);
     setAlternatives();
@@ -38,10 +38,17 @@ function setQuestion(){
     $('#question').text(getQuestion(questionNumber));
 }
 
+function resetQuiz(){
+    $('#quiz #question').text("");
+    $('#quiz #listAlt').html("");
+}
+
 function setAlternatives(){
     var altCounter = 0;
-    $.each(getAlternatives(questionNumber), function() { 
-        $("#alt"+altCounter).html(this.AlternativeText);
+    $.each(getAlternatives(questionNumber), function() {
+        $("#quiz #listAlt").append("<li class=liAlt id=liAlt"+altCounter+" onclick=onAlternativeClick("+altCounter+")><a class=aAlt id=alt"+altCounter+" >"+this.AlternativeText+"</a></li>").listview("refresh");
+        $("#quiz #liAlt"+altCounter).css("background-color","#808080")
+        $("#quiz #liAlt"+altCounter).children().css("color","#ffffff");
         if(this.AlternativeCorrect==1)
             correctAlternative = altCounter;
         altCounter++;

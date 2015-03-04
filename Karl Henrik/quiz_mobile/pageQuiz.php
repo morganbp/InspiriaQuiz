@@ -16,10 +16,10 @@
         </div>
         <div id="lowerHalf">
             <div id="listAlt" data-role="listview" data-inset="true" data-icon="false" >
-                <li class="liAlt" id="liAlt0" onclick="onAlternativeClick(0)"><a class="aAlt" id="alt0" >test</a></li>
-                <li class="liAlt" id="liAlt1" onclick="onAlternativeClick(1)"><a class="aAlt" id="alt1" >test</a></li>
-                <li class="liAlt" id="liAlt2" onclick="onAlternativeClick(2)"><a class="aAlt" id="alt2" >test</a></li>
-                <li class="liAlt" id="liAlt3" onclick="onAlternativeClick(3)"><a class="aAlt" id="alt3" >test</a></li>
+                <li><a></a></li>
+                <li><a></a></li>
+                <li><a></a></li>
+                <li><a></a></li>
             </div>
         </div>
     </div>
