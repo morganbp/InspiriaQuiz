@@ -45,5 +45,3 @@ function setupNextQuestion(){
     buildQuiz();
     isAltClicked = false;
 }
-
-function 

@@ -14,7 +14,6 @@ function Quiz(id){
 	
 	this.getQuestion = function(number){
 		this.questionNumber = number + 1;
-		
 		if(number < this.quiz.length){
 			return this.quiz[number];
 		}else{
