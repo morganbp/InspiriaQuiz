@@ -10,7 +10,7 @@ if(!isset($_POST['QuizID'])){
 $quizID = $_POST['QuizID'];
 
 
-if($stmt = $mysqli -> prepare("SELECT Quiz.QuizName, Question.QuestionID, QuestionText, AlternativeText, AlternativeCorrect FROM Question 
+if($stmt = $mysqli -> prepare("SELECT Quiz.QuizName, Question.QuestionID, QuestionText, AlternativeText, AlternativeCorrect, AlternativeID FROM Question 
     JOIN Alternative ON Question.QuestionID = Alternative.QuestionID  
 	JOIN Quiz ON Quiz.QuizID = Question.QuizID
     WHERE Question.QuizID = ?")) {
@@ -44,7 +44,8 @@ if($stmt = $mysqli -> prepare("SELECT Quiz.QuizName, Question.QuestionID, Questi
     foreach($mysql_data as $key => $alternative){
         $temporary_data[$alternative['QuestionID']]['Alternatives'][] = array(
                 'AlternativeText' => $alternative['AlternativeText'],
-                'AlternativeCorrect' => $alternative['AlternativeCorrect']);
+                'AlternativeCorrect' => $alternative['AlternativeCorrect'],
+                'AlternativeID' => $alternative['AlternativeID']);
     }
 	
     // Remove unwanted indexes used for structuring the JSON.

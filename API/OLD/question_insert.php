@@ -22,7 +22,7 @@ $questionText = $_POST['QuestionText'];
 $alternatives = $_POST['Alternative'];
 $correctID = intval($_POST['Correct']);
 
-//die();
+die();
 
 
 if($stmt = $mysqli -> prepare('INSERT INTO Question(QuestionText, QuestionPosition, QuizID, ExhibitionID) 
