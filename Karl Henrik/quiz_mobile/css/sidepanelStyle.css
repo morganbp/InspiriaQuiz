@@ -1,13 +1,22 @@
-div#sidepanel{
+#sidepanel{
     width: 200px;
 }
 
-ul li#btnCloseSidepanel{
+#sidepanel #btnCloseSidepanel{
     width:40px;
     margin-left:160px;
 }
 
-ul li#btnCloseSidepanel a{
+#sidepanel #btnCloseSidepanel a:active{
+    box-shadow: none;
+}
+
+#sidepanel #btnCloseSidepanel a:focus{
+    box-shadow: none;
+}
+
+#sidepanel #btnCloseSidepanel a{
     padding: 15px 0 15px 0;
     background-color: transparent;
+    border:none;
 }

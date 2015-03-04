@@ -1,10 +1,5 @@
-function checkIfQuizIdIsNumber(quizId){
-    return !isNaN(quizId);
-}
-
-function displayErrorMessage(){
-    changePage('#errorQuizNotFoundDialog');
-}
+var questionNumber = 0;
+var correctAlternative;
 
 function initializeQuiz(){
     /*$(window).on("beforeunload",function(){
@@ -28,11 +23,32 @@ function initializeQuiz(){
             buildQuiz();
         }
     });*/
-    var quizId = $("#txtInputQuizId").val();
-    if(checkIfQuizIdIsNumber(quizId)){
-        getQuiz(quizId);
-    }
-    else{
-        displayErrorMessage();
-    }
+    
+}
+
+
+function buildQuiz(){
+    setQuestion();
+    setTimer(timer);
+    setAlternatives();
+    startTimer(questionTimerGoing);
+}
+
+function setQuestion(){
+    $('#question').text(getQuestion(questionNumber));
+}
+
+function setAlternatives(){
+    var altCounter = 0;
+    $.each(getAlternatives(questionNumber), function() { 
+        $("#alt"+altCounter).html(this.AlternativeText);
+        if(this.AlternativeCorrect==1)
+            correctAlternative = altCounter;
+        altCounter++;
+    });
+}
+
+function saveProgress(){
+    localStorage("questionNumber",questionNumber);
+    localStorage("answers",answers);
 }

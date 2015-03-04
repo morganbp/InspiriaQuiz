@@ -1,13 +1,13 @@
 <style>
-    #errorQuizNotFoundDialog #dialogTitleBar{
+    #dialogTitleBar{
         background: -webkit-linear-gradient(grey, lightblue, white);
         background: -o-linear-gradient(grey, lightblue, white);
         background: -moz-linear-gradient(grey, lightblue, white);
         background: linear-gradient(grey, lightblue, white);
     }
     
-    #errorQuizNotFoundDialog #dialogContent{
-         background: -webkit-linear-gradient(white, lightblue, grey);
+    #dialogContent{
+        background: -webkit-linear-gradient(white, lightblue, grey);
         background: -o-linear-gradient(white, lightblue, grey);
         background: -moz-linear-gradient(white, lightblue, grey);
         background: linear-gradient(white, lightblue, grey);

@@ -14,6 +14,8 @@
         <!--imported javascript-->
         <script src="javascript/quizmodeFunctions.js"></script>
         <script src="javascript/startQuiz.js"></script>
+        <script src="javascript/jqueryMobilFunctions.js"></script>
+        <script src="javascript/quizmodeFunctions.js"></script>
     </head>
     <body>
         <div data-role="page" data-theme="a" id="homescreen">
@@ -21,19 +23,19 @@
             <div data-role="content" id="content">
                 <ul data-role="listview" id="quizMode">
                     <li data-icon="false">
-                        <a href="pageQuizmode1">
+                        <a href="quizmode1">
                             <h3>Quiz for idag</h3>
                             <p>Er du på besøk hos Inspiria og vil prøve dagens quiz klikk her!</p>
                         </a>
                     </li>
                     <li data-icon="false">
-                        <a href="#pageQuizmode2">
+                        <a href="#quizmode2">
                             <h3>Quiz for Skole/bedrift</h3>
                             <p>Er du med en skole eller bedrift og skal gå rundt i Inspiria science center og ta vår quiz laget spesielt til dere klikk her!</p>
                         </a>
                     </li>
                     <li data-icon="false">
-                        <a href="pageQuizmode3">
+                        <a href="quizmode3">
                             <h3>Quiz for lukket arrangement</h3>
                             <p>Hvis du skal være med på et lukket arrangement i auditoriet eller et konferanserom klikk her!</p>
                         </a>
@@ -46,6 +48,7 @@
             include 'pageQuizmode2.php';
             include 'pageQuizmode3.php';
             include 'pageQuiz.php';
+            include 'dialogs/quizNotFoundErrorDialog.php';
         ?>
     </body>
 </html>

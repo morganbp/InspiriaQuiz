@@ -1,28 +1,30 @@
-@media all and (orientation:landscape){
-    #quiz #content{
-        position:fixed;
-        height:100%;
-        width:100%;
-        float:left;
-        overflow-y: scroll;
-    }
-}
-
-@media all and (orientation:portrait){
-
-    #quiz #content{
-        position:fixed;
-        height:100%;
-        width:100%;
-        float:left;
-        overflow-y: scroll;
-    }
-    
+#quiz #content{
+    position:fixed;
+    height:100%;
+    width:100%;
+    float:left;
 }
 
 #quiz #upperHalf{
     width:100%;
     height:50%;
+}
+
+#quiz #infoHeader{
+    height:50px;
+    border:none;
+}
+
+#quiz #scoreWrapper{
+    position: absolute;
+    left:50px;
+    top:30%;
+}
+
+#quiz #timerWrapper{
+    position: absolute;
+    right:50px;
+    top:30%;
 }
 
 #quiz #lowerHalf{
@@ -37,45 +39,46 @@
 }
 
 #quiz #listAlt li{
-    display: inline-block;
     background-color:grey;
     width:45%;
     height:45%;
+    display: inline-flex;
+    justify-content: center;
+	align-items: center;
     border-radius: 15px;
-    border:1px solid black;
+    cursor:pointer;
 }
 
 #quiz #listAlt li a{
     text-align: center;
-    color: white;
-    height:100%;
-    font-size: 11pt;
     font-weight: normal;
+    color: white;
+    text-shadow: none;
     background-color: transparent;
     border:none;
     padding:0;
-    vertical-align: center;
     white-space: normal;
+    border-radius: 0;
 }
 
 #quiz #listAlt li:hover{
-    background-color:black;
+    background-color:#3e3e3e;
 }
 
 #quiz #liAlt0{
     margin:0;
-    margin-right:0.5%;
-    margin-bottom:1%;
+    margin-right:0.25%;
+    margin-bottom:0.5%;
 }
 #quiz #liAlt1{
-    margin-left:0.5%;
-    margin-bottom:1%;
+    margin-left:0.25%;
+    margin-bottom:0.5%;
 }
 #quiz #liAlt2{
-    margin-right:0.5%;
-    margin-top:0.5%;
+    margin-right:0.25%;
+    margin-top:0.25%;
 }
 #quiz #liAlt3{
-    margin-left:0.5%;
-    margin-top:0.5%;
+    margin-left:0.25%;
+    margin-top:0.25%;
 }
