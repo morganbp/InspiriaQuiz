@@ -7,8 +7,18 @@
     
     <script src="jquery-2.1.3.js"></script>
     <script type='text/javascript'>
-        function quizSingleClick(quizID){
-            document.location = "quiz_single.php?QuizID=" + quizID;
+        function addAlternative(element){
+            
+            var alternativeHTML = 
+                
+                
+                '<input type="hidden" name="AlternativeID['.$qKey.']['.$aKey.']" value="'.$alternative->AlternativeID.'"/>'
+                '<input class="correct-checkbox" type="checkbox" name="Correct['.$qKey.']['.$aKey.']"/>'
+                '<input class="alternative-text" type="text" name="Alternative['.$qKey.']['.$aKey.']" value=""/>'
+                echo '<a href="#"><i class="flaticon-cross93"></i></a>';
+                
+                
+            $(element).parent().append("<p>Morn</p>");
         }
     </script>
 </head>
@@ -79,7 +89,7 @@
                                             echo '<a href="#"><i class="flaticon-cross93"></i></a>';
                                             
                                             if($aKey == count($json->Alternatives)-1)
-                                                echo '<a href="#"><i class="flaticon-plus24"></i></a>';
+                                                echo '<i class="flaticon-plus24" onclick="addAlternative(this)"></i>';
                                         echo '</td>';
                                     echo '</tr>';
                                 }
@@ -87,7 +97,7 @@
                         }
                         ?>
                     <tr class='question-top'>
-                        <th><button>Hello</button></th>
+                        <th><button>Oppdater quizen</button></th>
                     </tr>
                     </form>
                     </table>
