@@ -68,7 +68,7 @@ function Quiz(id){
 		var quiz = this;
 		"use strict";
 		$.ajax({
-			url: /*"http://frigg.hiof.no/bo15-g21/API/quiz_get.php"*/ "http://158.39.190.115/Bach/API/quiz_get.php", 
+			url: "http://frigg.hiof.no/bo15-g21/API/quiz_get.php" /*"API/quiz_get.php"*/, 
 			data: {QuizID: quizId},
 			type: 'POST',
 			error: function(XMLHttpRequest, textStatus, errorThrown){
