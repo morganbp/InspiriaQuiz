@@ -35,7 +35,7 @@
 					<div id="getQuiz">
 						<div data-role="popup" id="invalidInput"><p>Please type in  a number</p></div>
 						<div data-role="popup" id="quizNotFound"><p>Couldn't find Quiz</p></div>
-						<input type="number" name="name" id="basic" onkeypress="chooseQuiz(event)" placeholder="ID" />
+						<input type="number" name="name" id="basic" onkeypress="chooseQuiz(event)" placeholder="QuizID" Style="text-align:center;"/>
 						<button type="button" onclick="chooseQuiz(event)">Hent Quiz</button>
 					</div>
 					<div id="spinner"></div>

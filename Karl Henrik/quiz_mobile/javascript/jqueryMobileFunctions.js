@@ -1,3 +1,3 @@
-function changePage(page, options){
-        $("body").pagecontainer("change", page);
+function changePage(page){
+    $("body").pagecontainer("change", page);
 }

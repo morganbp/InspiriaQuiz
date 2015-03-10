@@ -5,17 +5,21 @@ function getQuiz() {
 	xmlhttp.onreadystatechange=function(){
 		if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		{
+			changePage('#quiz');
 			resultJSON = JSON.parse(xmlhttp.responseText);
-            numberOfQuestions = resultJSON.length;
-            getQuestion(0);
+            if(resultJSON == "false"){
+                displayErrorMessage();
+            }
+            //$.cookie("quiz",resultJSON,{expires : 1});
+            buildQuiz()
 		}
 	}
-    xmlhttp.open("GET", "question_get.php", true);
+    xmlhttp.open("GET", "php/question_get.php", true);
 	//xmlhttp.open("GET", "http://frigg.hiof.no/bo15-g21/API/question_get.php?action=select&QuizID=1", true);
 	xmlhttp.send();
 }
 
-function getQuestion(qNum){
+/*function getQuestion(qNum){
     $("#Question").html(resultJSON[qNum].QuestionText);
 	$("#Alternatives").empty();
     updateQuizInfo(qNum);
@@ -27,4 +31,12 @@ function getQuestion(qNum){
             correctAlternative = i;
         }
     }
+}*/
+
+function getQuestion(qNum){
+    return resultJSON[qNum].QuestionText;
+}
+
+function getAlternatives(qNum){
+    return resultJSON[qNum].Alternatives;
 }

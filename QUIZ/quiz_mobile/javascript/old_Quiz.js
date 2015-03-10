@@ -14,7 +14,6 @@ function Quiz(id){
 	
 	this.getQuestion = function(number){
 		this.questionNumber = number + 1;
-		
 		if(number < this.quiz.length){
 			return this.quiz[number];
 		}else{
@@ -69,7 +68,7 @@ function Quiz(id){
 		var quiz = this;
 		"use strict";
 		$.ajax({
-			url: /*"http://frigg.hiof.no/bo15-g21/API/quiz_get.php"*/ "http://localhost/inspiriaQuiz/API/quiz_get.php", 
+			url: "http://frigg.hiof.no/bo15-g21/API/quiz_get.php" /*"API/quiz_get.php"*/, 
 			data: {QuizID: quizId},
 			type: 'POST',
 			error: function(XMLHttpRequest, textStatus, errorThrown){

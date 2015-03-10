@@ -1,0 +1,69 @@
+{
+  "Update": {
+    "Questions": [
+      {
+        "QuestionID": 2,
+        "QuestionTitle": "Ny tittel"
+      },
+      {
+        "QuestionID": 5,
+        "QuestionTitle": "Nytt spørsmål"
+      }
+    ],
+    "Alternatives": [
+      {
+        "AlternativeID": 100,
+        "AlternativeText": "Alt 1"
+      },
+      {
+        "AlternativeID": 10,
+        "AlternativeText": "Alt 2"
+      }
+    ]
+  },
+  "Insert": {
+    "Questions": [
+      {
+        "QuestionID": 2,
+        "QuestionText": "Hvor ligger HiØ?",
+        "Alternatives": [
+          {
+            "AlternativeText": "Sarpsborg",
+            "AlternativeCorrect": 0,
+            "AlternativeID": 2
+          },
+          {
+            "AlternativeText": "Askim",
+            "AlternativeCorrect": 0,
+            "AlternativeID": 3
+          },
+          {
+            "AlternativeText": "Halden",
+            "AlternativeCorrect": 1,
+            "AlternativeID": 4
+          },
+          {
+            "AlternativeText": "Oslo",
+            "AlternativeCorrect": 0,
+            "AlternativeID": 5
+          }
+        ]
+      }
+    ]
+  },
+  "Delete": {
+    "Questions": [
+      {
+        "QuestionID": 2
+      }
+    ],
+    "Alternatives": [
+      {
+        "AlternativeID": 100
+      },
+      {
+        "AlternativeID": 10
+      }
+    ]
+  }
+}

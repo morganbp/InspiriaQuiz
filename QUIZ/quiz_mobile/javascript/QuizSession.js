@@ -72,7 +72,30 @@ function QuizSession(quizId){
 			this.quizGuiHandler.showCorrectAnswer(answer, this.currentQuestion);
 			this.countdown.stop();
 		}
-		
+	}
+	
+	/*
+	*	Start the Countdown clock
+	*/
+	this.initializeCountdown = function(){
+		this.startCountdown(new Countdown(function(){quizSession.showCorrectAnswers();}, quizSession.getQuestionTime()*1000));
+	}
+	
+	this.startCountdown = function(countdown){
+		this.setCountdown(countdown);
+		this.getCountdown().start(100);
+	}
+	
+	this.userAnswers= function(answere){
+		this.setHasAnswered(true);
+		this.setAnswere(answere);	
+		this.getCountdown().stop();
+	}
+	
+	this.clearAlternativesDiv = function(){
+		$("#alternatives").empty();
+		$("#alternatives").removeClass("ui-grid-a ui-grid-b");	
+>>>>>>> 1030bed6ab8ee8411d864cc128acf0d1b7fd8695
 	}
 	
 	this.endQuestion = function(){

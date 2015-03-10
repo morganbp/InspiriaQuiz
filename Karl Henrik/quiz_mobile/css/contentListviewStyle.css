@@ -1,7 +1,7 @@
-ul#quizMode li a{
+#homeScreen ul#quizMode li a{
     text-align:center;
 }
 
-ul#quizMode li a p{
+#homeScreen ul#quizMode li a p{
     white-space:normal;
 }
