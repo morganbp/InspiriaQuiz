@@ -25,11 +25,18 @@
 		.answere{
 			background: yellow;
 		}
-		.wrong{
-			background : red;
+		.wrong{	
+			background: rgb(155,0,0);
+			color:white;
+			opacity: 0.2;
+		}
+		
+		.neutral{
+			opacity: 0.2;	
 		}
 		.correct{
-			background: green;	
+			background: rgb(0,155,0);
+			
 		}
 			
 		#countdown{

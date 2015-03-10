@@ -1,26 +1,23 @@
-function Countdown(countEnded, millisec){
+function Countdown(countEndedEvent, millisec){
 	
-	this.endEvent = countEnded;
-	this.initialTime = millisec;
-	this.timeLeft = millisec;
+	this.updateFrequence;
+	
+	this.endEvent;
+	
+	this.initialTime;
+	
+	this.timeLeft;
+	
+	this.timeStart;
+	
+	this.timeUsed;
+	
 	this.intervalID;
-		
-	this.getTimeLeft = function(){
-		return this.timeLeft;	
-	}
-	
-	this.setTimeLeft= function(timeLeft){
-		this.timeLeft = timeLeft;	
-	}
-	
-	this.getInitialTime = function(){
-		return this.initialTime;	
-	}
 
-	this.decreaseTime = function(time){
-		var newTime = this.getTimeLeft() - time;
+	this.decreaseTime = function(){
+		var newTime = this.timeLeft - this.updateFrequence;
 		if(newTime >= 0){
-			this.setTimeLeft(newTime);
+			this.timeLeft = newTime;
 			this.updateProgressbar();
 		}else{
 			this.stop();
@@ -31,25 +28,41 @@ function Countdown(countEnded, millisec){
 		return this.initialTime - this.timeLeft;	
 	}
 	
-	this.start = function(time){
+	this.start = function(){
+		this.timeStart = Date.now();
 		var c = this;
-		this.intervalID = setInterval(function(){ c.decreaseTime(time);}, time);
+		this.intervalID = setInterval(function(){c.decreaseTime()}, this.updateFrequence);
 		this.updateProgressbar();
 	}
 	
-	this.stop = function(){
+	this.pause = function(){
 		clearInterval(this.intervalID);
+	}
+	
+	this.resume = function(){
+		var c = this;
+		this.intervalID = setInterval(function(){c.decreaseTime()}, this.updateFrequence); 	
+	}
+
+	this.reset = function(){
+		this.timeLeft = this.initialTime;
+	}
+	
+	this.stop = function(){
+		this.timeUsed = Date.now() - this.timeStart;
+		this.pause();
+		this.reset();
 		this.endEvent();
 	}
 	
 	this.updateProgressbar = function(){
-		var percent = (this.getTimeLeft() / this.initialTime) * 100;
+		var percent = (this.timeLeft / this.initialTime) * 100;
 		$("#countdown").progressbar({
 			value: percent
 		});
 		var color;
 		if(percent > 40){
-			color = '#0F0';
+			color = '#000';
 		}else{
 			color = '#F00';
 			$("#countdown > div").css({'height':'6px'});
@@ -57,5 +70,14 @@ function Countdown(countEnded, millisec){
 		$("#countdown").css({'background':'rgba(0,0,0,0)'});
 		$("#countdown > div").css({'background':color});
 	}
+	
+	this.Countdown = function(countEndedEvent, millisec){
+		this.updateFrequence = 1000;
+		this.endEvent = countEndedEvent;
+		this.initialTime = millisec;
+		this.timeLeft = millisec;
+	}
+	
+	this.Countdown(countEndedEvent, millisec);
 	
 }

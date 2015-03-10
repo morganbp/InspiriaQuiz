@@ -17,8 +17,10 @@
 		<link rel="stylesheet" href="css/quiz.css" />
         <!--imported javascript-->
         <script src="javascript/quizmodeFunctions.js"></script>
-		<script src="javascript/Quiz.js"></script>
+		<script src="javascript/QuizData.js"></script>
 		<script src="javascript/QuizSession.js"></script>
+		<script src="javascript/QuizGuiHandler.js"></script>
+		<script src="javascript/QuizDBHandler.js"></script>
 		<script src="javascript/Countdown.js"></script>
 		<script src="javascript/spin.min.js"></script>
 		
