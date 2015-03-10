@@ -51,9 +51,7 @@ function answerClicked(alternative){
 
 	
 function startUpScreen(){
-	$("#score").css("display", "none");
-	$("#countdown").css("display", "none");
-	$("#alternatives").css("display","none");
+	$("#quiz").css("display", "none");
 	$("#getQuiz").css("display", "block");
 	$("#quizQuestion").html("Velg Quiz");
 }

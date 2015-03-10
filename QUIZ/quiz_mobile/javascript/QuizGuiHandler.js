@@ -13,7 +13,7 @@ function QuizGuiHandler(){
 	var letters = ['a','b'];
 	
 	var QuizGuiHandler = function(){
-		$("#countdown").css("display", "block");
+		$("#quiz").css("display", "block");
 		$("#getQuiz").css("display","none");	
 	}
 	
@@ -44,8 +44,8 @@ function QuizGuiHandler(){
 		}
 	}
 	
-	this.setScore = function(){
-		
+	this.setScore = function(score){
+		$("#scoreHeader").html(score);
 	}
 	
 	/**

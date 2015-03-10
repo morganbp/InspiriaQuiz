@@ -61,6 +61,7 @@ function QuizSession(quizId){
 		
 		this.quizGuiHandler.setQuestion(this.currentQuestion.QuestionText);
 		this.quizGuiHandler.setAlternatives(this.currentQuestion.Alternatives);
+		this.quizGuiHandler.setScore("" + this.totalScore);
 		
 		this.countdown.start();
 	}
@@ -69,40 +70,16 @@ function QuizSession(quizId){
 		if(!this.hasAnswered){
 			this.hasAnswered = true;
 			this.answer = answer;	
-			this.quizGuiHandler.showCorrectAnswer(answer, this.currentQuestion);
 			this.countdown.stop();
 		}
 	}
 	
-	/*
-	*	Start the Countdown clock
-	*/
-	this.initializeCountdown = function(){
-		this.startCountdown(new Countdown(function(){quizSession.showCorrectAnswers();}, quizSession.getQuestionTime()*1000));
-	}
-	
-	this.startCountdown = function(countdown){
-		this.setCountdown(countdown);
-		this.getCountdown().start(100);
-	}
-	
-	this.userAnswers= function(answere){
-		this.setHasAnswered(true);
-		this.setAnswere(answere);	
-		this.getCountdown().stop();
-	}
-	
-	this.clearAlternativesDiv = function(){
-		$("#alternatives").empty();
-		$("#alternatives").removeClass("ui-grid-a ui-grid-b");	
->>>>>>> 1030bed6ab8ee8411d864cc128acf0d1b7fd8695
-	}
-	
 	this.endQuestion = function(){
 		// If answer is correct
-		if(this.currentQuestion.Alternatives[this.answer].AlternativeCorrect === 1){
+		if(this.answer !== -1 && this.currentQuestion.Alternatives[this.answer].AlternativeCorrect === 1){
 			this.updateScore();	
 		}
+		this.quizGuiHandler.showCorrectAnswer(this.answer, this.currentQuestion);
 		var score = this.totalScore;
 		setTimeout(function(){window.quizSession.quizGuiHandler.showScore(score)}, 2000);
 	}

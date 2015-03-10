@@ -62,13 +62,14 @@ function Countdown(countEndedEvent, millisec){
 		});
 		var color;
 		if(percent > 40){
-			color = '#000';
+			color = '#59b548';
 		}else{
-			color = '#F00';
+			color = '#e84b7d';
 			$("#countdown > div").css({'height':'6px'});
 		}
 		$("#countdown").css({'background':'rgba(0,0,0,0)'});
 		$("#countdown > div").css({'background':color});
+		$("#timer").html(this.timeLeft/1000);
 	}
 	
 	this.Countdown = function(countEndedEvent, millisec){

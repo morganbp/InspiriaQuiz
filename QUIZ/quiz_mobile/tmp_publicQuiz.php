@@ -5,9 +5,14 @@
         <title>Inspiria quiz</title>
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!--jQuery-->
-		<link rel="stylesheet" href="jquery-mobile/jquery.mobile-1.4.5.min.css" />
+		
         <script src="jquery-mobile/jquery-1.11.1.min.js"></script>
         <script src="jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
+		
+		
+		<link rel="stylesheet" href="jquery-mobile/jquery.mobile-1.4.5.min.css" />
+		<link rel="stylesheet" href="css/themes/inspiriaStyle.min.css" />
+		<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
 		<!-- UI -->
 		<link rel="stylesheet" href="jquery-ui/jquery-ui.css"/>
 		<script src="jquery-ui/jquery-ui.min.js"></script>
@@ -38,13 +43,26 @@
 						<input type="number" name="name" id="basic" onkeypress="chooseQuiz(event)" placeholder="QuizID" Style="text-align:center;"/>
 						<button type="button" onclick="chooseQuiz(event)">Hent Quiz</button>
 					</div>
-					<div id="spinner"></div>
-					<div id="countdown"></div>
-					<div id="score" style="display:none;">
-						<h3>Din poengsum:</h3>
-						<div id="totalScore"></div>
+					<div id="quiz">
+						<div id="infoHeader" data-role="header">
+							<div id="scoreWrapper">
+								<label style="display:inline;">Poengsum: </label>
+								<span id="scoreHeader" style="display:inline;">0</span>
+							</div>
+							<div id="timerWrapper">
+								<label style="display:inline;">Tid igjen: </label>
+								<span id="timer" style="display:inline;"></span>
+							</div>
+						</div>
+						
+						<div id="spinner"></div>
+						<div id="countdown"></div>
+						<div id="score" style="display:none;">
+							<h3>Din poengsum:</h3>
+							<div id="totalScore"></div>
+						</div>
+						<div id="alternatives"></div>
 					</div>
-					<div id="alternatives"></div>
 				</div>
             </div>
 			<script src="javascript/quizScript.js"></script>	
