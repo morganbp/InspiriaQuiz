@@ -8,10 +8,17 @@
     <script src="jquery-2.1.3.js"></script>
     <script type='text/javascript'>
         var quizJSON = null;
+        var submitJSON = {
+            Insert: [], 
+            Update: [], 
+            Delete: []
+        };
+        
         $( document ).ready(function() {
             fetchQuiz(1);
         });
         
+        /* QUIZ SETUP SECTION */
         // GET data from database
         function fetchQuiz(quizId){
             "use strict";
@@ -24,25 +31,79 @@
                 },
                 success: function(data){
                     quizJSON = data;
-                    feedTableWithData();
+                    makeQuestionTable();
                 }
             });
         }
         
-        function feedTableWithData(){
+        // Makes the question table
+        function makeQuestionTable(){
             $('.content').prepend("<h1>" + quizJSON.QuizName + "</h1>");
-            $('.panel').append("<div class='panel-header'>Spørsmål i " + quizJSON.QuizName + "</div>");
+            $('.panel').append("<div class='panel-header'>" + quizJSON.QuizName + "</div>");
             $('.panel').append("<table id='question-list'>");
+            
             
             var questionsJSON = quizJSON.Questions;
             for(var i=0; i<questionsJSON.length; i++){
-                $('#question-list').append(questionHeaderRow(i));
+                $('#question-list').append(questionSection(i));
             }
         }
         
-        function questionHeaderRow(i){
-            return "<tr class='question-top'><th>Spørsmål " + i + "</th></tr>";
+        // Functions for divs inside the table for better readability in code above.
+        // Returns a question with all fields
+        function questionSection(i){
+            return questionHeaderRow(i) + questionTextInputRow(i) + questionAlternatives(i);
         }
+        
+        function questionHeaderRow(i){
+            return "<tr class='question-top'><th>" + quizJSON.Questions[i].QuestionText + "</th></tr>";
+        }
+        
+        function questionTextInputRow(i){
+            var startRow = "<tr class='question-single'><td>";
+            var hiddenInput = "<input type='hidden' name='QuestionID["+i+"]' value='" + quizJSON.Questions[i].QuestionID + "'/>";
+            var shownInput = "<input class='question-text' type='text' name='QuestionText["+i+"]' value='" + quizJSON.Questions[i].QuestionText + "'/>";
+            var endRow = "</td></tr>";
+            
+            return startRow + hiddenInput + shownInput + endRow;
+        }
+        
+        function questionAlternatives(i){
+            var alternativesText = "";
+            var altJSON = quizJSON.Questions[i].Alternatives;
+            
+            
+            for(var j=0; j<altJSON.length; j++){
+                alternativesText += questionAlternative(i, j);
+            }
+            
+            return alternativesText;
+        }
+        
+        function questionAlternative(i, j){
+            var altText = quizJSON.Questions[i].Alternatives[j].AlternativeText;
+            var altID = quizJSON.Questions[i].Alternatives[j].AlternativeID;
+            var correct = quizJSON.Questions[i].Alternatives[j].AlternativeCorrect;
+            
+            var startRow = "<tr class='alternatives'><td>";
+            var hiddenInputID = "<input type='hidden' name='AlternativeID["+i+"]["+j+"]' value='" + altID + "'>";
+            var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' name='Correct["+i+"]["+j+"]' " + (correct?"checked='checked'":"") + ">";
+            var shownInput = "<input class='alternative-text' type='text' name='Alternative["+i+"]["+j+"]' value='" + altText + "'>"
+            var deleteButton = "<i class='flaticon-cross93' onclick='removeAlternative("+i+","+j+")'></i>";
+            var endRow = "</td></tr>";
+
+            return startRow + hiddenInputID + checkboxCorrect + shownInput + deleteButton + endRow;
+        }
+        
+        /* QUIZ MANIPULATION SECTION */
+        // When the user clicks on the X behind an alternative
+        function removeAlternative(qNum, aNum){
+            var altID = quizJSON.Questions[qNum].Alternatives[aNum].AlternativeID;
+            quizJSON.Questions[qNum].Alternatives.splice(aNum, 1);
+            submitJSON.Delete.push(altID);
+            console.log(submitJSON);
+        }
+        
     </script>
 </head>
 <body>
@@ -61,10 +122,8 @@
         
         
         <div class='content'>
-            
             <div class='panel'>
-                    
-                
+                <!-- Javascript incoming -->
             </div>
         </div>
     </div>
