@@ -15,8 +15,14 @@
         };
         
         $( document ).ready(function() {
-            fetchQuiz(1);
+            fetchQuiz(2);
         });
+        
+        function addCheckboxClickListeners(){
+            $(".correct-checkbox").change(function() {
+                $(this).prev().toggleClass("alternative-text-correct");
+            });
+        }
         
         /* QUIZ SETUP SECTION */
         // GET data from database
@@ -27,11 +33,12 @@
                 type: "POST",
                 data: {QuizID: quizId},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
-                    alert("Quiz not found"); //No quiz found, or QuizID invalid.
+                    alert("Quiz not found."); //No quiz found, or QuizID invalid.
                 },
                 success: function(data){
                     quizJSON = data;
                     makeQuestionTable();
+                    addCheckboxClickListeners();
                 }
             });
         }
@@ -39,7 +46,8 @@
         // Makes the question table
         function makeQuestionTable(){
             $('.content').prepend("<h1>" + quizJSON.QuizName + "</h1>");
-            $('.panel').append("<div class='panel-header'>" + quizJSON.QuizName + "</div>");
+            var submitButton = "<button class='submit-quiz' type='button'>Lagre endringene</button>";
+            $('.panel').append("<div class='panel-header'>" + quizJSON.QuizName + submitButton + "</div>");
             $('.panel').append("<table id='question-list'>");
             
             
@@ -65,7 +73,7 @@
             var shownInput = "<input class='question-text' type='text' name='QuestionText["+i+"]' value='" + quizJSON.Questions[i].QuestionText + "'/>";
             var endRow = "</td></tr>";
             
-            return startRow + hiddenInput + shownInput + endRow;
+            return startRow + shownInput + endRow;
         }
         
         function questionAlternatives(i){
@@ -86,21 +94,29 @@
             var correct = quizJSON.Questions[i].Alternatives[j].AlternativeCorrect;
             
             var startRow = "<tr class='alternatives'><td>";
-            var hiddenInputID = "<input type='hidden' name='AlternativeID["+i+"]["+j+"]' value='" + altID + "'>";
             var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' name='Correct["+i+"]["+j+"]' " + (correct?"checked='checked'":"") + ">";
-            var shownInput = "<input class='alternative-text' type='text' name='Alternative["+i+"]["+j+"]' value='" + altText + "'>"
-            var deleteButton = "<i class='flaticon-cross93' onclick='removeAlternative("+i+","+j+")'></i>";
+            var shownInput = "<input class='alternative-text " + (correct?"alternative-text-correct":"")+ "' type='text' name='Alternative["+i+"]["+j+"]' value='" + altText + "'>"
+            var deleteButton = "<i class='flaticon-cross93' onclick='removeAlternative(this, "+i+","+j+")'></i>";
             var endRow = "</td></tr>";
 
-            return startRow + hiddenInputID + checkboxCorrect + shownInput + deleteButton + endRow;
+            return startRow + shownInput + checkboxCorrect + deleteButton + endRow;
         }
         
         /* QUIZ MANIPULATION SECTION */
         // When the user clicks on the X behind an alternative
-        function removeAlternative(qNum, aNum){
+        function removeAlternative(element, qNum, aNum){
+            var altID = quizJSON.Questions[qNum].Alternatives[aNum].AlternativeID;
+            //quizJSON.Questions[qNum].Alternatives.splice(aNum, 1);
+            submitJSON.Delete.push(altID);
+            $(element).closest("tr").remove();
+            console.log(submitJSON);
+        }
+        
+        // When the user clicks on the + behind the last alternative
+        function addAlternative(qNum, aNum){
             var altID = quizJSON.Questions[qNum].Alternatives[aNum].AlternativeID;
             quizJSON.Questions[qNum].Alternatives.splice(aNum, 1);
-            submitJSON.Delete.push(altID);
+            submitJSON.Insert.push(altID);
             console.log(submitJSON);
         }
         
