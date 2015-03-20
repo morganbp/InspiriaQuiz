@@ -1,3 +1,4 @@
+
 <html>
 <head>
     <title>Inspiria Quiz Admin</title>
@@ -9,13 +10,13 @@
     <script type='text/javascript'>
         var quizJSON = null;
         var submitJSON = {
-            Insert: [], 
-            Update: [], 
-            Delete: []
+            Insert: {Alternatives: [], Questions: []}, 
+            Update: {Alternatives: [], Questions: []}, 
+            Delete: {Alternatives: [], Questions: []}
         };
         
         $( document ).ready(function() {
-            fetchQuiz(2);
+            fetchQuiz(<?php echo $_GET['QuizID'];?>);
         });
         
         function addCheckboxClickListeners(){
@@ -46,7 +47,7 @@
         // Makes the question table
         function makeQuestionTable(){
             $('.content').prepend("<h1>" + quizJSON.QuizName + "</h1>");
-            var submitButton = "<button class='submit-quiz' type='button'>Lagre endringene</button>";
+            var submitButton = "<button class='submit-quiz' type='button' onclick='submitQuiz()'>Lagre endringene</button>";
             $('.panel').append("<div class='panel-header'>" + quizJSON.QuizName + submitButton + "</div>");
             $('.panel').append("<table id='question-list'>");
             
@@ -85,6 +86,8 @@
                 alternativesText += questionAlternative(i, j);
             }
             
+            alternativesText += questionAlternativePlus();
+            
             return alternativesText;
         }
         
@@ -96,28 +99,76 @@
             var startRow = "<tr class='alternatives'><td>";
             var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' name='Correct["+i+"]["+j+"]' " + (correct?"checked='checked'":"") + ">";
             var shownInput = "<input class='alternative-text " + (correct?"alternative-text-correct":"")+ "' type='text' name='Alternative["+i+"]["+j+"]' value='" + altText + "'>"
-            var deleteButton = "<i class='flaticon-cross93' onclick='removeAlternative(this, "+i+","+j+")'></i>";
+            var deleteButton = "<i class='flaticon-cross93' onclick='removeAlternative(this, "+i+", "+j+")'></i>";
             var endRow = "</td></tr>";
 
             return startRow + shownInput + checkboxCorrect + deleteButton + endRow;
+        }
+        
+        function questionNewAlternative(){
+            var startRow = "<tr class='alternatives'><td>";
+            var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' name='NewCorrect'>";
+            var shownInput = "<input class='alternative-text' type='text' name='NewAlternative' placeholder='...'>"
+            var deleteButton = "<i class='flaticon-cross93' onclick='removeNewAlternative(this)'></i>";
+            var endRow = "</td></tr>";
+
+            return startRow + shownInput + checkboxCorrect + deleteButton + endRow;
+        }
+        
+        function questionAlternativePlus(){
+            var startRow = "<tr class='alternatives'><td>";
+            var addButton = "<i class='flaticon-plus24' onclick='addAlternative(this)'></i>";
+            var endRow = "</td></tr>";
+            
+            return startRow + addButton + endRow;
         }
         
         /* QUIZ MANIPULATION SECTION */
         // When the user clicks on the X behind an alternative
         function removeAlternative(element, qNum, aNum){
             var altID = quizJSON.Questions[qNum].Alternatives[aNum].AlternativeID;
-            //quizJSON.Questions[qNum].Alternatives.splice(aNum, 1);
-            submitJSON.Delete.push(altID);
+            submitJSON.Delete.Alternatives.push(altID);
             $(element).closest("tr").remove();
             console.log(submitJSON);
         }
         
+        // When the user clicks on the X behind an alternative that does not have an ID (a new alternative)
+        function removeNewAlternative(element){
+            $(element).closest("tr").remove();
+        }
+        
         // When the user clicks on the + behind the last alternative
-        function addAlternative(qNum, aNum){
-            var altID = quizJSON.Questions[qNum].Alternatives[aNum].AlternativeID;
-            quizJSON.Questions[qNum].Alternatives.splice(aNum, 1);
-            submitJSON.Insert.push(altID);
+        function addAlternative(element){
+            var tr = $(element).closest("tr");
+            while(!tr.is(".question-single"))
+                tr = tr.prev();
+            
+            var numberOfAlternatives = tr.nextUntil(".question-top").length-1;
+            
+            if(numberOfAlternatives < 4){
+                $(element).closest("tr").before(questionNewAlternative());
+            }
+        }
+        
+        /* SUBMIT */
+        function submitQuiz(){
+            $("input[name=NewAlternative]").each(function(index){
+                submitJSON.Insert.Alternatives.push($(this).val());
+            });
             console.log(submitJSON);
+            
+            
+            $.ajax({
+                url: "http://localhost/InspiriaQuiz/API/quiz_update.php", //"http://frigg.hiof.no/bo15-g21/API/quiz_get.php",
+                type: "POST",
+                data: {SubmitJSON: submitJSON},
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Quiz could not be updated."); //No quiz found, or QuizID invalid.
+                },
+                success: function(data){
+                    console.log(data);
+                }
+            });
         }
         
     </script>
