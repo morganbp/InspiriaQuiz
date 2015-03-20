@@ -42,17 +42,16 @@ function popup(id){
 /**
 * When the player press one of the answeres, the button gets chosen
 */
-function chooseAlternative(alternative){
-	if(!quizSession.hasAnswered()){
-		quizSession.userAnswers(alternative.getAttribute("id"));
+function answerClicked(alternative){
+	if(!window.quizSession.hasAnswered){
+		window.quizSession.answerClicked(alternative.getAttribute("id"));
 		alternative.className += " answere";
 	}
 }
 
 	
 function startUpScreen(){
-	$("#score").css("display", "none");
-	$("#countdown").css("display", "none");
+	$("#quiz").css("display", "none");
 	$("#getQuiz").css("display", "block");
 	$("#quizQuestion").html("Velg Quiz");
 }

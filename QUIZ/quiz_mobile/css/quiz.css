@@ -1,56 +1,98 @@
+body{
+	background: white;
+}
+
 .centerHorizontal{
-			text-align:center;
-		}
+	text-align:center;
+}
 			
-		#alternatives{			
-			margin-bottom: 5px;
-			margin-left: -5px;
-			position: absolute;
-			bottom: 0px;
-			heigth: 300px;
-			width: 95%;
-		}
-			
-		.alternative{
-			margin: 1px;
-			border-radius: 3px;
-			display: flex;
-			justify-content: center; /* align horizontal */
-			align-items: center; /* align vertical */
-			height: 90px;
-			background: #CCC;
-			text-shadow:none;
-			font: bold 16px arial; 
-		}	
-		.answere{
-			background: yellow;
-		}
-		.wrong{
-			background : red;
-		}
-		.correct{
-			background: green;	
-		}
-			
-		#countdown{
-			margin: auto 0px;	
-			position: absolute;
-			left: 0;
-			top: 44px;
-			width: 100%;
-			height: 3px;
-			border-radius: 0;
-			border: none;
-		}
-			
-		#score{
-			display:none;
-			text-align:center;
-			display: block;
-			margin-top:20%;
-		}
-		#totalScore{
-			font-style: bold;
-			font-size: 50px;
-		}
+#alternatives{			
+	margin-bottom: 5px;
+	margin-left: -5px;
+	position: absolute;
+	bottom: 0px;
+	heigth: 300px;
+	width: 95%;
+}
+
+.alternative{
+	margin: 1px;
+	border-radius: 3px;
+	display: flex;
+	justify-content: center; /* align horizontal */
+	align-items: center; /* align vertical */
+	height: 90px;
+	background: rgb(9,152,217);
+	text-shadow:none;
+	color: white;
+	font: bold 16px arial; 
+}	
+.answere{
+	background: #ffaa26;
+}
+.wrong{	
+	background: #e84b7d;
+	color:white;
+	opacity: 0.2;
+}
+
+.neutral{
+	opacity: 0.2;	
+}
+.correct{
+	background: #59b548;
+
+}
+
+#countdown{
+	margin: auto 0px;	
+	left: 0;
+	top: 44px;
+	width: 100%;
+	height: 4px;
+	border-radius: 0;
+	border: 1px solid #0998d9;
+}
+
+#score{
+	display:none;
+	text-align:center;
+	display: block;
+	margin-top:20%;
+}
+#totalScore{
+	font-style: bold;
+	font-size: 50px;
+}
+
+#quiz #infoHeader{
+	position: absolute;
+	background: #88c7ed;
+	top:44px;
+	left:0px;
+	height:30px;
+	width: 100%;
+	border:none;
+}
+
+#quiz #scoreWrapper{
+	display: inline-block;
+	padding:4px;
+	align-content: flex-start;
+}
+
+#quiz #timerWrapper{
+	display: inline-block;
+	padding:4px;
+	float:right;
+	text-align: right;
+}
+#inspiriaLogo{
+	background-image: url("../images/inspiriaLogo.png");
+	background-repeat: no-repeat;
+	position: absolute;
+	top:2px;
+	right:-5px;
+}
+
 		

@@ -13,7 +13,8 @@
     </ul>
 </div>
 
-<header data-role="header">
+<header data-role="header" id="navheader">
     <h1 style="text-align:center; white-space:normal;">Inspiria quiz</h1>
     <a href="#sidepanel" data-icon="bars" data-iconpos="notext"></a>
+	<div id="inspiriaLogo" style="width:50px;height:50px;"></div>
 </header>

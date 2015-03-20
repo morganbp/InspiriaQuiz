@@ -7,18 +7,12 @@
     
     <script src="jquery-2.1.3.js"></script>
     <script type='text/javascript'>
-        function addAlternative(element){
+        //addAlternative(element, questionNumber, alternativeNumber);
+        function addAlternative(element, qKey, aKey){
+            var alternativeHTML = '<tr class="alternatives"><td><input type="hidden" name="AlternativeID['+qKey+']['+aKey+']" value=""/><input class="correct-checkbox" type="checkbox" name="Correct['+qKey+']['+aKey+']"/><input class="alternative-text" type="text" name="Alternative['+qKey+']['+aKey+']" value=""/><a href="#"><i class="flaticon-cross93"></i></a><i class="flaticon-plus24" onclick="addAlternative(this, '+qKey+', '+aKey+')"></i></tr></td>';
             
-            var alternativeHTML = 
-                
-                
-                '<input type="hidden" name="AlternativeID['.$qKey.']['.$aKey.']" value="'.$alternative->AlternativeID.'"/>'
-                '<input class="correct-checkbox" type="checkbox" name="Correct['.$qKey.']['.$aKey.']"/>'
-                '<input class="alternative-text" type="text" name="Alternative['.$qKey.']['.$aKey.']" value=""/>'
-                echo '<a href="#"><i class="flaticon-cross93"></i></a>';
-                
-                
-            $(element).parent().append("<p>Morn</p>");
+            $(element).closest('.alternatives').after(alternativeHTML);
+            $(element).remove();
         }
     </script>
 </head>
@@ -89,7 +83,7 @@
                                             echo '<a href="#"><i class="flaticon-cross93"></i></a>';
                                             
                                             if($aKey == count($json->Alternatives)-1)
-                                                echo '<i class="flaticon-plus24" onclick="addAlternative(this)"></i>';
+                                                echo '<i class="flaticon-plus24" onclick="addAlternative(this, '.$qKey.', '.$aKey.')"></i>';
                                         echo '</td>';
                                     echo '</tr>';
                                 }

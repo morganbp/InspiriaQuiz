@@ -1,4 +1,4 @@
-@import url('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600');
+/*@import url('http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,400,300,600');*/
 
 /* GENERAL RULES */
 * {
@@ -9,7 +9,7 @@
 }
 
 body{
-    font-family: 'Open Sans';
+    font-family: Arial, sans-serif;
     background-color: #eaeaea;
 }
 
@@ -52,6 +52,11 @@ header{
     height: calc(100% - 50px);
     background-color: #222;
     float: left;
+    
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -o-transition: 0.2s;
 }
 
 .content{
@@ -60,6 +65,11 @@ header{
     margin-left: 280px;
     padding: 15px;
     padding-top: 60px;
+    
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+    -moz-transition: 0.2s;
+    -o-transition: 0.2s;
 }
 
 /* NAVIGATION */
@@ -96,6 +106,10 @@ ul#nav li a:hover{
     background-color: #000;
     color: #fff;
     padding-left: 20px;
+}
+
+.sidebar #nav li a span{
+    white-space: nowrap;
 }
 
 /* CONTENT */
@@ -198,8 +212,38 @@ ul#nav li a:hover{
 }
 
 .correct-checkbox{
+    margin-left: 10px;
     margin-right: 10px;
 }
-.correct-checkbox:checked + input.alternative-text{
+.alternative-text-correct{
     font-weight: bold;
+}
+
+.submit-quiz{
+    padding: 2px 5px;
+    float: right;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 850px) {
+    .sidebar #nav li a span{
+        display: none;
+        
+        transition: 0.2s;
+        -webkit-transition: 0.2s;
+        -moz-transition: 0.2s;
+        -o-transition: 0.2s;
+    }
+    .sidebar{
+        width: 50px;
+    }
+    .sidebar:hover{
+        width: 280px;
+    }
+    .sidebar:hover #nav li a span{
+        display: inline;
+    }
+    .content{
+        margin-left: 50px;
+    }
 }
