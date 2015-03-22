@@ -1,19 +1,30 @@
 <html>
 <head>
+    <meta charset="utf-8" >
 </head>
 <body>
     <div>
-        <canvas id="myCanvas" ></canvas>
-        <img width="150px" height="150px" src="http://localhost/Bach/QUIZ/quiz_mobile/images/Kube_farger.png" >
+        <canvas id="counterCanvas" ></canvas>
     </div>
     <script>
-        var c = document.getElementById("myCanvas");
-        var ctx = c.getContext("2d");
-        ctx.beginPath();
-        ctx.arc(300,50,40,0,2*Math.PI);
-        ctx.fillStyle = "#000000";
-        ctx.fill();
-        ctx.stroke();
+        var counter = 0;
+        function test(){
+            if(counter>15){
+                counter = 0;
+            }
+            var c = document.getElementById("counterCanvas");
+            var ctx = c.getContext("2d");
+            ctx.clearRect(0,0,c.width,c.height);
+            ctx.beginPath();
+            ctx.arc(100,75,50,1.5*Math.PI,1.5*Math.PI+(Math.PI*2)-counter);
+            
+            ctx.fillStyle = "#000099";
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();
+            counter += 0.4188790;
+        }
+        window.setInterval(test,500);
     </script>
 </body>
 </html>
