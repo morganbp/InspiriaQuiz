@@ -29,7 +29,7 @@
                         </a>
                     </li>
                     <li data-icon="false">
-                        <a href="#quizmode2">
+                        <a href="publicQuiz.php">
                             <h3>Quiz for Skole/bedrift</h3>
                             <p>Er du med en skole eller bedrift og skal gå rundt i Inspiria science center og ta vår quiz laget spesielt til dere klikk her!</p>
                         </a>
