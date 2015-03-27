@@ -70,11 +70,11 @@
         
         function questionTextInputRow(i){
             var startRow = "<tr class='question-single'><td>";
-            var hiddenInput = "<input type='hidden' name='QuestionID["+i+"]' value='" + quizJSON.Questions[i].QuestionID + "'/>";
+            var hiddenInput = "<input type='hidden' name='QuestionID' value='" + quizJSON.Questions[i].QuestionID + "'/>";
             var shownInput = "<input class='question-text' type='text' name='QuestionText["+i+"]' value='" + quizJSON.Questions[i].QuestionText + "'/>";
             var endRow = "</td></tr>";
             
-            return startRow + shownInput + endRow;
+            return startRow + hiddenInput + shownInput + endRow;
         }
         
         function questionAlternatives(i){
@@ -97,8 +97,9 @@
             var correct = quizJSON.Questions[i].Alternatives[j].AlternativeCorrect;
             
             var startRow = "<tr class='alternatives'><td>";
-            var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' name='Correct["+i+"]["+j+"]' " + (correct?"checked='checked'":"") + ">";
+            var hiddenInput = "<input type='hidden' name='QuestionID' value='" + quizJSON.Questions[i].QuestionID + "'/>";
             var shownInput = "<input class='alternative-text " + (correct?"alternative-text-correct":"")+ "' type='text' name='Alternative["+i+"]["+j+"]' value='" + altText + "'>"
+            var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' name='Correct["+i+"]["+j+"]' " + (correct?"checked='checked'":"") + ">";
             var deleteButton = "<i class='flaticon-cross93' onclick='removeAlternative(this, "+i+", "+j+")'></i>";
             var endRow = "</td></tr>";
 
@@ -153,20 +154,26 @@
         /* SUBMIT */
         function submitQuiz(){
             $("input[name=NewAlternative]").each(function(index){
-                submitJSON.Insert.Alternatives.push($(this).val());
+                var alt = $(this).val();
+                var corBool = $(this).next("input[name=NewCorrect]").prop("checked");
+                var cor = (corBool==true)?1:0;
+                var qID = $(this).closest("tr").prevAll(".question-single:first").find("input[name=QuestionID]").val();
+                
+                submitJSON.Insert.Alternatives.push({"QuestionID": qID, "AlternativeText": alt, "AlternativeCorrect": cor});
             });
             console.log(submitJSON);
             
             
             $.ajax({
-                url: "http://localhost/InspiriaQuiz/API/quiz_update.php", //"http://frigg.hiof.no/bo15-g21/API/quiz_get.php",
+                url: "http://localhost/InspiriaQuiz/API/quiz_update.php",
                 type: "POST",
                 data: {SubmitJSON: submitJSON},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
-                    alert("Quiz could not be updated."); //No quiz found, or QuizID invalid.
+                    alert("Quiz could not be updated.");
                 },
                 success: function(data){
                     console.log(data);
+                    alert("Quiz has been updated.");
                 }
             });
         }
