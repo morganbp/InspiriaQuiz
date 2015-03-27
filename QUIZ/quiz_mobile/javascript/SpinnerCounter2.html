@@ -1,0 +1,50 @@
+<html>
+    <head>
+    </head>
+    <body>
+        
+        <canvas id="spinner" ></canvas>
+        <div id="counter"></div>
+        <script>
+            var totalSeconds = 15;
+            var seconds = totalSeconds;
+            var timer;
+            
+            var counterMax = 1.4999;
+            var counterMin = -0.4999;
+            var maxRemoveable = 1.9998
+            
+            function drawCounter(piMultiplier){
+                var c = document.getElementById("spinner");
+                var ctx = c.getContext("2d");
+                ctx.beginPath();
+                ctx.clearRect(0,0,c.width,c.height);
+                ctx.strokeStyle = "#ff0000";
+                ctx.lineWidth = 10;
+                ctx.arc(105,80,60,1.5*Math.PI,piMultiplier*Math.PI);
+                ctx.stroke();
+            }
+            var test = 0;
+            function timerOnTick(){
+                if(seconds == 15){
+                    drawCounter(counterMax);
+                }
+                else if(seconds <= 0 || test > maxRemoveable){
+                    drawCounter(counterMin);
+                    clearInterval(timer);
+                }
+                else{
+                    drawCounter(counterMax-test);
+                    test += 0.0067;
+                }
+                seconds -= 0.05;
+                document.getElementById("counter").innerHTML = Math.ceil(seconds);
+            }
+            
+            function initialTimer(){
+                timer = setInterval('timerOnTick()',50);
+            }
+            initialTimer();
+        </script>
+    </body>
+</html>

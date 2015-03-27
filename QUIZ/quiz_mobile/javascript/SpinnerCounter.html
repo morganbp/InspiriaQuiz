@@ -62,20 +62,18 @@
                     '-webkit-transform':'rotate('+deg+'deg)',
                     '-o-transform':'rotate('+deg+'deg)',
                     'transform':'rotate('+deg+'deg)'});
-
-                $('.percent').html(Math.round(percent)+'%');
             }
 
             function stopWatch(){
                 if(timerSeconds <= 0){
                     drawTimer(0);
                     clearInterval(timer);
-                    alert("ok");
                 }
                 else{
                     var percent = ((timerSeconds-=0.05)/totalSeconds)*100;
                     drawTimer(percent.toFixed(1));
                 }
+                $('.percent').html(Math.ceil(timerSeconds));
             }
             
             function startTimer(){
