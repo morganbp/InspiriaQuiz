@@ -20,9 +20,24 @@
         });
         
         function addCheckboxClickListeners(){
-            $(".correct-checkbox").change(function() {
-                $(this).prev().toggleClass("alternative-text-correct");
+            $(".correct-checkbox").each(function(){
+                $(this).change(function(){
+                    $(this).prev().toggleClass("alternative-text-correct");
+                });
             });
+        }
+        function removeCheckboxClickListeners(){
+            $(".correct-checkbox").each(function(){
+                $(this).off("change");
+            });
+        }
+        function refreshCheckboxClickListeners(){
+            removeCheckboxClickListeners();
+            addCheckboxClickListeners();
+        }
+        
+        function toggleAlternativeCorrect(){
+            $(this).prev().toggleClass("alternative-text-correct");
         }
         
         /* QUIZ SETUP SECTION */
@@ -97,9 +112,8 @@
             var correct = quizJSON.Questions[i].Alternatives[j].AlternativeCorrect;
             
             var startRow = "<tr class='alternatives'><td>";
-            var hiddenInput = "<input type='hidden' name='QuestionID' value='" + quizJSON.Questions[i].QuestionID + "'/>";
-            var shownInput = "<input class='alternative-text " + (correct?"alternative-text-correct":"")+ "' type='text' name='Alternative["+i+"]["+j+"]' value='" + altText + "'>"
             var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' name='Correct["+i+"]["+j+"]' " + (correct?"checked='checked'":"") + ">";
+            var shownInput = "<input class='alternative-text " + (correct?"alternative-text-correct":"")+ "' type='text' name='Alternative["+i+"]["+j+"]' value='" + altText + "'>"
             var deleteButton = "<i class='flaticon-cross93' onclick='removeAlternative(this, "+i+", "+j+")'></i>";
             var endRow = "</td></tr>";
 
@@ -148,6 +162,8 @@
             
             if(numberOfAlternatives < 4){
                 $(element).closest("tr").before(questionNewAlternative());
+                
+                refreshCheckboxClickListeners();
             }
         }
         
@@ -159,6 +175,7 @@
                 var cor = (corBool==true)?1:0;
                 var qID = $(this).closest("tr").prevAll(".question-single:first").find("input[name=QuestionID]").val();
                 
+                alert(qID);
                 submitJSON.Insert.Alternatives.push({"QuestionID": qID, "AlternativeText": alt, "AlternativeCorrect": cor});
             });
             console.log(submitJSON);

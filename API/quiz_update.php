@@ -21,7 +21,8 @@ if(!empty($submitJSON['Insert']))
    $insert = $submitJSON['Insert'];
 
 // DELETE SINGLE ALTERNATIVES
-if(isset($delete)){
+if(isset($delete))
+if(count($delete['Alternatives']) > 0){
     if($stmt = $mysqli -> prepare('DELETE FROM Alternative WHERE AlternativeID = ?;')) {
         foreach($delete['Alternatives'] as $a){
             //$qID = $a;
@@ -36,8 +37,8 @@ if(isset($delete)){
 }
 
 // INSERT SINGLE ALTERNATIVES
-print_r($insert);
-if(isset($insert)){
+if(isset($insert))
+if(count($insert['Alternatives']) > 0){
     if($stmt = $mysqli -> prepare('INSERT INTO Alternative(QuestionID, AlternativeText, AlternativeCorrect) VALUES(?, ?, ?);')) {
         foreach($insert['Alternatives'] as $alt){
             $qID = intval($alt['QuestionID']);
@@ -53,7 +54,8 @@ if(isset($insert)){
 }
 die();
 
-if(isset($update)){
+if(isset($update))
+if(count($update['Alternatives']) > 0){
     if($stmt = $mysqli -> prepare('UPDATE Alternative SET AlternativeText = ?, AlternativeCorrect = ? WHERE AlternativeID = ?;')) {
         foreach($alternativeText as $qKey => $question){
             foreach($question as $aKey => $alternative){
