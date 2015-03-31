@@ -3,45 +3,58 @@
     </head>
     <body>
         
-        <canvas id="spinner" ></canvas>
-        <div id="counter"></div>
+        <div>
+            <canvas id="spinner" ></canvas>
+            <div id="timerCounter"></div>
+        </div>
         <script>
-            var totalSeconds = 15;
-            var seconds = totalSeconds;
+            var totalSeconds;
+            var seconds;
             var timer;
             
             var counterMax = 1.4999;
             var counterMin = -0.4999;
-            var maxRemoveable = 1.9998
+            var counter = 0;
             
             function drawCounter(piMultiplier){
                 var c = document.getElementById("spinner");
                 var ctx = c.getContext("2d");
                 ctx.beginPath();
                 ctx.clearRect(0,0,c.width,c.height);
-                ctx.strokeStyle = "#ff0000";
+                if(seconds<=totalSeconds/2 && seconds>=totalSeconds/4){
+                    ctx.strokeStyle = "#ffaa26";
+                }
+                else if(seconds <= totalSeconds/4){
+                    ctx.strokeStyle = "#ff0000";
+                }
+                else{
+                    ctx.strokeStyle = "#0998d9";
+                }
                 ctx.lineWidth = 10;
-                ctx.arc(105,80,60,1.5*Math.PI,piMultiplier*Math.PI);
+                ctx.arc(105,80,30,1.5*Math.PI,piMultiplier*Math.PI);
                 ctx.stroke();
             }
-            var test = 0;
+            
             function timerOnTick(){
-                if(seconds == 15){
+                if(seconds == totalSeconds){
                     drawCounter(counterMax);
                 }
-                else if(seconds <= 0 || test > maxRemoveable){
+                else if(seconds <= 0){
                     drawCounter(counterMin);
                     clearInterval(timer);
                 }
                 else{
-                    drawCounter(counterMax-test);
-                    test += 0.0067;
+                    drawCounter(counterMax-counter);
+                    counter += (100/(totalSeconds*1000));
                 }
                 seconds -= 0.05;
-                document.getElementById("counter").innerHTML = Math.ceil(seconds);
+                seconds = seconds.toFixed(2);
+                document.getElementById("timerCounter").innerHTML = Math.ceil(seconds);
             }
             
             function initialTimer(){
+                totalSeconds = 15;
+                seconds = totalSeconds;
                 timer = setInterval('timerOnTick()',50);
             }
             initialTimer();
