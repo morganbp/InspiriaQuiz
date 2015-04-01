@@ -55,6 +55,8 @@ function SpinnerCounter(cont){
     this.setupTimerCounterTextBox = function(){
         var timerDiv = container.children[1].style;
         timerDiv.position = "absolute";
+        timerDiv.top = (container.children[0].height/2)-8;
+        timerDiv.left = (container.children[0].width/2)-2;
 
         //Adding the new font for the countdown numbers
         var fontStyle = document.createElement("style");
