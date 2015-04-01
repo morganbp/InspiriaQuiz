@@ -44,16 +44,6 @@ body{
 
 }
 
-#countdown{
-	margin: auto 0px;	
-	left: 0;
-	top: 44px;
-	width: 100%;
-	height: 4px;
-	border-radius: 0;
-	border: 1px solid #0998d9;
-}
-
 #score{
 	display:none;
 	text-align:center;

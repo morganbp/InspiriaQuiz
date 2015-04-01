@@ -9,13 +9,9 @@
         <script src="jquery-mobile/jquery-1.11.1.min.js"></script>
         <script src="jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
 		
-		
 		<link rel="stylesheet" href="jquery-mobile/jquery.mobile-1.4.5.min.css" />
-		<link rel="stylesheet" href="css/themes/inspiriaStyle.min.css" />
+		
 		<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
-		<!-- UI -->
-		<link rel="stylesheet" href="jquery-ui/jquery-ui.css"/>
-		<script src="jquery-ui/jquery-ui.min.js"></script>
         <!--stylesheets-->
         <link rel="stylesheet" href="css/sidepanelStyle.css" />
         <link rel="stylesheet" href="css/contentListviewStyle.css" />
@@ -26,8 +22,9 @@
 		<script src="javascript/QuizSession.js"></script>
 		<script src="javascript/QuizGuiHandler.js"></script>
 		<script src="javascript/QuizDBHandler.js"></script>
-		<script src="javascript/Countdown.js"></script>
+		<!--<script src="javascript/Countdown.js"></script>-->
 		<script src="javascript/spin.min.js"></script>
+        <script src="javascript/SpinnerCounter.js"></script>
 		
     </head>
     <body onload="getCookie()" onbeforeunload="saveCookies()">
@@ -56,11 +53,11 @@
 						</div>
 						
 						<div id="spinner"></div>
-						<div id="countdown"></div>
 						<div id="score" style="display:none;">
 							<h3>Din poengsum:</h3>
 							<div id="totalScore"></div>
 						</div>
+						<div id="countdown"></div>
 						<div id="alternatives"></div>
 					</div>
 				</div>
