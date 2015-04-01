@@ -46,7 +46,7 @@ function SpinnerCounter(cont){
     this.initialTimer = function(){
         totalSeconds = 15;
         seconds = totalSeconds;
-        container.innerHTML = '<div id="canvasWrapper" style="position:relative;" ><canvas style="background-color:green;" id="spinner" ></canvas><div id="timerCounter" style="position:absolute; top:60px; left:140px;" >15</div></div>';
+        container.innerHTML = '<div id="canvasWrapper" style="position:relative;" ><canvas style="background-color:green;" id="spinner" ></canvas><div id="timerCounter" style="position:absolute;" >15</div></div>';
         this.setupTimerCounterTextBox();
         var c = this;
         timer = setInterval(function(){c.timerOnTick()},50);
@@ -55,9 +55,9 @@ function SpinnerCounter(cont){
     this.setupTimerCounterTextBox = function(){
         var timerDiv = container.firstChild.children[1].style;
         alert(container.firstChild.children[1].id)
-        /*timerDiv.position = "absolute";
-        timerDiv.top = -100;
-        timerDiv.left = 20;*/
+        //timerDiv.position = "absolute";
+        timerDiv.top = 100;
+        timerDiv.left = 20;
 
         //Adding the new font for the countdown numbers
         var fontStyle = document.createElement("style");
