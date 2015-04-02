@@ -65,6 +65,7 @@
             var submitButton = "<button class='submit-quiz' type='button' onclick='submitQuiz()'>Lagre endringene</button>";
             $('.panel').append("<div class='panel-header'>" + quizJSON.QuizName + submitButton + "</div>");
             $('.panel').append("<table id='question-list'>");
+            $('.panel').append("</table>");
             
             
             var questionsJSON = quizJSON.Questions;
@@ -76,7 +77,8 @@
         // Functions for divs inside the table for better readability in code above.
         // Returns a question with all fields
         function questionSection(i){
-            return questionHeaderRow(i) + questionTextInputRow(i) + questionAlternatives(i);
+            //return questionHeaderRow(i) + questionTextInputRow(i) + questionAlternatives(i);
+            return "<table class='question-section'>" + questionHeaderRow(i) + questionTextInputRow(i) + questionAlternatives(i) + "</table>";
         }
         
         function questionHeaderRow(i){
@@ -169,13 +171,31 @@
         
         /* SUBMIT */
         function submitQuiz(){
+            $(".question-section").each(function(outer){
+                console.log(this);
+                $(this).find(".alternative-text").each(function(inner){
+                    //var regexFirst = /[0-9]*(?=]\[)/;
+                    var pattern = /\d+/g;
+                    var index = $(this).prop("name");
+                    var res = index.match(pattern);
+                    console.log(res[1]);
+                    
+                    // Get Alternative[][THIS INDEX]
+                    // Compare value and correct to quizJSON
+                    // Add to submitJSON if not the same
+                });
+            });
+            
+            
+            return;
+            console.log("This should not be shown.");
+            
             $("input[name=NewAlternative]").each(function(index){
                 var alt = $(this).val();
                 var corBool = $(this).next("input[name=NewCorrect]").prop("checked");
                 var cor = (corBool==true)?1:0;
                 var qID = $(this).closest("tr").prevAll(".question-single:first").find("input[name=QuestionID]").val();
                 
-                alert(qID);
                 submitJSON.Insert.Alternatives.push({"QuestionID": qID, "AlternativeText": alt, "AlternativeCorrect": cor});
             });
             console.log(submitJSON);
