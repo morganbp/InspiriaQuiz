@@ -24,7 +24,6 @@
 		<script src="javascript/QuizDBHandler.js"></script>
 		<!--<script src="javascript/Countdown.js"></script>-->
 		<script src="javascript/spin.min.js"></script>
-        <script src="javascript/SpinnerCounter.js"></script>
 		
     </head>
     <body onload="getCookie()" onbeforeunload="saveCookies()">
@@ -57,12 +56,13 @@
 							<h3>Din poengsum:</h3>
 							<div id="totalScore"></div>
 						</div>
-						<div id="countdown"></div>
 						<div id="alternatives"></div>
+						<div id="countdown"></div>
 					</div>
 				</div>
             </div>
 			<script src="javascript/quizScript.js"></script>	
         </div>
+        <script src="javascript/SpinnerCounter.js"></script>
     </body>
 </html>

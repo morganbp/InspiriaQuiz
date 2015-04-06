@@ -46,24 +46,23 @@ function SpinnerCounter(cont){
     this.initialTimer = function(){
         totalSeconds = 15;
         seconds = totalSeconds;
-        container.innerHTML = '<div id="canvasWrapper" style="position:relative;" ><canvas style="background-color:green;" id="spinner" ></canvas><div id="timerCounter" style="position:absolute;" >15</div></div>';
+        container.innerHTML = '<canvas style="background-color:green;" id="canvas_spinner" ></canvas><div id="div_timerCounter" >15</div>';
         this.setupTimerCounterTextBox();
         var c = this;
-        timer = setInterval(function(){c.timerOnTick()},50);
+        timer = setInterval( function(){c.timerOnTick()},50);
     }
 
     this.setupTimerCounterTextBox = function(){
-        var timerDiv = container.firstChild.children[1].style;
-        alert(container.firstChild.children[1].id)
-        //timerDiv.position = "absolute";
-        timerDiv.top = 100;
-        timerDiv.left = 20;
+        var timerDiv = container.firstChild.children[1];
+        /*//timerDiv.position = "absolute";
+        timerDiv.style.top = 60;
+        timerDiv.style.left = 140;*/
 
         //Adding the new font for the countdown numbers
         var fontStyle = document.createElement("style");
         fontStyle.appendChild(document.createTextNode('@font-face {font-family: CounterNumberFont; src: url("http://127.0.0.1:81/inspiriaquiz/QUIZ/quiz_mobile/css/fonts/Superstar M54.ttf");}'));
         document.head.appendChild(fontStyle);
-        timerDiv.fontFamily = "CounterNumberFont";
-        timerDiv.fontSize = "20pt";
+        timerDiv.style.fontFamily = "CounterNumberFont";
+        timerDiv.style.fontSize = "20pt";
     }
 }

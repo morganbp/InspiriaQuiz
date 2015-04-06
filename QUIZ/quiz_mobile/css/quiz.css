@@ -6,13 +6,12 @@ body{
 	text-align:center;
 }
 			
-#alternatives{			
-	margin-bottom: 5px;
-	margin-left: -5px;
+#alternatives{
 	position: absolute;
-	bottom: 0px;
-	heigth: 300px;
-	width: 95%;
+    margin: auto 0;
+    bottom: 0;
+	width: 100%;
+    text-align: center;
 }
 
 .alternative{
@@ -77,6 +76,16 @@ body{
 	float:right;
 	text-align: right;
 }
+
+#countdown{
+    border: 1px solid black;
+	position: absolute;
+    margin: auto 0;
+	bottom: 0px;
+	width: 100%;
+    text-align: center;
+}
+
 #inspiriaLogo{
 	background-image: url("../images/inspiriaLogo.png");
 	background-repeat: no-repeat;
