@@ -8,7 +8,7 @@ function SpinnerCounter(cont){
     var counter = 0;
 
     this.drawCounter = function(piMultiplier){
-        var c = container.firstChild.children[0];
+        var c = container.children[0];
         var ctx = c.getContext("2d");
         ctx.beginPath();
         ctx.clearRect(0,0,c.width,c.height);
@@ -40,7 +40,7 @@ function SpinnerCounter(cont){
         }
         seconds -= 0.05;
         seconds = seconds.toFixed(2);
-        container.firstChild.children[1].innerHTML = Math.ceil(seconds);
+        container.children[1].innerHTML = Math.ceil(seconds);
     }
 
     this.initialTimer = function(){
@@ -53,7 +53,7 @@ function SpinnerCounter(cont){
     }
 
     this.setupTimerCounterTextBox = function(){
-        var timerDiv = container.firstChild.children[1];
+        var timerDiv = container.children[1].style;
         /*//timerDiv.position = "absolute";
         timerDiv.style.top = 60;
         timerDiv.style.left = 140;*/
@@ -62,7 +62,7 @@ function SpinnerCounter(cont){
         var fontStyle = document.createElement("style");
         fontStyle.appendChild(document.createTextNode('@font-face {font-family: CounterNumberFont; src: url("http://127.0.0.1:81/inspiriaquiz/QUIZ/quiz_mobile/css/fonts/Superstar M54.ttf");}'));
         document.head.appendChild(fontStyle);
-        timerDiv.style.fontFamily = "CounterNumberFont";
-        timerDiv.style.fontSize = "20pt";
+        timerDiv.fontFamily = "CounterNumberFont";
+        timerDiv.fontSize = "20pt";
     }
 }
