@@ -40,7 +40,8 @@ function QuizGuiHandler(){
 			className = "ui-block-" + letters[i%2];
 
 			// append the box
-			$("#alternatives").append('<div id="' + i + '" class="'+ className +' centerHorizontal alternative" style="width:49%;" onclick="answerClicked(this);"><span>'+alternatives[i].AlternativeText +'</span></div>');
+            //+ className +' centerHorizontal 
+			$("#alternatives").append('<div id="' + i + '" class="alternative" onclick="answerClicked(this);"><span>'+alternatives[i].AlternativeText +'</span></div>');
 		}
 	}
 	
