@@ -20,11 +20,13 @@ body{
 .alternative{
 	margin: 2px;
 	border-radius: 3px;
-    display:inline-block;
+    display:inline-flex;
 	height: 90px;
     width:49%;
 	background: rgb(9,152,217);
 	text-shadow:none;
+	justify-content: center; /* align horizontal */
+	align-items: center; /* align vertical */
 	color: white;
 	font: bold 16px arial;
 }	
@@ -94,7 +96,7 @@ body{
 
 #countdown #div_timerCounter{
     position: absolute;
-    left:49%;
+    left:49.1%;
     top:75px;
 }
 
