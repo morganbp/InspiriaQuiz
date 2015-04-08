@@ -1,5 +1,7 @@
 {
   "Update": {
+    "QuizID": 1,
+    "QuizName": "Kake",
     "Questions": [
       {
         "QuestionID": 2,
@@ -13,7 +15,8 @@
     "Alternatives": [
       {
         "AlternativeID": 100,
-        "AlternativeText": "Alt 1"
+        "AlternativeText": "Alt 1",
+        "AlternativeCorrect": 1
       },
       {
         "AlternativeID": 10,
