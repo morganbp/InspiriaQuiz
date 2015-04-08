@@ -10,7 +10,7 @@ if(!isset($_POST['QuizID'])){
 $quizID = $_POST['QuizID'];
 
 
-if($stmt = $mysqli -> prepare("SELECT Quiz.QuizName, Question.QuestionID, QuestionText, AlternativeText, AlternativeCorrect, AlternativeID FROM Question 
+if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Question.QuestionID, QuestionText, AlternativeText, AlternativeCorrect, AlternativeID FROM Question 
     JOIN Alternative ON Question.QuestionID = Alternative.QuestionID  
 	JOIN Quiz ON Quiz.QuizID = Question.QuizID
     WHERE Question.QuizID = ?")) {
@@ -32,6 +32,7 @@ if($stmt = $mysqli -> prepare("SELECT Quiz.QuizName, Question.QuestionID, Questi
 
     //var_dump($mysql_data);
 	// Add the the quizname
+	$output["QuizID"] = $mysql_data[0]['QuizID'];
 	$output["QuizName"] = $mysql_data[0]['QuizName'];
 
     // Structure the JSON based on QuestionID

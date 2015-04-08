@@ -61,9 +61,9 @@
         
         // Makes the question table
         function makeQuestionTable(){
-            $('.content').prepend("<h1>" + quizJSON.QuizName + "</h1>");
-            var submitButton = "<button class='submit-quiz' type='button' onclick='submitQuiz()'>Lagre endringene</button>";
-            $('.panel').append("<div class='panel-header'>" + quizJSON.QuizName + submitButton + "</div>");
+            $('.content').prepend("<h1>Endrer quizen: " + quizJSON.QuizName + "</h1>");
+            var submitButton = "<button id='submit-quiz' type='button' onclick='submitQuiz()'>Lagre endringene</button>";
+            $('.panel').append("<div class='panel-header'>Quiz tittel: <input id='quiz-name' type='text' name='quizName' value='" + quizJSON.QuizName + "'/>" + submitButton + "</div>");
             $('.panel').append("<table id='question-list'>");
             $('.panel').append("</table>");
             
@@ -114,22 +114,24 @@
             var correct = quizJSON.Questions[i].Alternatives[j].AlternativeCorrect;
             
             var startRow = "<tr class='alternatives'><td>";
-            var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' name='Correct["+i+"]["+j+"]' " + (correct?"checked='checked'":"") + ">";
+            var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' id='Correct["+i+"]["+j+"]' name='Correct["+i+"]["+j+"]' " + (correct?"checked='checked'":"") + ">";
+            var checkboxCorrectLabel = "<label for='Correct["+i+"]["+j+"]'></label>";
             var shownInput = "<input class='alternative-text " + (correct?"alternative-text-correct":"")+ "' type='text' name='Alternative["+i+"]["+j+"]' value='" + altText + "'>"
             var deleteButton = "<i class='flaticon-cross93' onclick='removeAlternative(this, "+i+", "+j+")'></i>";
             var endRow = "</td></tr>";
 
-            return startRow + shownInput + checkboxCorrect + deleteButton + endRow;
+            return startRow + shownInput + checkboxCorrect + checkboxCorrectLabel + deleteButton + endRow;
         }
         
         function questionNewAlternative(){
             var startRow = "<tr class='alternatives'><td>";
-            var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' name='NewCorrect'>";
+            var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' id='NewCorrect' name='NewCorrect'>";
+            var checkboxCorrectLabel = "<label for='NewCorrect'></label>";
             var shownInput = "<input class='alternative-text' type='text' name='NewAlternative' placeholder='...'>"
             var deleteButton = "<i class='flaticon-cross93' onclick='removeNewAlternative(this)'></i>";
             var endRow = "</td></tr>";
 
-            return startRow + shownInput + checkboxCorrect + deleteButton + endRow;
+            return startRow + shownInput + checkboxCorrect + checkboxCorrectLabel + deleteButton + endRow;
         }
         
         function questionAlternativePlus(){
@@ -171,29 +173,55 @@
         
         /* SUBMIT */
         function submitQuiz(){
+            // TODO Compare question title as well
+            
+            $("#submit-quiz").html("Lagrer...");
+            
+            var quizName = $("#quiz-name").val();
+            if(quizJSON.QuizName != quizName){
+                submitJSON.Update.QuizID = quizJSON.QuizID;
+                submitJSON.Update.QuizName = quizName;
+            }
+            
             $(".question-section").each(function(outer){
-                console.log(this);
-                $(this).find(".alternative-text").each(function(inner){
-                    //var regexFirst = /[0-9]*(?=]\[)/;
+                //console.log(this);
+                $(this).find(".alternative-text:not(input[name=NewAlternative])").each(function(inner){
+                    // Find json array indexes
                     var pattern = /\d+/g;
-                    var index = $(this).prop("name");
-                    var res = index.match(pattern);
-                    console.log(res[1]);
+                    var nameProperty = $(this).prop("name");
+                    var indexes = nameProperty.match(pattern);
+                    var questionIndex = indexes[0];     // json[THIS_INDEX][]
+                    var alternativeIndex = indexes[1];  // json[][THIS_INDEX]
                     
-                    // Get Alternative[][THIS INDEX]
-                    // Compare value and correct to quizJSON
+                    // Compare value to quizJSON
+                    var newAlternativeText = $(this).val();
+                    var oldAlternativeText = quizJSON.Questions[questionIndex].Alternatives[alternativeIndex].AlternativeText;
+                    var alternativeID = quizJSON.Questions[questionIndex].Alternatives[alternativeIndex].AlternativeID;
+                    
+                    // Compare correct to quizJSON
+                    var newCorrectBoolean = $(this).next("input[type=checkbox]").prop("checked");
+                    var newCorrectValue = (newCorrectBoolean==true)?1:0;
+                    var oldCorrectValue = quizJSON.Questions[questionIndex].Alternatives[alternativeIndex].AlternativeCorrect;
+                    
                     // Add to submitJSON if not the same
+                    if(newAlternativeText != oldAlternativeText || newCorrectValue != oldCorrectValue){
+                        // Add to submitJSON
+                        console.log(newCorrectValue+"!="+oldCorrectValue);
+                        submitJSON.Update.Alternatives.push({
+                            "AlternativeID": alternativeID, 
+                            "AlternativeText": newAlternativeText, 
+                            "AlternativeCorrect": newCorrectValue
+                            });
+                    }
                 });
             });
+            //console.log(submitJSON);
             
-            
-            return;
-            console.log("This should not be shown.");
-            
+            // Add new alternatives and correct-values to submitJSON
             $("input[name=NewAlternative]").each(function(index){
                 var alt = $(this).val();
-                var corBool = $(this).next("input[name=NewCorrect]").prop("checked");
-                var cor = (corBool==true)?1:0;
+                var correctBoolean = $(this).next("input[name=NewCorrect]").prop("checked");
+                var cor = (correctBoolean==true)?1:0;
                 var qID = $(this).closest("tr").prevAll(".question-single:first").find("input[name=QuestionID]").val();
                 
                 submitJSON.Insert.Alternatives.push({"QuestionID": qID, "AlternativeText": alt, "AlternativeCorrect": cor});
@@ -206,15 +234,18 @@
                 type: "POST",
                 data: {SubmitJSON: submitJSON},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
+                    console.log(errorThrown);
+                    $("#submit-quiz").html("Lagre endringene");
                     alert("Quiz could not be updated.");
                 },
                 success: function(data){
                     console.log(data);
-                    alert("Quiz has been updated.");
+                    $("#submit-quiz").html("Lagret");
+                    //alert("Quiz has been updated.");
+                    location.reload();
                 }
             });
         }
-        
     </script>
 </head>
 <body>

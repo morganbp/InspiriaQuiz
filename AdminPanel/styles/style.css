@@ -127,6 +127,25 @@ ul#nav li a:hover{
     text-shadow: 2px 2px 1px #222;
     padding: 10px 10px 10px 15px;
 }
+.panel .panel-header input#quiz-name{
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid #000;
+    width: 400px;
+}
+.panel .panel-header button#submit-quiz{
+    height: 32px;
+    text-decoration: none;
+    background-color: #78d4f2;
+    border: 2px black solid;
+}
+.panel .panel-header button#submit-quiz:hover{
+    background-color: #8fdbf4;
+}
+.panel .panel-header button#submit-quiz:active{
+    background-color: #15a6d6;
+}
 
 .panel .panel-body{
     background-color: #fff;
@@ -217,15 +236,42 @@ ul#nav li a:hover{
     width: 300px;
 }
 
+/* CORRECT CHECKBOX */
 .correct-checkbox{
     margin-left: 10px;
     margin-right: 10px;
+    display:none;
 }
+
+input[type=checkbox] + label:before {
+    font-family: Arial, sans-serif;
+    content: "";  
+    display: inline-block;  
+    width: 24px;
+    height: 24px;
+    vertical-align: middle;
+    margin: 0 8px;
+    background-color: #000;  
+    /*box-shadow: inset 0px 2px 2px rgba(0, 0, 0, .3);*/
+    border-radius: 5px;
+    cursor: pointer;
+}
+input[type=checkbox]:checked + label:before {
+    content: "\2713"; /* \2714 = Thicker */
+    color: #fff; /* Or #1BB6E9 */
+    background-color: #000;
+    text-align: center;
+    line-height: 26px;
+    font-size: 22px;
+    /*text-shadow: 0px 0px 3px #eee;*/
+}
+
+
 .alternative-text-correct{
     font-weight: bold;
 }
 
-.submit-quiz{
+#submit-quiz{
     padding: 2px 5px;
     float: right;
 }

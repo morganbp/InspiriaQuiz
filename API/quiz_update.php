@@ -52,22 +52,35 @@ if(count($insert['Alternatives']) > 0){
         die();
     }
 }
-die();
 
-if(isset($update))
-if(count($update['Alternatives']) > 0){
-    if($stmt = $mysqli -> prepare('UPDATE Alternative SET AlternativeText = ?, AlternativeCorrect = ? WHERE AlternativeID = ?;')) {
-        foreach($alternativeText as $qKey => $question){
-            foreach($question as $aKey => $alternative){
-                $aID = intval($alternativeID[$qKey][$aKey]);
-                $stmt -> bind_param("sii", $alternative, $correctAlternatives[$qKey][$aKey], $aID);
+if(isset($update)){
+    if(isset($update['QuizName'])){
+        if($stmt = $mysqli -> prepare('UPDATE Quiz SET QuizName = ? WHERE QuizID = ?;')) {
+            print_r($update);
+            $stmt -> bind_param("si", $update['QuizName'], $update['QuizID']);
+            $stmt -> execute();
+        }else{
+            echo "Failed to prepare statement";
+            http_response_code(500);
+            die();
+        }
+    }
+    
+    if(isset($update['Alternatives']))
+    if(count($update['Alternatives']) > 0){
+        if($stmt = $mysqli -> prepare('UPDATE Alternative SET AlternativeText = ?, AlternativeCorrect = ? WHERE AlternativeID = ?;')) {
+            foreach($update['Alternatives'] as $alt){
+                $altText = $alt['AlternativeText'];
+                $altCorrect = intval($alt['AlternativeCorrect']);
+                $altID = intval($alt['AlternativeID']);
+                $stmt -> bind_param("sii", $altText, $altCorrect, $altID);
                 $stmt -> execute();
             }
+        }else{
+            echo "Failed to prepare statement";
+            http_response_code(500);
+            die();
         }
-    }else{
-        echo "Failed to prepare statement";
-        http_response_code(500);
-        die();
     }
 }
 ?>
