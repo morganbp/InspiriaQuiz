@@ -35,9 +35,10 @@ window.participants;
 *	Creates a WebSocket to the server.
 *
 */
-window.conn = new WebSocket('ws://158.39.175.164:8080');
+window.conn = new WebSocket('ws://localhost:8080');
 conn.onopen = function(e) {
-	console.log("Connection established!");	
+	console.log("Connection established!");
+	createQuizSession(1);
 };
 
 /**
@@ -76,6 +77,7 @@ conn.onmessage = function(e){
 function initData(resp){
 	var str = JSON.stringify(resp.data);
 	window.quizData = JSON.parse(str);
+	console.log(resp.data);
 }
 
 /**

@@ -1,5 +1,5 @@
-function QuizSession(quizId){
-	
+function QuizSession(quizId, quizData){
+	quizData = typeof quizData !== 'undefined' ? quizData : null;
 	// Maximum points for each question
 	this.maxPoints = 1000;
 	// Minimum points for each question
@@ -89,11 +89,17 @@ function QuizSession(quizId){
 		startUpScreen();
 	}
 		
-	this.QuizSession = function(id){
-		this.quiz = new QuizData(quizId);
-		this.quizGuiHandler = new QuizGuiHandler();
-		this.countdown = new SpinnerCounter(document.getElementById("countdown"));
+	this.QuizSession = function(id, quizData){
+		if(quizData == null){
+			this.quiz = new QuizData(quizId);
+			this.quizGuiHandler = new QuizGuiHandler();
+			this.countdown = new SpinnerCounter(document.getElementById("countdown"));
+		}else{
+			this.quiz = quizData;
+			this.quizGuiHandler = new HostGuiHandler();
+		}
+		
 	}
 	
-	this.QuizSession(quizId);
+	this.QuizSession(quizId, quizData);
 }

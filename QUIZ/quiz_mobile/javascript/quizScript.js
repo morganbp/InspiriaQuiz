@@ -20,11 +20,20 @@ function chooseQuiz(event){
 	if(event.keyCode === 13 || event instanceof MouseEvent){
 		var id = $("#basic").val();
 		if(/[0-9]/.test(id)){
-			quizSession = new QuizSession(Number(id));
-			setUpSpinner();
+			startQuiz(id);
 		}else{
 			popup("#invalidInput");
 		}
+	}
+}
+
+function startQuiz(id, host){
+	host = typeof host != 'undefined' ? host : false;
+	if(host){
+		quizSession = new QuizSession(Number(id));
+	}else{
+		quizSession = new QuizSession(Number(id));
+		setUpSpinner();
 	}
 }
 
