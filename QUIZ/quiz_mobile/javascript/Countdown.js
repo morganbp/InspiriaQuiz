@@ -68,7 +68,7 @@ function Countdown(countEndedEvent, millisec){
 			$("#countdown > div").css({'height':'6px'});
 		}
 		$("#countdown").css({'background':'rgba(0,0,0,0)'});
-		$("#countdown > div").css({'background':color});
+		$("#countdown").children.css({'background':color});
 		$("#timer").html(this.timeLeft/1000);
 	}
 	

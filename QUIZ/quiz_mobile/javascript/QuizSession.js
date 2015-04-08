@@ -63,14 +63,14 @@ function QuizSession(quizId){
 		this.quizGuiHandler.setAlternatives(this.currentQuestion.Alternatives);
 		this.quizGuiHandler.setScore("" + this.totalScore);
 		
-		this.countdown.start();
+		this.countdown.initialTimer();
 	}
 	
 	this.answerClicked = function(answer){
 		if(!this.hasAnswered){
 			this.hasAnswered = true;
 			this.answer = answer;	
-			this.countdown.stop();
+			//this.countdown.stop();
 		}
 	}
 	
@@ -92,7 +92,7 @@ function QuizSession(quizId){
 	this.QuizSession = function(id){
 		this.quiz = new QuizData(quizId);
 		this.quizGuiHandler = new QuizGuiHandler();
-		this.countdown = new Countdown(function(){window.quizSession.endQuestion();}, this.questionTime*1000);
+		this.countdown = new SpinnerCounter(document.getElementById("countdown"));
 	}
 	
 	this.QuizSession(quizId);

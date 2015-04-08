@@ -1,10 +1,6 @@
 var questionNumber = 0;
 var correctAlternative;
 
-
-
-
-
 function buildQuiz(){
     $('#question').text(getQuestion(questionNumber));
     var altCounter = 0;
