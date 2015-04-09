@@ -70,13 +70,13 @@ function QuizSession(quizId, quizData){
 		if(!this.hasAnswered){
 			this.hasAnswered = true;
 			this.answer = answer;	
-			//this.countdown.stop();
-            this.endQuestion();
+			this.countdown.stop();
 		}
 	}
 	
 	this.endQuestion = function(){
 		// If answer is correct
+        console.log(this.currentQuestion);
 		if(this.answer !== -1 && this.currentQuestion.Alternatives[this.answer].AlternativeCorrect === 1){
 			this.updateScore();	
 		}
@@ -94,7 +94,7 @@ function QuizSession(quizId, quizData){
 		if(quizData == null){
 			this.quiz = new QuizData(quizId);
 			this.quizGuiHandler = new QuizGuiHandler();
-			this.countdown = new SpinnerCounter(document.getElementById("countdown"));
+			this.countdown = new SpinnerCounter(document.getElementById("countdown"), function(){window.quizSession.endQuestion()});
 		}else{
 			this.quiz = quizData;
 			this.quizGuiHandler = new HostGuiHandler();

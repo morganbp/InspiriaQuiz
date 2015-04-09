@@ -84,7 +84,7 @@ body{
 	position: absolute;
     margin: auto 0;
     left: 0;
-	bottom: 0;
+	bottom: 7px;
 	width: 100%;
     text-align: center;
     pointer-events: none;
@@ -96,7 +96,7 @@ body{
 	text-align: center;
 	justify-content: center;
     width:100%;
-    top:75px;
+    top:72px;
 }
 
 #inspiriaLogo{
