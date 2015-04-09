@@ -43,7 +43,7 @@
         /* QUIZ SETUP SECTION */
         // GET data from database
         function fetchQuiz(quizId){
-            "use strict";
+            //"use strict";
             $.ajax({
                 url: "http://localhost/InspiriaQuiz/API/quiz_get.php", //"http://frigg.hiof.no/bo15-g21/API/quiz_get.php",
                 type: "POST",
