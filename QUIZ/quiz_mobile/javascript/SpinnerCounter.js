@@ -2,11 +2,11 @@ function SpinnerCounter(cont, endEvt){
     this.totalSeconds;
     this.seconds;
     this.timer;
-    this.container = cont;
-    this.endEvent = endEvt;
-    this.counterMax = 1.4999;
-    this.counterMin = -0.4999;
-    this.counter = 0;
+    this.container;
+    this.endEvent;
+    this.counterMax;
+    this.counterMin;
+    this.counter;
 
     this.drawCounter = function(piMultiplier){
         var c = this.container.children[0];
@@ -26,7 +26,6 @@ function SpinnerCounter(cont, endEvt){
 
     this.timerOnTick = function(){
         if(this.seconds <= 0){
-            clearInterval(this.timer);
             this.drawCounter(this.counterMin);
             this.stop();
         }
@@ -62,7 +61,20 @@ function SpinnerCounter(cont, endEvt){
     }
     
     this.stop = function(){
+        clearInterval(this.timer);
         this.endEvent();
     }
     
+    this.setup = function(){
+        this.initi
+    }
+    
+    this.SpinnerCounter = function(cont, endEvt){
+        this.container = cont;
+        this.endEvent = endEvt;
+        this.counterMax = 1.4999;
+        this.counterMin = -0.4999;
+        this.counter = 0;
+    }
+    this.SpinnerCounter(cont,endEvt);
 }

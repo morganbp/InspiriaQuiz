@@ -14,17 +14,17 @@
         <link rel="stylesheet" href="css/contentListviewStyle.css" />
 		<link rel="stylesheet" href="css/quiz.css" />
         <!--imported javascript-->
-        <script src="javascript/quizmodeFunctions.js"></script>
         <script src="javascript/startQuiz.js"></script>
         <script src="javascript/jqueryMobilFunctions.js"></script>
-        <script src="javascript/quizmodeFunctions.js"></script>
 		<!-- Quiz Scripts -->
+        <script src="javascript/quizScript.js"></script>
 		<script src="javascript/quizmodeFunctions.js"></script>
 		<script src="javascript/QuizData.js"></script>
 		<script src="javascript/QuizSession.js"></script>
 		<script src="javascript/QuizGuiHandler.js"></script>
 		<script src="javascript/QuizDBHandler.js"></script>
 		<script src="javascript/spin.min.js"></script>
+	    <script src="javascript/SpinnerCounter.js"></script>
     </head>
     <body>
         <div data-role="page" data-theme="a" id="homescreen">

@@ -30,9 +30,9 @@ function chooseQuiz(event){
 function startQuiz(id, host){
 	host = typeof host != 'undefined' ? host : false;
 	if(host){
-		quizSession = new QuizSession(Number(id));
+		window.quizSession = new QuizSession(Number(id));
 	}else{
-		quizSession = new QuizSession(Number(id));
+		window.quizSession = new QuizSession(Number(id));
 		setUpSpinner();
 	}
 }

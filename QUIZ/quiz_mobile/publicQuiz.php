@@ -32,6 +32,4 @@
 			</div>
 		</div>
 	</div>
-	<script src="javascript/quizScript.js"></script>	
-	<script src="javascript/SpinnerCounter.js"></script>
 </div>
