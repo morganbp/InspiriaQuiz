@@ -1,21 +1,19 @@
-function SpinnerCounter(cont){
-    var totalSeconds;
-    var seconds;
-    var timer;
-    var container = cont;
-    var counterMax = 1.4999;
-    var counterMin = -0.4999;
-    var counter = 0;
+function SpinnerCounter(cont, endEvt){
+    this.totalSeconds;
+    this.seconds;
+    this.timer;
+    this.container = cont;
+    this.endEvent = endEvt;
+    this.counterMax = 1.4999;
+    this.counterMin = -0.4999;
+    this.counter = 0;
 
     this.drawCounter = function(piMultiplier){
-        var c = container.children[0];
+        var c = this.container.children[0];
         var ctx = c.getContext("2d");
         ctx.beginPath();
         ctx.clearRect(0,0,c.width,c.height);
-        if(Math.ceil(seconds)<=totalSeconds/2 && Math.ceil(seconds)>=totalSeconds/3){
-            ctx.strokeStyle = "#ffaa26";
-        }
-        else if(Math.ceil(seconds) < totalSeconds/3){
+        if(Math.ceil(this.seconds) < this.totalSeconds/3){
             ctx.strokeStyle = "#ff0000";
         }
         else{
@@ -27,33 +25,32 @@ function SpinnerCounter(cont){
     }
 
     this.timerOnTick = function(){
-        if(seconds == totalSeconds){
-            this.drawCounter(counterMax);
-        }
-        else if(seconds <= 0){
-            this.drawCounter(counterMin);
-            clearInterval(timer);
+        if(this.seconds <= 0){
+            clearInterval(this.timer);
+            this.drawCounter(this.counterMin);
+            this.stop();
         }
         else{
-            this.drawCounter(counterMax-counter);
-            counter += (100/(totalSeconds*1000));
+            this.drawCounter(this.counterMax-this.counter);
+            this.counter += (100/(this.totalSeconds*1000));
         }
-        seconds -= 0.05;
-        seconds = seconds.toFixed(2);
-        container.children[1].innerHTML = Math.ceil(seconds);
+        this.seconds -= 0.05;
+        this.seconds = this.seconds.toFixed(2);
+        this.container.children[1].innerHTML = Math.ceil(this.seconds);
     }
 
     this.initialTimer = function(){
-        totalSeconds = 15;
-        seconds = totalSeconds;
-        container.innerHTML = '<canvas style="height:180px;" id="canvas_spinner" ></canvas><div id="div_timerCounter" >15</div>';
+        this.totalSeconds = 5;
+        this.seconds = this.totalSeconds;
+        this.container.innerHTML = '<canvas style="height:180px;" id="canvas_spinner" ></canvas><div id="div_timerCounter" >15</div>';
         this.setupTimerCounterTextBox();
         var c = this;
-        timer = setInterval( function(){c.timerOnTick()},50);
+        this.drawCounter(this.counterMax);
+        this.timer = setInterval( function(){c.timerOnTick()},50);
     }
 
     this.setupTimerCounterTextBox = function(){
-        var timerDiv = container.children[1].style;
+        var timerDiv = this.container.children[1].style;
         timerDiv.fontFamily = "Ariel";
 
         //Adding the new font for the countdown numbers
@@ -63,4 +60,9 @@ function SpinnerCounter(cont){
         timerDiv.fontFamily = "CounterNumberFont";
         timerDiv.fontSize = "20pt";
     }
+    
+    this.stop = function(){
+        this.endEvent();
+    }
+    
 }
