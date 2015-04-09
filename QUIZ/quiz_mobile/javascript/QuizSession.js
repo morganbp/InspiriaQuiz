@@ -71,6 +71,7 @@ function QuizSession(quizId, quizData){
 			this.hasAnswered = true;
 			this.answer = answer;	
 			//this.countdown.stop();
+            this.endQuestion();
 		}
 	}
 	

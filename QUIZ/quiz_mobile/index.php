@@ -54,10 +54,6 @@
         </div>
         <?php
             include 'pageQuizmode1.php';
-<<<<<<< HEAD
-=======
-            //include 'pageQuizmode2.php';
->>>>>>> e17b25460fe2c78c5a9cd5b16af7f178d016e247
             include 'pageQuizmode3.php';
             include 'pageQuiz.php';
 			include 'publicQuiz.php';
