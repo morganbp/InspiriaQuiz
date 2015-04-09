@@ -8,14 +8,23 @@
         <script src="jquery-mobile/jquery-1.11.1.min.js"></script>
         <script src="jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
         <link rel="stylesheet" href="jquery-mobile/jquery.mobile-1.4.5.min.css" />
+		<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
         <!--stylesheets-->
         <link rel="stylesheet" href="css/sidepanelStyle.css" />
         <link rel="stylesheet" href="css/contentListviewStyle.css" />
+		<link rel="stylesheet" href="css/quiz.css" />
         <!--imported javascript-->
         <script src="javascript/quizmodeFunctions.js"></script>
         <script src="javascript/startQuiz.js"></script>
         <script src="javascript/jqueryMobilFunctions.js"></script>
         <script src="javascript/quizmodeFunctions.js"></script>
+		<!-- Quiz Scripts -->
+		<script src="javascript/quizmodeFunctions.js"></script>
+		<script src="javascript/QuizData.js"></script>
+		<script src="javascript/QuizSession.js"></script>
+		<script src="javascript/QuizGuiHandler.js"></script>
+		<script src="javascript/QuizDBHandler.js"></script>
+		<script src="javascript/spin.min.js"></script>
     </head>
     <body>
         <div data-role="page" data-theme="a" id="homescreen">
@@ -29,7 +38,7 @@
                         </a>
                     </li>
                     <li data-icon="false">
-                        <a href="publicQuiz.php">
+                        <a href="#publicQuiz">
                             <h3>Quiz for Skole/bedrift</h3>
                             <p>Er du med en skole eller bedrift og skal gå rundt i Inspiria science center og ta vår quiz laget spesielt til dere klikk her!</p>
                         </a>
@@ -45,8 +54,13 @@
         </div>
         <?php
             include 'pageQuizmode1.php';
+<<<<<<< HEAD
+=======
+            //include 'pageQuizmode2.php';
+>>>>>>> e17b25460fe2c78c5a9cd5b16af7f178d016e247
             include 'pageQuizmode3.php';
             include 'pageQuiz.php';
+			include 'publicQuiz.php';
             include 'dialogs/quizNotFoundErrorDialog.php';
         ?>
     </body>
