@@ -45,7 +45,7 @@ function SpinnerCounter(cont, endEvt){
         this.setupTimerCounterTextBox();
         var c = this;
         this.drawCounter(this.counterMax);
-        this.timer = setInterval( function(){c.timerOnTick()},50);
+        this.timer = setInterval(function(){c.timerOnTick()},50);
     }
 
     this.setupTimerCounterTextBox = function(){
