@@ -29,6 +29,7 @@ window.ERROR_MESSAGE = "ERROR_MESSAGE";
 window.currentQuestion = -1;
 window.quizData;
 window.participants;
+window.quizGui;
 
 /**
 *
@@ -38,7 +39,7 @@ window.participants;
 window.conn = new WebSocket('ws://localhost:8080');
 conn.onopen = function(e) {
 	console.log("Connection established!");
-	createQuizSession(1);
+	connected();
 };
 
 /**
@@ -51,7 +52,6 @@ conn.onopen = function(e) {
 conn.onmessage = function(e){
 
 	var resp = JSON.parse(e.data);
-
 	console.log(resp);
 	switch(resp["request-type"]){
 		case window.NEXT_QUESTION:
@@ -61,31 +61,14 @@ conn.onmessage = function(e){
 			initData(resp);
 			break;
 		case window.UPDATED_PARTICIPANTS:
-			updateParticipantVariable(resp);
-			updateParticipants();
+			updateParticipants(resp);
 			break;
 	}
 
 }
 
-/**
-*
-*	When receivieng data from server, store the JSON object in global 
-*	variable quizData
-*
-*/
-function initData(resp){
-	var str = JSON.stringify(resp.data);
-	window.quizData = JSON.parse(str);
-	console.log(resp.data);
+function createQuizSession(id){
+	conn.send('{"quiz-id":"'+ id +'", "request-type":"' + window.CREATE_QUIZ_SESSION + '"}');
+
 }
 
-/**
-*	
-*	Updates the variable which holds the number of participants
-*
-*/
-function updateParticipantVariable(resp){
-	var str = JSON.stringify(resp.data);
-	window.participants = JSON.parse(str);
-}

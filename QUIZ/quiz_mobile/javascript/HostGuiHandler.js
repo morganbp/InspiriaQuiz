@@ -1,5 +1,8 @@
 function HostGuiHandler(){
 	
+	//
+	this.START_SCREEN = "START_SCREEN";
+	
 	// constant for Quiz Mode
 	this.QUIZ_MODE = "QUIZ_MODE";
 	
@@ -13,12 +16,14 @@ function HostGuiHandler(){
 	var letters = ['a','b'];
 	
 	var HostGuiHandler = function(){
-		$("#quiz").css("display", "block");
-		$("#startScreen").css("display","none");
 	}
+	
+	
 	
 	this.setQuestion = function(questionText){
 		if(typeof questionText == "string" || questionText instanceof String){
+			$("#quiz").css("display", "block");
+			$("#startScreen").css("display","none");
 			$("#quizQuestion").text(questionText);
 		}
 	}
@@ -108,5 +113,22 @@ function HostGuiHandler(){
 		$("#alternatives").removeClass("ui-grid-a ui-grid-b");	
 	}
 	
+	this.setStartScreen = function(quizData){
+		$("#quizTitle").html(quizData.quiz.QuizName);
+		$("#quizCode").html(quizData.quizKey);	
+	}
+	
+	this.populateParticipants = function(participants){
+		var classes = ['a','b','c','d','e','f'];
+		$('#participants').empty();
+		console.log(participants);
+		for(var i = 0; i < participants.participants.length; i++){
+			var col = classes[Math.floor(i%classes.length)];
+			console.log(col);
+			var gridClass = 'ui-block-'+col;
+			$('#participants').append('<div class="' + gridClass  + '">'+ participants.participants[i].username +'</div>');
+			
+		}
+	}
 	HostGuiHandler();
 }

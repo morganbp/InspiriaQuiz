@@ -29,6 +29,7 @@ class QuizHandler {
 		}else{
 			$response = '{"request-type":"'.QuizHandler::$INIT_QUIZ.'","data":'.$newQuiz->getQuiz().'}';
 		}
+		echo $response;
 		return $response;
 	}
 	
