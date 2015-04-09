@@ -23,7 +23,7 @@ body{
     display:inline-flex;
 	height: 90px;
     width:49%;
-	background: rgb(9,152,217);
+	background: #41b6e6;
 	text-shadow:none;
 	justify-content: center; /* align horizontal */
 	align-items: center; /* align vertical */
@@ -31,7 +31,7 @@ body{
 	font: bold 16px arial;
 }	
 .answere{
-	background: #ffaa26;
+	background: #41b6e6;
 }
 .wrong{	
 	background: #e84b7d;
@@ -40,7 +40,7 @@ body{
 }
 
 .neutral{
-	opacity: 0.2;	
+	opacity: 0.2;
 }
 .correct{
 	background: #59b548;
@@ -90,13 +90,12 @@ body{
     pointer-events: none;
 }
 
-#countdown #canvas_spinner{
-    
-}
-
 #countdown #div_timerCounter{
+    display:flex;
     position: absolute;
-    left:49.2%;
+	text-align: center;
+	justify-content: center;
+    width:100%;
     top:75px;
 }
 

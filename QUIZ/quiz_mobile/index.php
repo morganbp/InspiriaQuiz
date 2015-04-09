@@ -45,7 +45,6 @@
         </div>
         <?php
             include 'pageQuizmode1.php';
-            include 'pageQuizmode2.php';
             include 'pageQuizmode3.php';
             include 'pageQuiz.php';
             include 'dialogs/quizNotFoundErrorDialog.php';

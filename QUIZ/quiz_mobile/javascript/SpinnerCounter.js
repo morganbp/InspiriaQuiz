@@ -54,10 +54,11 @@ function SpinnerCounter(cont){
 
     this.setupTimerCounterTextBox = function(){
         var timerDiv = container.children[1].style;
+        timerDiv.fontFamily = "Ariel";
 
         //Adding the new font for the countdown numbers
         var fontStyle = document.createElement("style");
-        fontStyle.appendChild(document.createTextNode('@font-face {font-family: CounterNumberFont; src: url("http://127.0.0.1:81/inspiriaquiz/QUIZ/quiz_mobile/css/fonts/Superstar M54.ttf");}'));
+        fontStyle.appendChild(document.createTextNode('@font-face {font-family: CounterNumberFont; src: url("http://localhost/inspiriaquiz/QUIZ/quiz_mobile/css/fonts/Superstar M54.ttf");}'));
         document.head.appendChild(fontStyle);
         timerDiv.fontFamily = "CounterNumberFont";
         timerDiv.fontSize = "20pt";
