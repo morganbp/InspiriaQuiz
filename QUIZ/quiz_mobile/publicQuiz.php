@@ -11,7 +11,7 @@
 				<button type="button" onclick="chooseQuiz(event)">Hent Quiz</button>
 			</div>
 			<div id="quiz">
-				<div id="infoHeader" data-role="header">
+				<!--<div id="infoHeader" data-role="header">
 					<div id="scoreWrapper">
 						<label style="display:inline;">Poengsum: </label>
 						<span id="scoreHeader" style="display:inline;">0</span>
@@ -20,12 +20,13 @@
 						<label style="display:inline;">Tid igjen: </label>
 						<span id="timer" style="display:inline;"></span>
 					</div>
-				</div>
+				</div>-->
 
 				<div id="spinner"></div>
 				<div id="score" style="display:none;">
 					<h3>Din poengsum:</h3>
 					<div id="totalScore"></div>
+                    <Button>Neste spørsmål</Button>
 				</div>
 				<div id="alternatives"></div>
 				<div id="countdown"></div>

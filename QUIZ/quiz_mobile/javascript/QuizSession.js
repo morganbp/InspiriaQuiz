@@ -61,7 +61,6 @@ function QuizSession(quizId, quizData){
 		
 		this.quizGuiHandler.setQuestion(this.currentQuestion.QuestionText);
 		this.quizGuiHandler.setAlternatives(this.currentQuestion.Alternatives);
-		this.quizGuiHandler.setScore("" + this.totalScore);
 		
 		this.countdown.initialTimer();
 	}
@@ -76,7 +75,6 @@ function QuizSession(quizId, quizData){
 	
 	this.endQuestion = function(){
 		// If answer is correct
-        console.log(this.currentQuestion);
 		if(this.answer !== -1 && this.currentQuestion.Alternatives[this.answer].AlternativeCorrect === 1){
 			this.updateScore();	
 		}
@@ -99,7 +97,6 @@ function QuizSession(quizId, quizData){
 			this.quiz = quizData;
 			this.quizGuiHandler = new HostGuiHandler();
 		}
-		
 	}
 	
 	this.QuizSession(quizId, quizData);
