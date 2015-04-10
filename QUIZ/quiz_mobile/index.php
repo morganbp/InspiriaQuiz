@@ -23,7 +23,6 @@
 		<script src="javascript/QuizSession.js"></script>
 		<script src="javascript/QuizGuiHandler.js"></script>
 		<script src="javascript/QuizDBHandler.js"></script>
-		<script src="javascript/spin.min.js"></script>
 	    <script src="javascript/SpinnerCounter.js"></script>
     </head>
     <body>
