@@ -65,6 +65,11 @@ button#startQuiz{
 	width: 100%;
 }
 
+#startScreen{
+	position: absolute;
+	height:100%;
+	width: 100%;
+}
 #upperPart{
 	height: 50%;
 	background: white;

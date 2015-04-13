@@ -45,10 +45,6 @@ function QuizGuiHandler(){
 		}
 	}
 	
-	this.setScore = function(score){
-		$("#scoreHeader").html(score);
-	}
-	
 	/**
 	*	toggles between score mode and quiz mode
 	*/
@@ -61,9 +57,9 @@ function QuizGuiHandler(){
 				this.mode = this.SCORE_MODE;
 				break;
 			case this.SCORE_MODE:
-				$("#score").css("display","block");
 				$("#countdown").css("display", "none");
 				$("#alternatives").css("display","none");
+				$("#score").css("display","block");
 				this.mode = this.QUIZ_MODE;
 				break;
 		}

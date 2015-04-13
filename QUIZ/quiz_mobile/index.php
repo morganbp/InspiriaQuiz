@@ -5,10 +5,10 @@
         <title>Inspiria quiz</title>
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!--jQuery-->
-        <script src="jquery-mobile/jquery-1.11.1.min.js"></script>
-        <script src="jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
-        <link rel="stylesheet" href="jquery-mobile/jquery.mobile-1.4.5.min.css" />
-		<link rel="stylesheet" href="css/themes/jquery.mobile.icons.min.css" />
+        <script src="../../LIBS/javascript/jquery-mobile/jquery-1.11.1.min.js"></script>
+        <script src="../../LIBS/javascript/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
+        <link rel="stylesheet" href="../../LIBS/javascript/jquery-mobile/jquery.mobile-1.4.5.min.css" />
+		<link rel="stylesheet" href="../../LIBS/css/themes/jquery.mobile.icons.min.css" />
         <!--stylesheets-->
         <link rel="stylesheet" href="css/sidepanelStyle.css" />
         <link rel="stylesheet" href="css/contentListviewStyle.css" />
@@ -23,7 +23,6 @@
 		<script src="javascript/QuizSession.js"></script>
 		<script src="javascript/QuizGuiHandler.js"></script>
 		<script src="javascript/QuizDBHandler.js"></script>
-		<script src="javascript/spin.min.js"></script>
 	    <script src="javascript/SpinnerCounter.js"></script>
     </head>
     <body>

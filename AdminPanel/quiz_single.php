@@ -43,7 +43,6 @@
         /* QUIZ SETUP SECTION */
         // GET data from database
         function fetchQuiz(quizId){
-            //"use strict";
             $.ajax({
                 url: "http://localhost/InspiriaQuiz/API/quiz_get.php", //"http://frigg.hiof.no/bo15-g21/API/quiz_get.php",
                 type: "POST",
@@ -55,6 +54,38 @@
                     quizJSON = data;
                     makeQuestionTable();
                     addCheckboxClickListeners();
+                    fetchImages();
+                }
+            });
+        }
+        
+        function fetchImages(){
+            $.ajax({
+                url: "http://localhost/InspiriaQuiz/API/images_get.php",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Images not found.");
+                },
+                success: function(images){
+                    var optionList = "";
+                    for(var i=0; i<images.length; i++){
+                        optionList += "<option value='" + images[i].ImageFilename + "'>"
+                            +images[i].ImageName
+                            +"</option>";
+                    }
+                    $(".question-image select").each(function(){
+                        $(this).html(optionList);
+                        $(this).change(function(){
+                            var imageRow = $(this).closest(".question-section").find(".question-image-preview");
+                            var imageSrc = $(this).find(":selected").val();
+                            var imageTag = imageRow.find("img");
+                            
+                            imageTag.attr("src", "../UploadedImages/"+imageSrc)
+                            /*imageTag.fadeTo(500,0,function(){
+                                imageTag.attr("src", "../UploadedImages/"+imageSrc).fadeTo(500,1);
+                            });*/
+                            imageRow.fadeIn();
+                        });
+                    });
                 }
             });
         }
@@ -77,25 +108,38 @@
         // Functions for divs inside the table for better readability in code above.
         // Returns a question with all fields
         function questionSection(i){
-            //return questionHeaderRow(i) + questionTextInputRow(i) + questionAlternatives(i);
-            return "<table class='question-section'>" + questionHeaderRow(i) + questionTextInputRow(i) + questionAlternatives(i) + "</table>";
+            return "<table class='question-section'>" 
+                + questionHeaderRow(i) 
+                + questionImageRow(i) 
+                + questionTextInputRow(i) 
+                + questionAlternatives(i) 
+                + "</table>";
         }
         
         function questionHeaderRow(i){
-            return "<tr class='question-top'><th>" + quizJSON.Questions[i].QuestionText + "</th></tr>";
+            return "<tr class='question-top'><th>"
+                + quizJSON.Questions[i].QuestionText 
+                + "</th></tr>";
+        }
+        
+        function questionImageRow(i){
+            return "<tr><td><div class='question-info'>Bilde</div></td></tr>"
+                + "<tr class='question-image'><td>"
+                + "<select><option>Loading images...</option></select>"
+                + "</td></tr>"
+                + "<tr class='question-image-preview'><td><img/></td></tr>";
         }
         
         function questionTextInputRow(i){
-            var startRow = "<tr class='question-single'><td>";
-            var hiddenInput = "<input type='hidden' name='QuestionID' value='" + quizJSON.Questions[i].QuestionID + "'/>";
-            var shownInput = "<input class='question-text' type='text' name='QuestionText["+i+"]' value='" + quizJSON.Questions[i].QuestionText + "'/>";
-            var endRow = "</td></tr>";
-            
-            return startRow + hiddenInput + shownInput + endRow;
+            return "<tr><td><div class='question-info'>Spørsmål</div></td></tr>"
+                + "<tr class='question-single'><td>"
+                + "<input type='hidden' name='QuestionID' value='" + quizJSON.Questions[i].QuestionID + "'/>"
+                + "<input class='question-text' type='text' name='QuestionText["+i+"]' value='" + quizJSON.Questions[i].QuestionText + "'/>"
+                + "</td></tr>";
         }
         
         function questionAlternatives(i){
-            var alternativesText = "";
+            var alternativesText = "<tr><td><div class='question-info'>Alternativer</div></td></tr>";
             var altJSON = quizJSON.Questions[i].Alternatives;
             
             
@@ -177,6 +221,7 @@
             
             $("#submit-quiz").html("Lagrer...");
             
+            // Check quiz name
             var quizName = $("#quiz-name").val();
             if(quizJSON.QuizName != quizName){
                 submitJSON.Update.QuizID = quizJSON.QuizID;
@@ -185,9 +230,24 @@
             
             $(".question-section").each(function(outer){
                 //console.log(this);
+                var questionTextTag = $(this).find(".question-text");
+                var questionID = $(this).find("input[name=QuestionID]").val();
+                var newQuestionText = questionTextTag.val();
+                var pattern = /\d+/g;
+                var questionIndex = questionTextTag.prop("name").match(pattern);
+                
+                if(newQuestionText != quizJSON.Questions[questionIndex].QuestionText){
+                    console.log(questionIndex + " is not the same");
+                    submitJSON.Update.Questions.push({
+                        "QuestionID": questionID,
+                        "QuestionText": newQuestionText
+                    });
+                }
+                
+                // Check alternatives and correct
                 $(this).find(".alternative-text:not(input[name=NewAlternative])").each(function(inner){
                     // Find json array indexes
-                    var pattern = /\d+/g;
+                    //var pattern = /\d+/g;
                     var nameProperty = $(this).prop("name");
                     var indexes = nameProperty.match(pattern);
                     var questionIndex = indexes[0];     // json[THIS_INDEX][]
@@ -215,7 +275,6 @@
                     }
                 });
             });
-            //console.log(submitJSON);
             
             // Add new alternatives and correct-values to submitJSON
             $("input[name=NewAlternative]").each(function(index){
@@ -227,7 +286,6 @@
                 submitJSON.Insert.Alternatives.push({"QuestionID": qID, "AlternativeText": alt, "AlternativeCorrect": cor});
             });
             console.log(submitJSON);
-            
             
             $.ajax({
                 url: "http://localhost/InspiriaQuiz/API/quiz_update.php",

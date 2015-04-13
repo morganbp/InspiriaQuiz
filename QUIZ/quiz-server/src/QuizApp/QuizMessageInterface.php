@@ -30,13 +30,11 @@ class QuizMessageInterface implements MessageComponentInterface{
 		echo "messsage " . $msg. "\n";
 		
 		$result = "";
-		echo $requestType;
 		switch($requestType){
 			case QuizHandler::$CREATE_QUIZ_SESSION:
 				/*
 				*	Runs when a host wants to run a new QUIZ SESSION
 				*/
-				echo "Create
 				$result = $this->quizHandler->createQuizSession($jsonData["quiz-id"], $from);
 				
 				break;

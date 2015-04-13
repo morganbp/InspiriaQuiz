@@ -27,11 +27,14 @@
 .flaticon-log:before {
 	content: "\e002";
 }
-.flaticon-plus24:before {
+.flaticon-picture64:before {
 	content: "\e003";
+}
+.flaticon-plus24:before {
+	content: "\e004";
     vertical-align: middle;
     margin-left: 5px;
 }
 .flaticon-question1:before {
-	content: "\e004";
+	content: "\e005";
 }

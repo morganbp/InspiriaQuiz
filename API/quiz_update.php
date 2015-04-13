@@ -66,6 +66,21 @@ if(isset($update)){
         }
     }
     
+    if(isset($update['Questions']))
+    if(count($update['Questions']) > 0){
+        if($stmt = $mysqli -> prepare('UPDATE Question SET QuestionText = ? WHERE QuestionID = ?;')) {
+            print_r($update);
+            foreach($update['Questions'] as $question){
+                $stmt -> bind_param("si", $question['QuestionText'], $question['QuestionID']);
+                $stmt -> execute();
+            }
+        }else{
+            echo "Failed to prepare statement";
+            http_response_code(500);
+            die();
+        }
+    }
+    
     if(isset($update['Alternatives']))
     if(count($update['Alternatives']) > 0){
         if($stmt = $mysqli -> prepare('UPDATE Alternative SET AlternativeText = ?, AlternativeCorrect = ? WHERE AlternativeID = ?;')) {

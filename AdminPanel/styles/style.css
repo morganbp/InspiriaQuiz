@@ -48,7 +48,7 @@ header{
 .sidebar{
     position: fixed;
     top: 50px;
-    width: 280px;
+    width: 220px;
     height: calc(100% - 50px);
     background-color: #222;
     float: left;
@@ -62,7 +62,7 @@ header{
 .content{
     /*height: calc(100% - 50px);*/
     background-color: #eaeaea;
-    margin-left: 280px;
+    margin-left: 220px;
     padding: 15px;
     padding-top: 60px;
     
@@ -212,6 +212,11 @@ ul#nav li a:hover{
 .panel #question-list tr.question-single{
     border: none;
 }
+.panel #question-list .question-info{
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+}
 
 .panel #question-list input[type="text"] {
     padding: 10px;
@@ -271,13 +276,30 @@ input[type=checkbox]:checked + label:before {
     font-weight: bold;
 }
 
+/* IMAGE DROPDOWN */
+.panel #question-list select {
+    padding: 10px;
+    border: 2px solid #ddd;
+    
+    font-size: 14px;
+}
+
+.panel #question-list .question-image-preview {
+    display: none;
+}
+.panel #question-list .question-image-preview img{
+    background-color: black;
+    max-width: 300px;
+    max-height: 150px;
+}
+
 #submit-quiz{
     padding: 2px 5px;
     float: right;
 }
 
 /* MEDIA QUERIES */
-@media (max-width: 850px) {
+@media (max-width: 885px) {
     .sidebar #nav li a span{
         display: none;
         
@@ -298,4 +320,12 @@ input[type=checkbox]:checked + label:before {
     .content{
         margin-left: 50px;
     }
+}
+
+
+
+/* IMAGE UPLOAD */
+.image-thumbnail{
+    max-width: 200px;
+    max-height: 150px;
 }

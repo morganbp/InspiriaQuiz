@@ -112,7 +112,7 @@ class Quiz {
 	
 	public function getQuizFromDB(){
 		
-		$url = 'http://localhost/inspiriaQuiz/DB/quiz_get.php';
+		$url = 'http://frigg.hiof.no/bo15-g21/API/quiz_get.php';
 		$field = "QuizID={$this->getId()}";
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL,$url);
@@ -124,7 +124,7 @@ class Quiz {
 		curl_close($curl);
 		
 		if($data != NULL){
-			$this->quiz = "{\"quiz-key\":\"{$this->quizKey}\", \"quiz\":{$data}}";
+			$this->quiz = "{\"quizKey\":\"{$this->quizKey}\", \"quiz\":{$data}}";
 		}
 	}
 	
