@@ -38,7 +38,7 @@ foreach($alternativeID as $aKey => $aValue){
 var_dump($correctAlternatives);
 //die();
 
-if($stmt = $mysqli -> prepare('UPDATE Question SET QuestionText = ? WHERE QuestionID = ?;')) {
+if($stmt = $mysqli -> prepare('UPDATE Question SET QuestionText = ? WHERE QuestionID = ?')) {
 	foreach($questionText as $key => $q){
 		$qID = intval($questionID[$key]);
 		$stmt -> bind_param("si", $q, $qID);
@@ -52,7 +52,7 @@ if($stmt = $mysqli -> prepare('UPDATE Question SET QuestionText = ? WHERE Questi
 
 //die();
 
-if($stmt = $mysqli -> prepare('UPDATE Alternative SET AlternativeText = ?, AlternativeCorrect = ? WHERE AlternativeID = ?;')) {
+if($stmt = $mysqli -> prepare('UPDATE Alternative SET AlternativeText = ?, AlternativeCorrect = ? WHERE AlternativeID = ?')) {
 	foreach($alternativeText as $qKey => $question){
 		foreach($question as $aKey => $alternative){
 			$aID = intval($alternativeID[$qKey][$aKey]);

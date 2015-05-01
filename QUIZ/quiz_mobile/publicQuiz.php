@@ -26,7 +26,6 @@
 				<div id="score" style="display:none;">
 					<h3>Din poengsum:</h3>
 					<div id="totalScore"></div>
-                    <Button>Neste spørsmål</Button>
 				</div>
 				<div id="alternatives"></div>
 				<div id="countdown"></div>

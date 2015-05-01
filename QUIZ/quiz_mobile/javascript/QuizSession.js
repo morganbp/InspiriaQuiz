@@ -32,8 +32,7 @@ function QuizSession(quizId, quizData){
 	*
 	*/
 	this.updateScore = function(){
-		var timeUsed = Number(this.countdown.totalSeconds - this.countdown.seconds);
-		var timeUsedSec = timeUsed / 1000;
+		var timeUsedSec = Number(this.countdown.totalSeconds - this.countdown.seconds);
 		var points = this.maxPoints - (this.minPoints/this.questionTime * timeUsedSec);	
 
 		this.totalScore += Math.round(points);
@@ -48,7 +47,6 @@ function QuizSession(quizId, quizData){
 		this.hasAnswered = false;
 		this.answer = -1;
 		
-		this.quizGuiHandler.toggleQuizScore();
 		
 		removeSpinner();
 		
@@ -59,13 +57,10 @@ function QuizSession(quizId, quizData){
 			return;
 		}
 		
+		this.quizGuiHandler.showQuestion();
 		this.quizGuiHandler.setQuestion(this.currentQuestion.QuestionText);
 		this.quizGuiHandler.setAlternatives(this.currentQuestion.Alternatives);
-<<<<<<< HEAD
-		this.quizGuiHandler.setScore("" + this.totalScore);
-=======
-		
->>>>>>> 2f865a36b0802d8243fa540ed5119c2831b3d639
+
 		this.countdown.initialTimer();
 	}
 	
@@ -83,7 +78,8 @@ function QuizSession(quizId, quizData){
 			this.updateScore();	
 		}
 		this.quizGuiHandler.showCorrectAnswer(this.answer, this.currentQuestion);
-		setTimeout(function(){window.quizSession.quizGuiHandler.showScore(this.totalScore)}, 2000);
+		var score = this.totalScore + "";
+		setTimeout(function(){window.quizSession.quizGuiHandler.showScore(score);}, 2000);
 	}
 	
 	this.endQuizSession = function(){

@@ -65,14 +65,20 @@ function QuizGuiHandler(){
 		}
 	}
 	
+	this.showQuestion = function(){
+		this.mode = this.QUIZ_MODE;
+		this.toggleQuizScore();
+	}
+	
 	this.showScore = function(score){
+		this.mode = this.SCORE_MODE;
 		//Toggle alternatives and score visibility
 		this.toggleQuizScore();
 		var title = "Resultat";
-		setTimeout(function(){window.quizSession.startQuestion();}, 2000);
-	
 		$("#quizQuestion").html(title);
 		$("#totalScore").html(score);
+		setTimeout(function(){window.quizSession.startQuestion();}, 2000);
+		
 	}
 	
 	this.showCorrectAnswer = function(answer,  currentQuestion){

@@ -67,10 +67,10 @@ body{
 	border:none;
 }
 
-#quiz #scoreWrapper{
-	display: inline-block;
-	padding:4px;
-	align-content: flex-start;
+#scoreWrapper{
+	display: block;
+	padding: 4px;
+	background:yellow;
 }
 
 #quiz #timerWrapper{

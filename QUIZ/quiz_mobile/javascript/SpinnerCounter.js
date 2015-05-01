@@ -42,13 +42,9 @@ function SpinnerCounter(cont, endEvt){
     this.initialTimer = function(){
         this.totalSeconds = 5;
         this.seconds = this.totalSeconds;
-<<<<<<< HEAD
         this.counter = 0;
         this.container.innerHTML = '<canvas style="height:180px;" id="canvas_spinner" ></canvas><div id="div_timerCounter" >15</div>';
         this.setupTimerCounterTextBox();
-=======
-        this.setup();
->>>>>>> 2f865a36b0802d8243fa540ed5119c2831b3d639
         var c = this;
         this.drawCounter(this.counterMax);
         this.timer = setInterval(function(){c.timerOnTick()},50);
@@ -74,12 +70,7 @@ function SpinnerCounter(cont, endEvt){
     }
     
     this.setup = function(){
-<<<<<<< HEAD
         this.counter = 0;
-=======
-        this.container.innerHTML = '<canvas style="height:180px;" id="canvas_spinner" ></canvas><div id="div_timerCounter" ></div>';
-        this.setupTimerCounterTextBox();
->>>>>>> 2f865a36b0802d8243fa540ed5119c2831b3d639
     }
     
     this.SpinnerCounter = function(cont, endEvt){
