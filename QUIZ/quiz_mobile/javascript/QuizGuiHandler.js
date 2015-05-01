@@ -12,7 +12,7 @@ function QuizGuiHandler(){
 	// Letters used to grid view
 	var letters = ['a','b'];
 	
-	var QuizGuiHandler = function(){
+	this.QuizGuiHandler = function(){
 		$("#quiz").css("display", "block");
 		$("#getQuiz").css("display","none");	
 	}
@@ -98,6 +98,7 @@ function QuizGuiHandler(){
 	
 		$("#quizQuestion").html(title);
 		$("#totalScore").html(score);
+        this.clearAlternatives();
 	}
 	
 	this.clearAlternatives = function(){
@@ -105,5 +106,5 @@ function QuizGuiHandler(){
 		//$("#alternatives").removeClass("ui-grid-a ui-grid-b");	
 	}
 	
-	QuizGuiHandler();
+	this.QuizGuiHandler();
 }

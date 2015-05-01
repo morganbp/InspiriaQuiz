@@ -61,7 +61,11 @@ function QuizSession(quizId, quizData){
 		
 		this.quizGuiHandler.setQuestion(this.currentQuestion.QuestionText);
 		this.quizGuiHandler.setAlternatives(this.currentQuestion.Alternatives);
+<<<<<<< HEAD
+		this.quizGuiHandler.setScore("" + this.totalScore);
+=======
 		
+>>>>>>> 2f865a36b0802d8243fa540ed5119c2831b3d639
 		this.countdown.initialTimer();
 	}
 	
