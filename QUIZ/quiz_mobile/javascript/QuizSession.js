@@ -32,10 +32,10 @@ function QuizSession(quizId, quizData){
 	*
 	*/
 	this.updateScore = function(){
-		var timeUsed = Number(this.countdown.timeUsed);
+		var timeUsed = Number(this.countdown.totalSeconds - this.countdown.seconds);
 		var timeUsedSec = timeUsed / 1000;
 		var points = this.maxPoints - (this.minPoints/this.questionTime * timeUsedSec);	
-		
+
 		this.totalScore += Math.round(points);
 	}
 	
@@ -79,18 +79,22 @@ function QuizSession(quizId, quizData){
 			this.updateScore();	
 		}
 		this.quizGuiHandler.showCorrectAnswer(this.answer, this.currentQuestion);
-		var score = this.totalScore;
-		setTimeout(function(){window.quizSession.quizGuiHandler.showScore(score)}, 2000);
+		setTimeout(function(){window.quizSession.quizGuiHandler.showScore(this.totalScore)}, 2000);
 	}
 	
 	this.endQuizSession = function(){
+		// Submit score
+		var dbHandler = new QuizDBHandler();
+		var userID = 3;
+		dbHandler.submitQuizResults(this.quiz.quizJson.QuizID, userID, this.totalScore);
+		
 		window.quizSession = null;
 		startUpScreen();
 	}
 		
 	this.QuizSession = function(id, quizData){
 		if(quizData == null){
-			this.quiz = new QuizData(quizId);
+			this.quiz = new QuizData(id);
 			this.quizGuiHandler = new QuizGuiHandler();
 			this.countdown = new SpinnerCounter(document.getElementById("countdown"), function(){window.quizSession.endQuestion()});
 		}else{
