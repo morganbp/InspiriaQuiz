@@ -19,6 +19,7 @@
             fetchQuiz(<?php echo $_GET['QuizID'];?>);
         });
         
+        /* CHECKBOXES */
         function addCheckboxClickListeners(){
             $(".correct-checkbox").each(function(){
                 $(this).change(function(){
@@ -35,8 +36,8 @@
             removeCheckboxClickListeners();
             addCheckboxClickListeners();
         }
-        
         function toggleAlternativeCorrect(){
+        
             $(this).prev().toggleClass("alternative-text-correct");
         }
         
@@ -66,7 +67,7 @@
                     alert("Images not found.");
                 },
                 success: function(images){
-                    var optionList = "";
+                    var optionList = "<option value='none'>Ingen bilde valgt</option>";
                     for(var i=0; i<images.length; i++){
                         optionList += "<option value='" + images[i].ImageFilename + "'>"
                             +images[i].ImageName
@@ -77,13 +78,17 @@
                         $(this).change(function(){
                             var imageRow = $(this).closest(".question-section").find(".question-image-preview");
                             var imageSrc = $(this).find(":selected").val();
-                            var imageTag = imageRow.find("img");
+                            if(imageSrc == "none"){
+                                imageRow.fadeOut();
+                            }else{
+                                var imageTag = imageRow.find("img");
                             
-                            imageTag.attr("src", "../UploadedImages/"+imageSrc)
+                                imageTag.attr("src", "../UploadedImages/"+imageSrc)
+                                imageRow.fadeIn();
+                            }
                             /*imageTag.fadeTo(500,0,function(){
                                 imageTag.attr("src", "../UploadedImages/"+imageSrc).fadeTo(500,1);
                             });*/
-                            imageRow.fadeIn();
                         });
                     });
                 }
@@ -123,7 +128,7 @@
         }
         
         function questionImageRow(i){
-            return "<tr><td><div class='question-info'>Bilde</div></td></tr>"
+            return "<tr class='question-info'><td><div>Bilde</div></td></tr>"
                 + "<tr class='question-image'><td>"
                 + "<select><option>Loading images...</option></select>"
                 + "</td></tr>"
@@ -131,7 +136,7 @@
         }
         
         function questionTextInputRow(i){
-            return "<tr><td><div class='question-info'>Spørsmål</div></td></tr>"
+            return "<tr class='question-info'><td><div>Spørsmål</div></td></tr>"
                 + "<tr class='question-single'><td>"
                 + "<input type='hidden' name='QuestionID' value='" + quizJSON.Questions[i].QuestionID + "'/>"
                 + "<input class='question-text' type='text' name='QuestionText["+i+"]' value='" + quizJSON.Questions[i].QuestionText + "'/>"
@@ -139,7 +144,7 @@
         }
         
         function questionAlternatives(i){
-            var alternativesText = "<tr><td><div class='question-info'>Alternativer</div></td></tr>";
+            var alternativesText = "<tr class='question-info'><td><div>Alternativer</div></td></tr>";
             var altJSON = quizJSON.Questions[i].Alternatives;
             
             
@@ -147,7 +152,7 @@
                 alternativesText += questionAlternative(i, j);
             }
             
-            alternativesText += questionAlternativePlus();
+            alternativesText += questionAlternativePlus(i);
             
             return alternativesText;
         }
@@ -159,7 +164,7 @@
             
             var startRow = "<tr class='alternatives'><td>";
             var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' id='Correct["+i+"]["+j+"]' name='Correct["+i+"]["+j+"]' " + (correct?"checked='checked'":"") + ">";
-            var checkboxCorrectLabel = "<label for='Correct["+i+"]["+j+"]'></label>";
+            var checkboxCorrectLabel = "<label class='correct-label' for='Correct["+i+"]["+j+"]'></label>";
             var shownInput = "<input class='alternative-text " + (correct?"alternative-text-correct":"")+ "' type='text' name='Alternative["+i+"]["+j+"]' value='" + altText + "'>"
             var deleteButton = "<i class='flaticon-cross93' onclick='removeAlternative(this, "+i+", "+j+")'></i>";
             var endRow = "</td></tr>";
@@ -167,20 +172,20 @@
             return startRow + shownInput + checkboxCorrect + checkboxCorrectLabel + deleteButton + endRow;
         }
         
-        function questionNewAlternative(){
+        function questionNewAlternative(qNum, aNum){
             var startRow = "<tr class='alternatives'><td>";
-            var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' id='NewCorrect' name='NewCorrect'>";
-            var checkboxCorrectLabel = "<label for='NewCorrect'></label>";
-            var shownInput = "<input class='alternative-text' type='text' name='NewAlternative' placeholder='...'>"
+            var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' id='NewCorrect["+qNum+"]["+aNum+"]' name='NewCorrect'>";
+            var checkboxCorrectLabel = "<label class='correct-label' for='NewCorrect["+qNum+"]["+aNum+"]'></label>";
+            var shownInput = "<input class='alternative-text' type='text' name='NewAlternative["+qNum+"]["+aNum+"]' placeholder='...'>"
             var deleteButton = "<i class='flaticon-cross93' onclick='removeNewAlternative(this)'></i>";
             var endRow = "</td></tr>";
 
             return startRow + shownInput + checkboxCorrect + checkboxCorrectLabel + deleteButton + endRow;
         }
         
-        function questionAlternativePlus(){
-            var startRow = "<tr class='alternatives'><td>";
-            var addButton = "<i class='flaticon-plus24' onclick='addAlternative(this)'></i>";
+        function questionAlternativePlus(qNum){
+            var startRow = "<tr class='alternatives-plus'><td>";
+            var addButton = "<i class='flaticon-plus24' onclick='addAlternative(this, "+qNum+")'></i>";
             var endRow = "</td></tr>";
             
             return startRow + addButton + endRow;
@@ -197,19 +202,33 @@
         
         // When the user clicks on the X behind an alternative that does not have an ID (a new alternative)
         function removeNewAlternative(element){
-            $(element).closest("tr").remove();
+            var tr = $(element).closest("tr");
+            
+            // Renumber the other alternatives in the question
+            var pattern = /\d+/g;
+            $(tr).nextAll(".alternatives").each(function(){
+                var nameProperty = $(this).find(".alternative-text").prop("name");
+                var indexes = nameProperty.match(pattern);
+                $(this).find(".alternative-text").prop("name", "NewAlternative["+indexes[0]+"]["+(indexes[1]-1)+"]");
+                $(this).find(".correct-checkbox").prop("name", "NewCorrect["+indexes[0]+"]["+(indexes[1]-1)+"]");
+                $(this).find(".correct-checkbox").prop("id", "NewCorrect["+indexes[0]+"]["+(indexes[1]-1)+"]");
+                $(this).find(".correct-label").prop("for", "NewCorrect["+indexes[0]+"]["+(indexes[1]-1)+"]");
+                console.log(indexes);
+            });
+            
+            tr.remove();
         }
         
         // When the user clicks on the + behind the last alternative
-        function addAlternative(element){
+        function addAlternative(element, qNum){
             var tr = $(element).closest("tr");
-            while(!tr.is(".question-single"))
+            while(!tr.is(".question-info"))
                 tr = tr.prev();
             
             var numberOfAlternatives = tr.nextUntil(".question-top").length-1;
             
             if(numberOfAlternatives < 4){
-                $(element).closest("tr").before(questionNewAlternative());
+                $(element).closest("tr").before(questionNewAlternative(qNum, numberOfAlternatives));
                 
                 refreshCheckboxClickListeners();
             }
@@ -217,8 +236,6 @@
         
         /* SUBMIT */
         function submitQuiz(){
-            // TODO Compare question title as well
-            
             $("#submit-quiz").html("Lagrer...");
             
             // Check quiz name
@@ -237,7 +254,7 @@
                 var questionIndex = questionTextTag.prop("name").match(pattern);
                 
                 if(newQuestionText != quizJSON.Questions[questionIndex].QuestionText){
-                    console.log(questionIndex + " is not the same");
+                    //console.log(questionIndex + " is not the same");
                     submitJSON.Update.Questions.push({
                         "QuestionID": questionID,
                         "QuestionText": newQuestionText
@@ -245,9 +262,8 @@
                 }
                 
                 // Check alternatives and correct
-                $(this).find(".alternative-text:not(input[name=NewAlternative])").each(function(inner){
+                $(this).find(".alternative-text:not(input[name^=NewAlternative])").each(function(inner){
                     // Find json array indexes
-                    //var pattern = /\d+/g;
                     var nameProperty = $(this).prop("name");
                     var indexes = nameProperty.match(pattern);
                     var questionIndex = indexes[0];     // json[THIS_INDEX][]
@@ -277,9 +293,9 @@
             });
             
             // Add new alternatives and correct-values to submitJSON
-            $("input[name=NewAlternative]").each(function(index){
+            $("input[name^=NewAlternative]").each(function(index){
                 var alt = $(this).val();
-                var correctBoolean = $(this).next("input[name=NewCorrect]").prop("checked");
+                var correctBoolean = $(this).next("input[name^=NewCorrect]").prop("checked");
                 var cor = (correctBoolean==true)?1:0;
                 var qID = $(this).closest("tr").prevAll(".question-single:first").find("input[name=QuestionID]").val();
                 
@@ -304,6 +320,7 @@
                 }
             });
         }
+        
     </script>
 </head>
 <body>

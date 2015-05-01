@@ -324,8 +324,17 @@ input[type=checkbox]:checked + label:before {
 
 
 
-/* IMAGE UPLOAD */
-.image-thumbnail{
+/* IMAGE LIST */
+.quiz-list-image-preview{
+    width: 250px;
+}
+.quiz-list-image-title{
+    width: auto;
+}
+.quiz-list-image-delete{
+    width: 10%;
+}
+.quiz-list-image-preview .image-thumbnail{
     max-width: 200px;
     max-height: 150px;
 }
