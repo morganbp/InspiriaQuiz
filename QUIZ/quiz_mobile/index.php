@@ -29,32 +29,17 @@
         <div data-role="page" data-theme="a" id="homescreen">
             <?php include 'menuAndHeader.php'; ?>
             <div data-role="content" id="content">
-                <ul data-role="listview" id="quizMode">
-                    <li data-icon="false">
-                        <a href="quizmode1">
-                            <h3>Quiz for idag</h3>
-                            <p>Er du på besøk hos Inspiria og vil prøve dagens quiz klikk her!</p>
-                        </a>
-                    </li>
-                    <li data-icon="false">
-                        <a href="#publicQuiz">
-                            <h3>Quiz for Skole/bedrift</h3>
-                            <p>Er du med en skole eller bedrift og skal gå rundt i Inspiria science center og ta vår quiz laget spesielt til dere klikk her!</p>
-                        </a>
-                    </li>
-                    <li data-icon="false">
-                        <a href="quizmode3">
-                            <h3>Quiz for lukket arrangement</h3>
-                            <p>Hvis du skal være med på et lukket arrangement i auditoriet eller et konferanserom klikk her!</p>
-                        </a>
-                    </li>
-                </ul>
+                <form style="max-width:600px; margin:0 auto;" action="javascript::">
+                    <input type="text" placeholder="Bruker id" style="text-align:center;" />
+                    <Button type="submit" style="margin:0 auto; max-width:200px;" >Start quiz</Button>
+                </form>
+                <form action="javascript::">
+                    <h3 style="margin:50px auto 0 auto; max-width:500px; text-align:center;">Ta dagens quiz ved å klikke på knappen under.</h3>
+                    <Button type="submit" style="margin:0 auto; max-width:200px;">Ta dagens quiz</Button>
+                </form>
             </div>
         </div>
         <?php
-            include 'pageQuizmode1.php';
-            include 'pageQuizmode3.php';
-            include 'pageQuiz.php';
 			include 'publicQuiz.php';
             include 'dialogs/quizNotFoundErrorDialog.php';
         ?>
