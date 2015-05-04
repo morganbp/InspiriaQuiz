@@ -24,9 +24,11 @@ function QuizDBHandler(){
 			data: {QuizID: quizID, UserID: userID, Score: score},
 			type: 'POST',
 			error: function(XMLHttpRequest, textStatus, errorThrown){
+				console.log(errorThrown);
 				return null;
 			},
 			success: function(data){
+				console.log(data);
 				return data;
 			}
 		});

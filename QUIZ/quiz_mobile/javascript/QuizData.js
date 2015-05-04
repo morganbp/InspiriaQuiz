@@ -24,7 +24,7 @@ function QuizData(ID){
 	this.getData = function(data){
 		if(data !== null){
 			this.setQuizJson(data);
-			window.quizSession.startQuestion();
+			window.quizSession.nextQuestion();;
 		}else{
 			quizNotFound();
 		}

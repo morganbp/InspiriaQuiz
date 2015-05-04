@@ -6,6 +6,8 @@ function QuizGuiHandler(){
 	// constant for Score Mode
 	this.SCORE_MODE = "SCORE_MODE";
 	
+	this.NEXT_QUESTION_MODE = "NEXT_QUESTION_MODE";
+	
 	// if the quiz is in "Quiz mode" or "Score mode"
 	this.mode = this.QUIZ_MODE;
 	
@@ -14,12 +16,15 @@ function QuizGuiHandler(){
 	
 	this.QuizGuiHandler = function(){
 		$("#quiz").css("display", "block");
-		$("#getQuiz").css("display","none");	
+		$("#getQuiz").css("display","none");
 	}
 	
-	this.setQuestion = function(questionText){
-		if(typeof questionText == "string" || questionText instanceof String){
-			$("#quizQuestion").text(questionText);
+	this.setQuestion = function(questionObject){
+		$("#quizQuestion").text(questionObject.QuestionText);
+		if(questionObject.QuestionImageFilename != null){
+			$("#image").css("display","block");
+			$("#image").attr("src","/InspiriaQuiz/UploadedImages/" + questionObject.QuestionImageFilename);
+			$("#image").attr("alt", questionObject.QuestionImageName);
 		}
 	}
 	
@@ -46,38 +51,64 @@ function QuizGuiHandler(){
 	}
 	
 	/**
-	*	toggles between score mode and quiz mode
+	*	toggles between different sceens
 	*/
-	this.toggleQuizScore = function(){
-		switch(this.mode){
+	this.toggleGuiMode = function(newMode){
+		var mode = (newMode === "undefined") ? this.mode: newMode;
+		switch(mode){
 			case this.QUIZ_MODE:
 				$("#alternatives").css("display","block");
 				$("#countdown").css("display", "block");
 				$("#score").css("display","none");	
+				$("#nextQuestion").css("display", "none");
 				this.mode = this.SCORE_MODE;
 				break;
 			case this.SCORE_MODE:
 				$("#countdown").css("display", "none");
 				$("#alternatives").css("display","none");
 				$("#score").css("display","block");
+				$("#image").css("display","none");
+				$("#nextQuestion").css("display", "none");
 				this.mode = this.QUIZ_MODE;
+				break;
+			case this.NEXT_QUESTION_MODE:
+				$("#countdown").css("display", "none");
+				$("#alternatives").css("display","none");
+				$("#score").css("display","none");
+				$("#image").css("display","none");
+				$("#nextQuestion").css("display", "block");
+				this.mode = this.NEXT_QUESTION_MODE;
 				break;
 		}
 	}
 	
-	this.showQuestion = function(){
-		this.mode = this.QUIZ_MODE;
-		this.toggleQuizScore();
+	this.showQuestion = function(questionObject){
+		this.setQuestion(questionObject);
+		this.setAlternatives(questionObject.Alternatives);
+		this.toggleGuiMode(this.QUIZ_MODE);
+	}
+	
+	this.showReadyNextQuestion = function(question){
+		this.toggleGuiMode(this.NEXT_QUESTION_MODE);
+		$("#quizQuestion").html("Klar for neste spørsmål?");
+		$("#exhibitImageData").css("display", "none");
+		if(question.ExhibitImageFilename !== null){
+			$("#exhibitImageData").css("display", "block");
+			$("#exhibitImage").attr("src", "/inspiriaQuiz/UploadedImages/" + question.ExhibitImageFilename);
+			$("#exhibitImage").attr("alt", question.ExhibitImageName);
+			$("#exhibitName").html(question.ExhibitName);
+		}
+		
 	}
 	
 	this.showScore = function(score){
 		this.mode = this.SCORE_MODE;
 		//Toggle alternatives and score visibility
-		this.toggleQuizScore();
+		this.toggleGuiMode(this.SCORE_MODE);
 		var title = "Resultat";
 		$("#quizQuestion").html(title);
 		$("#totalScore").html(score);
-		setTimeout(function(){window.quizSession.startQuestion();}, 2000);
+		setTimeout(function(){window.quizSession.nextQuestion();}, 2000);
 		
 	}
 	
@@ -97,7 +128,7 @@ function QuizGuiHandler(){
 	
 	this.showResult = function(){
 		//Toggle alternatives and score visibility
-		this.toggleQuizScore();
+		this.toggleGuiMode(this.SCORE_MODE);
 		var title = "Sluttresultat";
 		// GÅ TIL START SCREEN
 		//setTimeout(function(), 2000);

@@ -10,18 +10,16 @@
 				<input type="number" name="name" id="basic" onkeypress="chooseQuiz(event)" placeholder="QuizID" Style="text-align:center;" autofocus/>
 				<button type="button" onclick="chooseQuiz(event)">Hent Quiz</button>
 			</div>
-			<div id="quiz">
-				<!--<div id="infoHeader" data-role="header">
-					<div id="scoreWrapper">
-						<label style="display:inline;">Poengsum: </label>
-						<span id="scoreHeader" style="display:inline;">0</span>
-					</div>
-					<div id="timerWrapper">
-						<label style="display:inline;">Tid igjen: </label>
-						<span id="timer" style="display:inline;"></span>
-					</div>
-				</div>-->
-
+			<div id="nextQuestion" style="display:none;">
+				<div id="exhibitImageData" style="display:none;">
+					<img id="exhibitImage" style="display:block;"/>
+					<div  class="centerHorizontal" style="margin:10px 0;">Info om neste spørsmål finner du på:</div>
+					<div id="exhibitName"  class="centerHorizontal bold" ></div>
+				</div>
+				<button onclick="window.quizSession.startQuestion();">Klar</button>
+			</div>
+			<div id="quiz" style="display:none;">
+				<img id="image" style="display:none;"/>
 				<div id="spinner"></div>
 				<div id="score" style="display:none;">
 					<h3>Din poengsum:</h3>

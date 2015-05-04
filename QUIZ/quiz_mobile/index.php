@@ -24,39 +24,26 @@
 		<script src="javascript/QuizGuiHandler.js"></script>
 		<script src="javascript/QuizDBHandler.js"></script>
 	    <script src="javascript/SpinnerCounter.js"></script>
+		<script>
+			
+		</script>
     </head>
     <body>
         <div data-role="page" data-theme="a" id="homescreen">
             <?php include 'menuAndHeader.php'; ?>
-            <div data-role="content" id="content">
-                <ul data-role="listview" id="quizMode">
-                    <li data-icon="false">
-                        <a href="quizmode1">
-                            <h3>Quiz for idag</h3>
-                            <p>Er du på besøk hos Inspiria og vil prøve dagens quiz klikk her!</p>
-                        </a>
-                    </li>
-                    <li data-icon="false">
-                        <a href="#publicQuiz">
-                            <h3>Quiz for Skole/bedrift</h3>
-                            <p>Er du med en skole eller bedrift og skal gå rundt i Inspiria science center og ta vår quiz laget spesielt til dere klikk her!</p>
-                        </a>
-                    </li>
-                    <li data-icon="false">
-                        <a href="quizmode3">
-                            <h3>Quiz for lukket arrangement</h3>
-                            <p>Hvis du skal være med på et lukket arrangement i auditoriet eller et konferanserom klikk her!</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+			<div class="center">
+				<div>
+					<a data-role="button" data-icon="delete" data-iconpos="top" data-inline="true" class="menuButton">Ta dagens quiz</a>
+				</div>
+				<div>
+					<h3 style="text-align:center;">Hvis du har bruker</h3>
+					<input type="text" placeholder="Skriv din brukerkode" style="text-align:center;"/>
+					<button id="getQuiz"  data-icon="check" data-iconpos="left" data-inline="true" data-theme="b" style="float:right;" onclick="">Hent quiz</a>
+				</div>
+			</div>
         </div>
         <?php
-            include 'pageQuizmode1.php';
-            include 'pageQuizmode3.php';
-            include 'pageQuiz.php';
 			include 'publicQuiz.php';
-            include 'dialogs/quizNotFoundErrorDialog.php';
         ?>
     </body>
 </html>

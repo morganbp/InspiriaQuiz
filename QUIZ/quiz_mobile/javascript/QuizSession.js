@@ -38,6 +38,17 @@ function QuizSession(quizId, quizData){
 		this.totalScore += Math.round(points);
 	}
 	
+	this.nextQuestion = function(){
+		removeSpinner();
+		// get next question in quiz
+		this.currentQuestion = this.quiz.getQuestion();
+		
+		if(this.currentQuestion == null){
+			this.endQuizSession();
+			return;
+		}
+		this.quizGuiHandler.showReadyNextQuestion(this.currentQuestion);
+	}
 	/**
 	*
 	*	Get a new question and set up GUI for question
@@ -46,21 +57,7 @@ function QuizSession(quizId, quizData){
 	this.startQuestion = function(){
 		this.hasAnswered = false;
 		this.answer = -1;
-		
-		
-		removeSpinner();
-		
-		// get next question in quiz
-		this.currentQuestion = this.quiz.getQuestion();
-		if(this.currentQuestion == null){
-			this.endQuizSession();
-			return;
-		}
-		
-		this.quizGuiHandler.showQuestion();
-		this.quizGuiHandler.setQuestion(this.currentQuestion.QuestionText);
-		this.quizGuiHandler.setAlternatives(this.currentQuestion.Alternatives);
-
+		this.quizGuiHandler.showQuestion(this.currentQuestion);
 		this.countdown.initialTimer();
 	}
 	
@@ -73,6 +70,7 @@ function QuizSession(quizId, quizData){
 	}
 	
 	this.endQuestion = function(){
+		this.hasAnswered = true;
 		// If answer is correct
 		if(this.answer !== -1 && this.currentQuestion.Alternatives[this.answer].AlternativeCorrect === 1){
 			this.updateScore();	
@@ -83,6 +81,7 @@ function QuizSession(quizId, quizData){
 	}
 	
 	this.endQuizSession = function(){
+		
 		// Submit score
 		var dbHandler = new QuizDBHandler();
 		var userID = 3;
@@ -96,10 +95,7 @@ function QuizSession(quizId, quizData){
 		if(quizData == null){
 			this.quiz = new QuizData(id);
 			this.quizGuiHandler = new QuizGuiHandler();
-			this.countdown = new SpinnerCounter(document.getElementById("countdown"), function(){window.quizSession.endQuestion()});
-		}else{
-			this.quiz = quizData;
-			this.quizGuiHandler = new HostGuiHandler();
+			this.countdown = new SpinnerCounter(document.getElementById("countdown"),function(){window.quizSession.endQuestion();});
 		}
 	}
 	
