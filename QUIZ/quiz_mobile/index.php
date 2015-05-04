@@ -31,16 +31,17 @@
     <body>
         <div data-role="page" data-theme="a" id="homescreen">
             <?php include 'menuAndHeader.php'; ?>
-			<div class="center">
-				<div>
-					<a data-role="button" data-icon="delete" data-iconpos="top" data-inline="true" class="menuButton">Ta dagens quiz</a>
-				</div>
-				<div>
-					<h3 style="text-align:center;">Hvis du har bruker</h3>
-					<input type="text" placeholder="Skriv din brukerkode" style="text-align:center;"/>
-					<button id="getQuiz"  data-icon="check" data-iconpos="left" data-inline="true" data-theme="b" style="float:right;" onclick="">Hent quiz</a>
-				</div>
-			</div>
+
+            <div data-role="content" id="content">
+                <form style="max-width:600px; margin:0 auto;" action="javascript::">
+                    <input type="text" placeholder="Bruker id" style="text-align:center;" />
+                    <Button type="submit" style="margin:0 auto; max-width:200px;" >Start quiz</Button>
+                </form>
+                <form action="javascript::">
+                    <h3 style="margin:50px auto 0 auto; max-width:500px; text-align:center;">Ta dagens quiz ved å klikke på knappen under.</h3>
+                    <Button type="submit" style="margin:0 auto; max-width:200px;">Ta dagens quiz</Button>
+                </form>
+            </div>
         </div>
         <?php
 			include 'publicQuiz.php';
