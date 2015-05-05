@@ -1,6 +1,6 @@
 function QuizDBHandler(){
 	
-	this.dbDIR = /*"http://frigg.hiof.no/bo15-g21/API/quiz_get.php"*/ "http://localhost/inspiriaQuiz/API/";
+	this.dbDIR = /*"/bo15-g21/API/"*/ "/inspiriaQuiz/API/";
 	this.getQuizJsonByID = function(quizID, dataCollecter){
 		"use strict";
 		$.ajax({
@@ -24,11 +24,9 @@ function QuizDBHandler(){
 			data: {QuizID: quizID, UserID: userID, Score: score},
 			type: 'POST',
 			error: function(XMLHttpRequest, textStatus, errorThrown){
-				console.log(errorThrown);
 				return null;
 			},
 			success: function(data){
-				console.log(data);
 				return data;
 			}
 		});
@@ -38,4 +36,24 @@ function QuizDBHandler(){
 		
 	}
 	
+	this.getUserData = function(endEvt, userID, userCode){
+	"user strict";
+	postData = {};
+		
+	if(userID !== "undefined" && userID !== null)
+		postData.UserID=userID;
+	if(userCode !== "undefined" && userCode !== null)
+		postData.UserCode=userCode;
+	$.ajax({
+			url: this.dbDIR + "user_get.php", 
+			data: postData,
+			type: 'POST',
+			error: function(XMLHttpRequest, textStatus, errorThrown){
+				endEvt(JSON.parse(XMLHttpRequest.responseText));
+			},
+			success: function(data){
+				endEvt(data);
+			}
+		});
+	}
 }

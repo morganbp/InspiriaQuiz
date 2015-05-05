@@ -15,8 +15,6 @@ function QuizGuiHandler(){
 	var letters = ['a','b'];
 	
 	this.QuizGuiHandler = function(){
-		$("#quiz").css("display", "block");
-		$("#getQuiz").css("display","none");
 	}
 	
 	this.setQuestion = function(questionObject){

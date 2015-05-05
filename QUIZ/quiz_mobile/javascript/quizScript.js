@@ -1,55 +1,44 @@
-window.quizSession;
+window.quizSession = null;
 
 // The spinner which runs when page is loading
 var spinner;
 
+initPage();
+
+function initPage(){
+	var url = window.location.href.split("#");
+	if(url.length > 1){
+		window.location.href = url[0];	
+	}
+}
+
 function saveCookies(){
-	localStorage.setItem("cQuizSession", JSON.stringify(quizSession));
+	//localStorage.setItem("cQuizSession", JSON.stringify(quizSession));
 }
 
 function getCookie(){
-	var session = localStorage.getItem("cQuizSession");
-	console.log(session);
+	//var session = localStorage.getItem("cQuizSession");
+	//console.log(session);
 }
 
-startUpScreen();
-/**
-* Event to choose which quiz we want to play
-*/
-function chooseQuiz(event){
-	if(event.keyCode === 13 || event instanceof MouseEvent){
-		var id = $("#basic").val();
-		if(/[0-9]/.test(id)){
-			startQuiz(id);
-		}else{
-			popup("#invalidInput");
-		}
+function startQuiz(id, user){
+	if(window.quizSession !== null ){
+		window.quizSession.continueQuiz();
+		return;
 	}
-}
-
-function startQuiz(id, host){
-	host = typeof host != 'undefined' ? host : false;
-	if(host){
+	
+	user = typeof user != 'undefined' ? user : null;
+	if(user === null){
 		window.quizSession = new QuizSession(Number(id));
 	}else{
-		window.quizSession = new QuizSession(Number(id));
-		setUpSpinner();
+		window.quizSession = new QuizSession(Number(id), user);
 	}
 }
-
-
-function popup(id){
-	$(id).popup("open");	
-	setTimeout(function(){
-		$(id).popup("close");
-	},1500); 
-		$("#basic").val('');
-}
-
 
 
 /**
 * When the player press one of the answeres, the button gets chosen
+
 */
 function answerClicked(alternative){
 	if(!window.quizSession.hasAnswered){
@@ -58,21 +47,13 @@ function answerClicked(alternative){
 	}
 }
 
-	
-function startUpScreen(){
-	$("#quiz").css("display", "none");
-	$("#getQuiz").css("display", "block");
-	$("#quizQuestion").html("Velg Quiz");
-}
 
-function quizNotFound(){
-	popup("#quizNotFound");
-	removeSpinner();
-}
-function setUpSpinner(){
-	$.mobile.loading('show');
-}
-
-function removeSpinner(){
-	$.mobile.loading('hide');
+/**
+*
+*
+*/
+function pauseSession(){
+	if(window.quizSession !== null){
+		window.quizSession.pauseQuiz();	
+	}
 }

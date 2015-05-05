@@ -6,6 +6,16 @@ body{
 	text-align:center;
 }
 
+#alternatives{
+	position: absolute;
+    bottom:0;
+    left:0%;
+    margin: 0 auto;
+    width:100%;
+	justify-content: center; /* align horizontal */
+	align-items: center; /* align vertical */
+    text-align: center;
+}
 
 .alternative{
 	margin: .5%;

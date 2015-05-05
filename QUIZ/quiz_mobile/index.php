@@ -24,20 +24,20 @@
 		<script src="javascript/QuizGuiHandler.js"></script>
 		<script src="javascript/QuizDBHandler.js"></script>
 	    <script src="javascript/SpinnerCounter.js"></script>
-		<script>
-			
-		</script>
+		
     </head>
     <body>
+		
         <div data-role="page" data-theme="a" id="homescreen">
             <?php include 'menuAndHeader.php'; ?>
 
             <div data-role="content" id="content">
-                <form style="max-width:600px; margin:0 auto;" action="javascript::">
-                    <input type="text" placeholder="Bruker id" style="text-align:center;" />
-                    <Button type="submit" style="margin:0 auto; max-width:200px;" >Start quiz</Button>
+				<div data-role="popup" id="errorMessage">Hei</div>
+                <form style="max-width:600px; margin:0 auto;" action="javascript:">
+                    <input type="text" placeholder="Bruker id" style="text-align:center;" id="userCode"/>
+                    <Button type="submit" id="startQuizBtn" style="margin:0 auto; max-width:200px;">Start quiz</Button>
                 </form>
-                <form action="javascript::">
+                <form action="javascript:">
                     <h3 style="margin:50px auto 0 auto; max-width:500px; text-align:center;">Ta dagens quiz ved å klikke på knappen under.</h3>
                     <Button type="submit" style="margin:0 auto; max-width:200px;">Ta dagens quiz</Button>
                 </form>
@@ -46,5 +46,34 @@
         <?php
 			include 'publicQuiz.php';
         ?>
+		<script>
+			var loading = false;
+			$("#startQuizBtn").click(function(){
+				if(!loading){
+					$.mobile.loading('show');
+					var input = document.getElementById("userCode").value;
+					var dbHandler = new QuizDBHandler();
+					// Collect the user data 
+					dbHandler.getUserData(function(data){
+						$.mobile.loading('hide');
+						if(!data.hasOwnProperty('Error')){
+							// START QUIZ
+							startQuiz(data.QuizID, data);
+							var url = window.location.href.split("#");
+							window.location.href = url[0] + "#publicQuiz";
+						}else{
+							// SHOW ERROR MESSAGE
+							$("#errorMessage").html("<p>" + data.Error + "</p>");
+							$("#errorMessage").popup("open");
+							setTimeout(function(){
+								$("#errorMessage").popup("close");
+								$("#errorMessage").html("");
+							}, 1500);
+						}
+
+					},null, input);
+				}
+			});
+		</script>
     </body>
 </html>

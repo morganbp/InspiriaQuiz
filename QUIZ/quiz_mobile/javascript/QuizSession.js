@@ -1,5 +1,5 @@
-function QuizSession(quizId, quizData){
-	quizData = typeof quizData !== 'undefined' ? quizData : null;
+function QuizSession(quizId, user){
+	user = typeof user !== 'undefined' ? user : null;
 	// Maximum points for each question
 	this.maxPoints = 1000;
 	// Minimum points for each question
@@ -25,6 +25,11 @@ function QuizSession(quizId, quizData){
 	this.quiz;
 	
 	this.quizGuiHandler; 
+	// user who takes the quiz
+	this.user;
+	
+	// Is the quiz active
+	this.active = true;
 	
 	/**
 	*
@@ -38,8 +43,18 @@ function QuizSession(quizId, quizData){
 		this.totalScore += Math.round(points);
 	}
 	
+	this.pauseQuiz = function(){
+		if(this.active){
+			this.active = false;
+		}
+		
+	}
+	
+	this.continueQuiz = function(){
+		this.active = true;
+	}
+	
 	this.nextQuestion = function(){
-		removeSpinner();
 		// get next question in quiz
 		this.currentQuestion = this.quiz.getQuestion();
 		
@@ -81,23 +96,23 @@ function QuizSession(quizId, quizData){
 	}
 	
 	this.endQuizSession = function(){
-		
 		// Submit score
 		var dbHandler = new QuizDBHandler();
-		var userID = 3;
-		dbHandler.submitQuizResults(this.quiz.quizJson.QuizID, userID, this.totalScore);
+		
+		dbHandler.submitQuizResults(this.quiz.quizJson.QuizID, this.user.UserID, this.totalScore);
 		
 		window.quizSession = null;
-		startUpScreen();
+		// navigate back to main screen
+		var url = window.location.href.split("#");
+		window.location.href = url[0];
 	}
 		
-	this.QuizSession = function(id, quizData){
-		if(quizData == null){
-			this.quiz = new QuizData(id);
-			this.quizGuiHandler = new QuizGuiHandler();
-			this.countdown = new SpinnerCounter(document.getElementById("countdown"),function(){window.quizSession.endQuestion();});
-		}
+	this.QuizSession = function(id, user){
+		this.quiz = new QuizData(id);
+		this.user = user;
+		this.quizGuiHandler = new QuizGuiHandler();
+		this.countdown = new SpinnerCounter(document.getElementById("countdown"),function(){window.quizSession.endQuestion();});
 	}
 	
-	this.QuizSession(quizId, quizData);
+	this.QuizSession(quizId, user);
 }

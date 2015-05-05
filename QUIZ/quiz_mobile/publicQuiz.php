@@ -4,12 +4,7 @@
 		<div id="questionScreen">
 			<!-- Title -->
 			<h2 id="quizQuestion" class="centerHorizontal"></h2>
-			<div id="getQuiz">
-				<div data-role="popup" id="invalidInput"><p>Please type in  a number</p></div>
-				<div data-role="popup" id="quizNotFound"><p>Couldn't find Quiz</p></div>
-				<input type="number" name="name" id="basic" onkeypress="chooseQuiz(event)" placeholder="QuizID" Style="text-align:center;" autofocus/>
-				<button type="button" onclick="chooseQuiz(event)">Hent Quiz</button>
-			</div>
+			<!-- NEXT QUESTION -->
 			<div id="nextQuestion" style="display:none;">
 				<div id="exhibitImageData" style="display:none;">
 					<img id="exhibitImage" style="display:block;"/>
@@ -18,7 +13,8 @@
 				</div>
 				<button onclick="window.quizSession.startQuestion();">Klar</button>
 			</div>
-			<div id="quiz" style="display:none;">
+			<!-- QUIZ -->
+			<div id="quiz">
 				<img id="image" style="display:none;"/>
 				<div id="spinner"></div>
 				<div id="score" style="display:none;">
