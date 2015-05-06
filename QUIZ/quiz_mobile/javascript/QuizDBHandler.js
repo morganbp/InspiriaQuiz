@@ -32,21 +32,47 @@ function QuizDBHandler(){
 		});
 	}
 	
-	this.submitPersonInfo = function(){
-		
+	this.getUserData = function(endEvt, userID, userCode){
+		"use strict";
+		var postData = {};
+
+		if(userID !== "undefined" && userID !== null)
+			postData.UserID=userID;
+		if(userCode !== "undefined" && userCode !== null)
+			postData.UserCode=userCode;
+		$.ajax({
+				url: this.dbDIR + "user_get.php", 
+				data: postData,
+				type: 'POST',
+				error: function(XMLHttpRequest, textStatus, errorThrown){
+					endEvt(JSON.parse(XMLHttpRequest.responseText));
+				},
+				success: function(data){
+					endEvt(data);
+				}
+			});
 	}
 	
-	this.getUserData = function(endEvt, userID, userCode){
-	"user strict";
-	postData = {};
-		
-	if(userID !== "undefined" && userID !== null)
-		postData.UserID=userID;
-	if(userCode !== "undefined" && userCode !== null)
-		postData.UserCode=userCode;
-	$.ajax({
-			url: this.dbDIR + "user_get.php", 
-			data: postData,
+	this.getListOfQuizzes = function(endEvt){
+		"use strict";
+		$.ajax({
+			url: this.dbDIR + "quiz_list_get.php", 
+			data: {},
+			type: 'POST',
+			error: function(XMLHttpRequest, textStatus, errorThrown){
+				endEvt(JSON.parse(XMLHttpRequest.responseText));
+			},
+			success: function(data){
+				endEvt(data);
+			}
+		});
+	}
+	
+	this.postUser = function(endEvt, user){
+		"use strict";
+		$.ajax({
+			url: this.dbDIR + "user_post.php", 
+			data: {UserFirstName: user.UserFirstName, UserLastName: user.UserLastName, UserAge: user.UserAge, UserEmail: user.UserEmail, UserPhone: user.UserPhone, UserGender: user.UserGender},
 			type: 'POST',
 			error: function(XMLHttpRequest, textStatus, errorThrown){
 				endEvt(JSON.parse(XMLHttpRequest.responseText));

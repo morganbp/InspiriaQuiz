@@ -8,6 +8,8 @@ function QuizGuiHandler(){
 	
 	this.NEXT_QUESTION_MODE = "NEXT_QUESTION_MODE";
 	
+	this.REGISTER_MODE = "REGISTER_MODE";
+	
 	// if the quiz is in "Quiz mode" or "Score mode"
 	this.mode = this.QUIZ_MODE;
 	
@@ -53,29 +55,29 @@ function QuizGuiHandler(){
 	*/
 	this.toggleGuiMode = function(newMode){
 		var mode = (newMode === "undefined") ? this.mode: newMode;
+		$("#countdown").css("display", "none");
+		$("#alternatives").css("display","none");
+		$("#score").css("display","none");
+		$("#image").css("display","none");
+		$("#nextQuestion").css("display", "none");
+		$("#registerUser").css("display", "none");
 		switch(mode){
 			case this.QUIZ_MODE:
 				$("#alternatives").css("display","block");
 				$("#countdown").css("display", "block");
-				$("#score").css("display","none");	
-				$("#nextQuestion").css("display", "none");
 				this.mode = this.SCORE_MODE;
 				break;
 			case this.SCORE_MODE:
-				$("#countdown").css("display", "none");
-				$("#alternatives").css("display","none");
 				$("#score").css("display","block");
-				$("#image").css("display","none");
-				$("#nextQuestion").css("display", "none");
 				this.mode = this.QUIZ_MODE;
 				break;
 			case this.NEXT_QUESTION_MODE:
-				$("#countdown").css("display", "none");
-				$("#alternatives").css("display","none");
-				$("#score").css("display","none");
-				$("#image").css("display","none");
 				$("#nextQuestion").css("display", "block");
 				this.mode = this.NEXT_QUESTION_MODE;
+				break;
+			case this.REGISTER_MODE:
+				$("#registerUser").css("display", "block");
+				this.mode = this.REGISTER_MODE;
 				break;
 		}
 	}
@@ -100,7 +102,6 @@ function QuizGuiHandler(){
 	}
 	
 	this.showScore = function(score){
-		this.mode = this.SCORE_MODE;
 		//Toggle alternatives and score visibility
 		this.toggleGuiMode(this.SCORE_MODE);
 		var title = "Resultat";
@@ -122,6 +123,11 @@ function QuizGuiHandler(){
 				}
 			}
 		}
+	}
+	
+	this.showRegisterScheme = function(){
+		this.toggleGuiMode(this.REGISTER_MODE);
+		$("#quizQuestion").html("Registrer resultat");
 	}
 	
 	this.showResult = function(){

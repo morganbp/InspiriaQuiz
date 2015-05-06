@@ -32,14 +32,14 @@
             <?php include 'menuAndHeader.php'; ?>
 
             <div data-role="content" id="content">
-				<div data-role="popup" id="errorMessage">Hei</div>
+				<div data-role="popup" class="errorMessage">Hei</div>
                 <form style="max-width:600px; margin:0 auto;" action="javascript:">
                     <input type="text" placeholder="Bruker id" style="text-align:center;" id="userCode"/>
-                    <Button type="submit" id="startQuizBtn" style="margin:0 auto; max-width:200px;">Start quiz</Button>
+                    <Button type="button" id="startQuizBtn" style="margin:0 auto; max-width:200px;">Start quiz</Button>
                 </form>
                 <form action="javascript:">
                     <h3 style="margin:50px auto 0 auto; max-width:500px; text-align:center;">Ta dagens quiz ved å klikke på knappen under.</h3>
-                    <Button type="submit" style="margin:0 auto; max-width:200px;">Ta dagens quiz</Button>
+                    <Button type="button" style="margin:0 auto; max-width:200px;" id="quizOfTheDay">Ta dagens quiz</Button>
                 </form>
             </div>
         </div>
@@ -47,33 +47,57 @@
 			include 'publicQuiz.php';
         ?>
 		<script>
-			var loading = false;
 			$("#startQuizBtn").click(function(){
-				if(!loading){
-					$.mobile.loading('show');
-					var input = document.getElementById("userCode").value;
-					var dbHandler = new QuizDBHandler();
-					// Collect the user data 
-					dbHandler.getUserData(function(data){
-						$.mobile.loading('hide');
-						if(!data.hasOwnProperty('Error')){
-							// START QUIZ
-							startQuiz(data.QuizID, data);
+				$.mobile.loading('show');
+				var input = document.getElementById("userCode").value;
+				var dbHandler = new QuizDBHandler();
+				// Collect the user data 
+				dbHandler.getUserData(function(data){
+					$.mobile.loading('hide');
+					if(!data.hasOwnProperty('Error')){
+						// START QUIZ
+						startQuiz(data.QuizID, data);
+						var url = window.location.href.split("#");
+						window.location.href = url[0] + "#publicQuiz";
+					}else{
+						showErrorMessage(data, "#errorMessage");
+					}
+
+				},null, input);
+				
+			});
+			
+			$("#quizOfTheDay").click(function(){
+				$.mobile.loading('show');
+				var dbHandler = new QuizDBHandler();
+				dbHandler.getListOfQuizzes(function(data){
+					$.mobile.loading('hide');
+					if(!data.hasOwnProperty('Error')){
+						var quizID = getQuizOfTheDayID(data);
+						if(quizID !== null){
+							// startQuiz
+							startQuiz(quizID);
 							var url = window.location.href.split("#");
 							window.location.href = url[0] + "#publicQuiz";
-						}else{
-							// SHOW ERROR MESSAGE
-							$("#errorMessage").html("<p>" + data.Error + "</p>");
-							$("#errorMessage").popup("open");
-							setTimeout(function(){
-								$("#errorMessage").popup("close");
-								$("#errorMessage").html("");
-							}, 1500);
-						}
-
-					},null, input);
-				}
+						}else
+							showErrorMessage(JSON.parse('{"Error":"Dagens Quiz er ikke tilgjengelig"}'), "#errorMessage");	
+						
+					}else
+						showErrorMessage(data, "#errorMessage");	
+				});
 			});
+			
+			
+			
+			function getQuizOfTheDayID(quizzes){
+				for(key in quizzes){
+					if(quizzes[key].QuizOfTheDay){
+						return quizzes[key].QuizID;
+					}
+				}
+				return null;
+			}
+			
 		</script>
     </body>
 </html>

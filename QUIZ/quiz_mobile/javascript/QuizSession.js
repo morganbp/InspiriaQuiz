@@ -59,7 +59,10 @@ function QuizSession(quizId, user){
 		this.currentQuestion = this.quiz.getQuestion();
 		
 		if(this.currentQuestion == null){
-			this.endQuizSession();
+			if(this.user !== null)
+				this.endQuizSession();
+			else
+				this.quizGuiHandler.showRegisterScheme();
 			return;
 		}
 		this.quizGuiHandler.showReadyNextQuestion(this.currentQuestion);
@@ -106,9 +109,9 @@ function QuizSession(quizId, user){
 			var url = window.location.href.split("#");
 			window.location.href = url[0];
 		}else{
-			if(this.countdown.running){
+			if(this.countdown.running)
 				this.countdown.stop();	
-			}
+			
 		}
 		window.quizSession = null;
 		

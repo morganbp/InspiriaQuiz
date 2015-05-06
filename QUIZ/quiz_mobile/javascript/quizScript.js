@@ -23,15 +23,15 @@ function getCookie(){
 }
 
 function startQuiz(id, user){
+	// check if there is a quiz running
 	if(window.quizSession !== null){
-		console.log(window.quizSession.user.UserCode);
-		console.log(document.getElementById("userCode").value);
+		// check if the code is the same code for the user running the quiz
 		if(window.quizSession.user.UserCode.toLowerCase() == document.getElementById("userCode").value.toLowerCase()){
 			window.quizSession.continueQuiz();
 			return;
 		}
+		// if there is another user, end previous session and start a new session
 		window.quizSession.endQuizSession(true);
-		
 	}
 	
 	user = typeof user != 'undefined' ? user : null;
@@ -53,7 +53,18 @@ function answerClicked(alternative){
 		alternative.className += " answere";
 	}
 }
-
+/**
+* Show error message from jQuery Dialog 
+*/
+function showErrorMessage(data, id){
+	// SHOW ERROR MESSAGE
+	$(id).html("<p>" + data.Error + "</p>");
+	$(id).popup("open");
+	setTimeout(function(){
+		$(id).popup("close");
+		$(id).html("");
+	}, 1500);	
+}
 
 /**
 *
@@ -62,5 +73,6 @@ function answerClicked(alternative){
 function pauseSession(){
 	if(window.quizSession !== null){
 		window.quizSession.pauseQuiz();	
+		window.location.href = "/inspiriaQuiz/QUIZ/quiz_mobile/";
 	}
 }
