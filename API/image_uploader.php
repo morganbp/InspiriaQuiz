@@ -12,7 +12,7 @@ $target_path = $target_path . $image_filename;
 if(move_uploaded_file($_FILES['ImageFile']['tmp_name'], $target_path)) {
     echo "The file ".basename($_FILES['ImageFile']['name'])." has been saved to ".$target_path;
 }else{
-    echo "There was an error uploading the file, please try again.";
+    die("There was an error uploading the file, please try again.");
 }
 
 

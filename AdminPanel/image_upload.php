@@ -69,7 +69,7 @@
                         echo '<tr class="quiz-single">';
                             echo '<td class="quiz-list-image-preview"><img class="image-thumbnail" src="../UploadedImages/'.$json->ImageFilename.'"/></td>';
                             echo '<td class="quiz-list-image-title">'.$json->ImageName.'</td>';
-                            echo '<td class="quiz-list-image-delete"><button type="button" onClick="deleteImage('.$json->ImageID.')">Slett</button></td>';
+                            echo '<td class="quiz-list-image-delete"><i class="flaticon-cross93" onclick="deleteImage('.$json->ImageID.')"></i></td>';
                         echo '</tr>';
                     }
                     ?>

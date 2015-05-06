@@ -18,6 +18,25 @@ a {
     color: black;
 }
 
+/* BUTTON STYLE */
+button, 
+input[type="submit"]{
+    height: 32px;
+    text-decoration: none;
+    background-color: #78d4f2;
+    border: 2px black solid;
+    padding: 2px 5px;
+}
+button:hover,
+input[type="submit"]:hover{
+    background-color: #8fdbf4;
+}
+button:active
+input[type="submit"]:active{
+    background-color: #15a6d6;
+}
+
+
 /* HEADER BAR */
 header{
     position: fixed;
@@ -134,28 +153,21 @@ ul#nav li a:hover{
     border: 2px solid #000;
     width: 400px;
 }
-.panel .panel-header button#submit-quiz{
-    height: 32px;
-    text-decoration: none;
-    background-color: #78d4f2;
-    border: 2px black solid;
-}
-.panel .panel-header button#submit-quiz:hover{
-    background-color: #8fdbf4;
-}
-.panel .panel-header button#submit-quiz:active{
-    background-color: #15a6d6;
-}
-
 .panel .panel-body{
     background-color: #fff;
     color: #000;
     padding: 15px;
 }
 
+.panel .panel-header button#submit-quiz{
+    float: right;
+}
+
+
 /* PANELS: QUIZ LITS & QUESTION LIST */
 .panel #quiz-list, .panel #question-list,
-.panel #question-list .question-section{
+.panel #question-list .question-section,
+.panel #question-list .add-question-section{
     width: 100%;
     height: auto;
     
@@ -293,9 +305,14 @@ input[type=checkbox]:checked + label:before {
     max-height: 150px;
 }
 
-#submit-quiz{
-    padding: 2px 5px;
+
+/* UNCAT */
+.delete-question{
+    /*padding: 2px 5px;*/
     float: right;
+}
+.add-question{
+    
 }
 
 /* MEDIA QUERIES */

@@ -9,7 +9,12 @@
     <script src="jquery-2.1.3.js"></script>
     <script type='text/javascript'>
         var quizJSON = null;
+        var imagesJSON = null;
+        var highestQuestionIndex = 0;
+        var optionList = "<option value='-1'>Ingen bilde valgt</option>";
+        
         var submitJSON = {
+            QuizID: <?php echo $_GET['QuizID'];?>,
             Insert: {Alternatives: [], Questions: []}, 
             Update: {Alternatives: [], Questions: []}, 
             Delete: {Alternatives: [], Questions: []}
@@ -53,12 +58,24 @@
                 },
                 success: function(data){
                     quizJSON = data;
+                    highestQuestionIndex = quizJSON.Questions.length;
                     makeQuestionTable();
                     addCheckboxClickListeners();
                     fetchImages();
+                    
+                    console.log(quizJSON);
                 }
             });
         }
+        
+        function findQuestionIndexByID(id){
+            for(var i=0; i<quizJSON.Questions.length; i++){
+                if(quizJSON.Questions[i].QuestionID == id)
+                    return i;
+            }
+            return -1;
+        }
+        
         
         function fetchImages(){
             $.ajax({
@@ -67,32 +84,47 @@
                     alert("Images not found.");
                 },
                 success: function(images){
-                    var optionList = "<option value='none'>Ingen bilde valgt</option>";
+                    imagesJSON = images;
                     for(var i=0; i<images.length; i++){
-                        optionList += "<option value='" + images[i].ImageFilename + "'>"
+                        optionList += "<option value='" + images[i].ImageID + "'>"
                             +images[i].ImageName
                             +"</option>";
                     }
                     $(".question-image select").each(function(){
                         $(this).html(optionList);
-                        $(this).change(function(){
-                            var imageRow = $(this).closest(".question-section").find(".question-image-preview");
-                            var imageSrc = $(this).find(":selected").val();
-                            if(imageSrc == "none"){
-                                imageRow.fadeOut();
-                            }else{
-                                var imageTag = imageRow.find("img");
-                            
-                                imageTag.attr("src", "../UploadedImages/"+imageSrc)
-                                imageRow.fadeIn();
-                            }
-                            /*imageTag.fadeTo(500,0,function(){
-                                imageTag.attr("src", "../UploadedImages/"+imageSrc).fadeTo(500,1);
-                            });*/
-                        });
+                        var questionID = $(this).closest('.question-section').find('input[name=QuestionID]').val();
+                        var questionIndex = findQuestionIndexByID(questionID);
+                        var imageIndex = quizJSON.Questions[questionIndex].ImageID;
+                        
+                        if(imageIndex == null)
+                            imageIndex = -1;
+
+                        $(this).val(imageIndex);
+                        $(this).change(refreshImagePreview);
                     });
                 }
             });
+        }
+        
+        function refreshImagePreview(){
+            var imageRow = $(this).closest(".question-section").find(".question-image-preview");
+            var imageIndex = $(this).find(":selected").val();
+            if(imageIndex == -1){
+                imageRow.fadeOut();
+            }else{
+                var imageFilename = imagesJSON[findImageIndexByID(imageIndex)].ImageFilename;
+                var imageTag = imageRow.find("img");
+
+                imageTag.attr("src", "../UploadedImages/"+imageFilename)
+                imageRow.fadeIn();
+            }
+        }
+        
+        function findImageIndexByID(imageID){
+            for(var i=0; imagesJSON.length; i++)
+                if(imagesJSON[i].ImageID == imageID)
+                    return i;
+            return -1;
         }
         
         // Makes the question table
@@ -108,6 +140,9 @@
             for(var i=0; i<questionsJSON.length; i++){
                 $('#question-list').append(questionSection(i));
             }
+            $('#question-list').append("<table class='add-question-section'><tr class='question-top'><td>"
+                    + "<button class='add-question' onclick='addQuestion()'>Legg til spørsmål</button>"
+                    + "</td></tr></table>");
         }
         
         // Functions for divs inside the table for better readability in code above.
@@ -123,7 +158,8 @@
         
         function questionHeaderRow(i){
             return "<tr class='question-top'><th>"
-                + quizJSON.Questions[i].QuestionText 
+                + quizJSON.Questions[i].QuestionText
+                + "<i class='flaticon-cross93 delete-question' onclick='removeQuestion(this, "+i+")'></i>"
                 + "</th></tr>";
         }
         
@@ -174,9 +210,9 @@
         
         function questionNewAlternative(qNum, aNum){
             var startRow = "<tr class='alternatives'><td>";
+            var shownInput = "<input class='alternative-text' type='text' name='NewAlternative["+qNum+"]["+aNum+"]' placeholder='...'>"
             var checkboxCorrect = "<input class='correct-checkbox' type='checkbox' id='NewCorrect["+qNum+"]["+aNum+"]' name='NewCorrect'>";
             var checkboxCorrectLabel = "<label class='correct-label' for='NewCorrect["+qNum+"]["+aNum+"]'></label>";
-            var shownInput = "<input class='alternative-text' type='text' name='NewAlternative["+qNum+"]["+aNum+"]' placeholder='...'>"
             var deleteButton = "<i class='flaticon-cross93' onclick='removeNewAlternative(this)'></i>";
             var endRow = "</td></tr>";
 
@@ -197,7 +233,7 @@
             var altID = quizJSON.Questions[qNum].Alternatives[aNum].AlternativeID;
             submitJSON.Delete.Alternatives.push(altID);
             $(element).closest("tr").remove();
-            console.log(submitJSON);
+            //console.log(submitJSON);
         }
         
         // When the user clicks on the X behind an alternative that does not have an ID (a new alternative)
@@ -213,7 +249,7 @@
                 $(this).find(".correct-checkbox").prop("name", "NewCorrect["+indexes[0]+"]["+(indexes[1]-1)+"]");
                 $(this).find(".correct-checkbox").prop("id", "NewCorrect["+indexes[0]+"]["+(indexes[1]-1)+"]");
                 $(this).find(".correct-label").prop("for", "NewCorrect["+indexes[0]+"]["+(indexes[1]-1)+"]");
-                console.log(indexes);
+                //console.log(indexes);
             });
             
             tr.remove();
@@ -234,6 +270,70 @@
             }
         }
         
+        // When the user clicks the X on a question
+        function removeQuestion(element, qNum){
+            var questionID = quizJSON.Questions[qNum].QuestionID;
+            //console.log(questionID);
+            submitJSON.Delete.Questions.push(questionID);
+            $(element).closest(".question-section").fadeOut(500, function(){
+                    $(this).remove()
+                });
+        }
+        
+        function removeNewQuestion(element){
+            $(element).closest(".question-section").fadeOut(500, function(){
+                    $(this).remove()
+                });
+        }
+        
+        // When the user clicks the button at the bottom to add a question
+        function addQuestion(){
+            var qNum = highestQuestionIndex;
+            var aNum = 0;
+            var emptyQuestion = "<table class='question-section'>"
+            
+                + "<tr class='question-top'><th>Nytt spørsmål"
+                + "<i class='flaticon-cross93 delete-question' onclick='removeNewQuestion(this)'></i>"
+                + "</th></tr>"
+                
+                + "<tr class='question-info'><td><div>Bilde</div></td></tr>"
+                + "<tr class='question-image'><td>"
+                + "<select>" + optionList + "</select>"
+                + "</td></tr>"
+                + "<tr class='question-image-preview'><td><img/></td></tr>"
+            
+                + "<tr class='question-info'><td><div>Spørsmål</div></td></tr>"
+                + "<tr class='question-single'><td>"
+                + "<input type='hidden' name='QuestionID' value='-1'/>"
+                + "<input class='question-text' type='text' name='NewQuestionText' placeholder='...'/>"
+                + "</td></tr>"
+            
+                + questionNewAlternatives(qNum)
+            
+                + "</table>";
+            
+            $(emptyQuestion).insertBefore($('.add-question-section', '#question-list'));
+            highestQuestionIndex++;
+            
+            // Refresh image preview change-listener
+            $(".question-image select").each(function(){
+                $(this).change(refreshImagePreview);
+            });
+        }
+        
+        
+        function questionNewAlternatives(i){
+            var alternativesText = "<tr class='question-info'><td><div>Alternativer</div></td></tr>";
+            
+            for(var j=0; j<4; j++){
+                alternativesText += questionNewAlternative(i, j);
+            }
+            
+            alternativesText += questionAlternativePlus(i);
+            
+            return alternativesText;
+        }
+        
         /* SUBMIT */
         function submitQuiz(){
             $("#submit-quiz").html("Lagrer...");
@@ -245,24 +345,61 @@
                 submitJSON.Update.QuizName = quizName;
             }
             
+            
+            
+            // Process questions with alternatives
             $(".question-section").each(function(outer){
-                //console.log(this);
-                var questionTextTag = $(this).find(".question-text");
                 var questionID = $(this).find("input[name=QuestionID]").val();
-                var newQuestionText = questionTextTag.val();
-                var pattern = /\d+/g;
-                var questionIndex = questionTextTag.prop("name").match(pattern);
                 
-                if(newQuestionText != quizJSON.Questions[questionIndex].QuestionText){
-                    //console.log(questionIndex + " is not the same");
-                    submitJSON.Update.Questions.push({
-                        "QuestionID": questionID,
-                        "QuestionText": newQuestionText
+                var questionTextTag = $(this).find(".question-text");
+                var newQuestionText = questionTextTag.val();
+                
+                // Find ImageID selected
+                $(this).find(".question-image select").each(function(){
+                    imageID = $(this).val();
+                });
+                //console.log("imageID = " + imageID);
+                
+                if(questionID == -1){
+                    // This section is a new question
+                    var questionText = $(this).find("input[name=NewQuestionText]").val();
+                    var alternatives = [];
+                    
+                    $(this).find(".alternative-text").each(function(){
+                        var alternativeText = $(this).val();
+                        var correctBoolean = $(this).next("input[type=checkbox]").prop("checked");
+                        var correctValue = (correctBoolean==true)?1:0;
+                        
+                        alternatives.push({
+                            "AlternativeText": alternativeText, 
+                            "AlternativeCorrect": correctValue
+                        });
                     });
+                    
+                    submitJSON.Insert.Questions.push({
+                        "QuestionText": questionText,
+                        "Alternatives": alternatives,
+                        "ImageID": imageID
+                    });
+                }else{
+                    // This is an existing question
+                    var pattern = /\d+/g;
+                    var questionIndex = questionTextTag.prop("name").match(pattern);
+                    
+                    if(newQuestionText != quizJSON.Questions[questionIndex].QuestionText
+                        || imageID != quizJSON.Questions[questionIndex].ImageID){
+                        //console.log(questionIndex + " is not the same");
+                        submitJSON.Update.Questions.push({
+                            "QuestionID": questionID,
+                            "QuestionText": newQuestionText,
+                            "ImageID": imageID
+                        });
+                    }
                 }
                 
+                
                 // Check alternatives and correct
-                $(this).find(".alternative-text:not(input[name^=NewAlternative])").each(function(inner){
+                $(this).find(".alternative-text:not(input[name^=NewAlternative])").each(function(){
                     // Find json array indexes
                     var nameProperty = $(this).prop("name");
                     var indexes = nameProperty.match(pattern);
@@ -282,7 +419,6 @@
                     // Add to submitJSON if not the same
                     if(newAlternativeText != oldAlternativeText || newCorrectValue != oldCorrectValue){
                         // Add to submitJSON
-                        console.log(newCorrectValue+"!="+oldCorrectValue);
                         submitJSON.Update.Alternatives.push({
                             "AlternativeID": alternativeID, 
                             "AlternativeText": newAlternativeText, 
@@ -301,7 +437,9 @@
                 
                 submitJSON.Insert.Alternatives.push({"QuestionID": qID, "AlternativeText": alt, "AlternativeCorrect": cor});
             });
-            console.log(submitJSON);
+            // Debug:
+            //console.log(submitJSON);
+            //return;
             
             $.ajax({
                 url: "http://localhost/InspiriaQuiz/API/quiz_update.php",
