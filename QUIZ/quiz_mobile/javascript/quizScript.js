@@ -8,6 +8,7 @@ initPage();
 function initPage(){
 	var url = window.location.href.split("#");
 	if(url.length > 1){
+		
 		window.location.href = url[0];	
 	}
 }
@@ -22,9 +23,15 @@ function getCookie(){
 }
 
 function startQuiz(id, user){
-	if(window.quizSession !== null ){
-		window.quizSession.continueQuiz();
-		return;
+	if(window.quizSession !== null){
+		console.log(window.quizSession.user.UserCode);
+		console.log(document.getElementById("userCode").value);
+		if(window.quizSession.user.UserCode.toLowerCase() == document.getElementById("userCode").value.toLowerCase()){
+			window.quizSession.continueQuiz();
+			return;
+		}
+		window.quizSession.endQuizSession(true);
+		
 	}
 	
 	user = typeof user != 'undefined' ? user : null;

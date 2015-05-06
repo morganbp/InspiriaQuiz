@@ -95,16 +95,23 @@ function QuizSession(quizId, user){
 		setTimeout(function(){window.quizSession.quizGuiHandler.showScore(score);}, 2000);
 	}
 	
-	this.endQuizSession = function(){
-		// Submit score
-		var dbHandler = new QuizDBHandler();
-		
-		dbHandler.submitQuizResults(this.quiz.quizJson.QuizID, this.user.UserID, this.totalScore);
-		
+	this.endQuizSession = function(abort){
+		var isaborting = (typeof abort === "undefined") ? false : abort;
+		if(!abort){
+			// Submit score
+			var dbHandler = new QuizDBHandler();
+
+			dbHandler.submitQuizResults(this.quiz.quizJson.QuizID, this.user.UserID, this.totalScore);
+				// navigate back to main screen
+			var url = window.location.href.split("#");
+			window.location.href = url[0];
+		}else{
+			if(this.countdown.running){
+				this.countdown.stop();	
+			}
+		}
 		window.quizSession = null;
-		// navigate back to main screen
-		var url = window.location.href.split("#");
-		window.location.href = url[0];
+		
 	}
 		
 	this.QuizSession = function(id, user){
