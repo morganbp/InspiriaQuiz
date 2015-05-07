@@ -82,4 +82,17 @@ function QuizDBHandler(){
 			}
 		});
 	}
+	
+	this.postAnswer = function(alternativeID, userID){
+		"use strict";
+		$.ajax({
+			url: this.dbDIR + "answer_post.php", 
+			data: {AlternativeID: alternativeID, UserID: userID},
+			type: 'POST',
+			error: function(XMLHttpRequest, textStatus, errorThrown){
+			},
+			success: function(data){
+			}
+		});
+	}
 }

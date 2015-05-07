@@ -84,6 +84,10 @@ function QuizSession(quizId, user){
 			this.hasAnswered = true;
 			this.answer = answer;	
 			this.countdown.stop();
+			if(this.user !== null){
+				var dbHandler = new QuizDBHandler();
+				dbHandler.postAnswer(this.currentQuestion.Alternatives[this.answer].AlternativeID, this.user.UserID);
+			}
 		}
 	}
 	

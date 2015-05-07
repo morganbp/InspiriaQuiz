@@ -25,8 +25,12 @@ function getCookie(){
 function startQuiz(id, user){
 	// check if there is a quiz running
 	if(window.quizSession !== null){
-		// check if the code is the same code for the user running the quiz
-		if(window.quizSession.user.UserCode.toLowerCase() == document.getElementById("userCode").value.toLowerCase()){
+		if(window.quizSession.user !== null){
+			// check if the code is the same code for the user running the quiz
+			if(window.quizSession.user.UserCode.toLowerCase() == document.getElementById("userCode").value.toLowerCase()){
+				window.quizSession.continueQuiz();
+				return;
+			}
 			window.quizSession.continueQuiz();
 			return;
 		}

@@ -6,6 +6,7 @@ include("db_connect.php"); // Make connection as $stmt
 if(!isset($_POST['UserFirstName']) || !isset($_POST['UserLastName']) || !isset($_POST['UserAge']) || (!isset($_POST['UserEmail']) && !isset($_POST['UserPhone'])) || !isset($_POST['UserGender'])){
 	echo json_encode(array("Error" => "Invalid url arguments"), JSON_UNESCAPED_UNICODE);
 	http_response_code(404);
+	die();
 }
 $userFirstName = $_POST['UserFirstName'];
 $userLastName = $_POST['UserLastName'];

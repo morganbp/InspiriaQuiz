@@ -97,5 +97,23 @@ if(isset($update)){
             die();
         }
     }
+	
+	if(isset($update['QuizOfTheDay']) && $update['QuizOfTheDay'])
+		if($stmt = $mysqli -> prepare('UPDATE Quiz SET QuizOfTheDay = 0 WHERE QuizOfTheDay = 1 AND QuizID != -1;')) {
+            print_r($update);
+            $stmt -> execute();
+			if($stmt = $mysqli->prepare('UPDATE Quiz SET QuizOfTheDay = ? WHERE QuizID = ?')){
+				$stmt -> bind_param("ii", $update['QuizOfTheDay'], $submitJSON['QuizID']);
+				$stmt -> execute();
+			}else{
+				echo "Failed to prepare statement";
+				http_response_code(500);
+				die();
+			}
+        }else{
+            echo "Failed to prepare statement";
+            http_response_code(500);
+            die();
+        }
 }
 ?>

@@ -7,7 +7,9 @@
         <!--jQuery-->
         <script src="/inspiriaQuiz/LIBS/javascript/jquery-mobile/jquery-1.11.1.min.js"></script>
         <script src="/inspiriaQuiz/LIBS/javascript/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
+		
         <link rel="stylesheet" href="/inspiriaQuiz/LIBS/javascript/jquery-mobile/jquery.mobile-1.4.5.min.css" />
+		<link rel="stylesheet" href="/inspiriaQuiz/LIBS/css/inspiriaTheme.min.css" />
 		<link rel="stylesheet" href="/inspiriaQuiz/LIBS/css/themes/jquery.mobile.icons.min.css" />
         <!--stylesheets-->
         <link rel="stylesheet" href="css/sidepanelStyle.css" />
@@ -32,13 +34,13 @@
             <?php include 'menuAndHeader.php'; ?>
 
             <div data-role="content" id="content">
-				<div data-role="popup" class="errorMessage">Hei</div>
+				<div data-role="popup" id="errorMessage"></div>
                 <form style="max-width:600px; margin:0 auto;" action="javascript:">
                     <input type="text" placeholder="Bruker id" style="text-align:center;" id="userCode"/>
                     <Button type="button" id="startQuizBtn" style="margin:0 auto; max-width:200px;">Start quiz</Button>
                 </form>
                 <form action="javascript:">
-                    <h3 style="margin:50px auto 0 auto; max-width:500px; text-align:center;">Ta dagens quiz ved å klikke på knappen under.</h3>
+                    <h2 style="margin:50px auto 20px auto; max-width:500px; text-align:center;">Dagens quiz</h2>
                     <Button type="button" style="margin:0 auto; max-width:200px;" id="quizOfTheDay">Ta dagens quiz</Button>
                 </form>
             </div>
