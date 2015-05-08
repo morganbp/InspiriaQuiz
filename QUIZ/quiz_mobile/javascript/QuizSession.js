@@ -110,11 +110,10 @@ function QuizSession(quizId, user){
 
 			dbHandler.submitQuizResults(this.quiz.quizJson.QuizID, this.user.UserID, this.totalScore);
 				// navigate back to main screen
-			var url = window.location.href.split("#");
-			window.location.href = url[0];
+			window.location.href = "#";
 		}else{
 			if(this.countdown.running)
-				this.countdown.stop();	
+				this.countdown.stop(true);	
 			
 		}
 		window.quizSession = null;

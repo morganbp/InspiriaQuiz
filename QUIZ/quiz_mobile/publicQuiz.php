@@ -15,7 +15,7 @@
 		</div>
 		<!-- QUIZ -->
 		<div id="quiz">
-			<img id="image" style="display:none;"/>
+			<img id="image"/>
 			<div id="spinner"></div>
 			<div id="score" style="display:none;">
 				<h3>Din poengsum:</h3>

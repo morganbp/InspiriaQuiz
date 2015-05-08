@@ -43,6 +43,7 @@
                     <h2 style="margin:50px auto 20px auto; max-width:500px; text-align:center;">Dagens quiz</h2>
                     <Button type="button" style="margin:0 auto; max-width:200px;" id="quizOfTheDay">Ta dagens quiz</Button>
                 </form>
+				<img src="images/Inspiria_kunnskapendreralt.png" style="margin: 30px auto; display:block; width: auto; height:120px; " />
             </div>
         </div>
         <?php
@@ -78,11 +79,11 @@
 						var quizID = getQuizOfTheDayID(data);
 						if(quizID !== null){
 							// startQuiz
-							startQuiz(quizID);
+							startQuiz(quizID, null);
 							var url = window.location.href.split("#");
 							window.location.href = url[0] + "#publicQuiz";
 						}else
-							showErrorMessage(JSON.parse('{"Error":"Dagens Quiz er ikke tilgjengelig"}'), "#errorMessage");	
+							showErrorMessage({Error:"Dagens Quiz er ikke tilgjengelig"}, "#errorMessage");	
 						
 					}else
 						showErrorMessage(data, "#errorMessage");	

@@ -109,15 +109,19 @@ body{
 
 #image {
 	display: block;
-	width: 150px;
-	height: 150px;
+	width: auto;
+	max-width: 300px;
+	height: auto;
+	max-height: 170px;
 	margin: 0 auto;
 }
 
 #exhibitImage {
 	display:block;
-	width: 200px;
-	height: 200px;
+	width: auto;
+	max-width: 300px;
+	height: auto;
+	max-height: 200px;
 	margin: 0 auto;
 }
 

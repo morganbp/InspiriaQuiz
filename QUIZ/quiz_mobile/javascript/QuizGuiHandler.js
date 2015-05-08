@@ -21,10 +21,12 @@ function QuizGuiHandler(){
 	
 	this.setQuestion = function(questionObject){
 		$("#quizQuestion").text(questionObject.QuestionText);
-		if(questionObject.QuestionImageFilename != null){
+		if(questionObject.QuestionImageFilename !== null){
 			$("#image").css("display","block");
-			$("#image").attr("src","/InspiriaQuiz/UploadedImages/" + questionObject.QuestionImageFilename);
+			$("#image").attr("src","/inspiriaQuiz/UploadedImages/" + questionObject.QuestionImageFilename);
 			$("#image").attr("alt", questionObject.QuestionImageName);
+		}else{
+			$("#image").css("display","none");
 		}
 	}
 	
@@ -65,6 +67,7 @@ function QuizGuiHandler(){
 			case this.QUIZ_MODE:
 				$("#alternatives").css("display","block");
 				$("#countdown").css("display", "block");
+				$("#image").css("display","block");
 				this.mode = this.SCORE_MODE;
 				break;
 			case this.SCORE_MODE:
