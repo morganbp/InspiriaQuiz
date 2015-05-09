@@ -43,8 +43,8 @@
             <div class='panel'>
                 <div class='panel-header'>Last opp</div>
                 <div class='panel-body'>
-                    <form enctype="multipart/form-data" action="../API/image_uploader.php" method="POST">
-                        <input type="text" name="ImageName" />
+                    <form enctype="multipart/form-data" action="../API/image_uploader.php" method="POST" id="image-create">
+                        <input type="text" name="ImageName" placeholder="Bildetittel" />
                         <input type="file" name="ImageFile" accept="image/*" />
                         <input type="submit" value="Last opp"></input>
                     </form>
@@ -55,9 +55,9 @@
                 
                 <table id='quiz-list'>
                     <tr class='quiz-top'>
-                        <th class='quiz-list-image-preview'>Forhåndsvisning</th>
-                        <th class='quiz-list-image-title'>Tittel</th>
-                        <th class='quiz-list-image-delete'>Slett</th>
+                        <th class='image-preview'>Forhåndsvisning</th>
+                        <th class='title'>Tittel</th>
+                        <th class='delete'>Slett</th>
                     </tr>
                     <?php
                     // Get the quizes and feed it into the table
@@ -67,9 +67,9 @@
 
                     foreach($jsonQuiz as $json){
                         echo '<tr class="quiz-single">';
-                            echo '<td class="quiz-list-image-preview"><img class="image-thumbnail" src="../UploadedImages/'.$json->ImageFilename.'"/></td>';
-                            echo '<td class="quiz-list-image-title">'.$json->ImageName.'</td>';
-                            echo '<td class="quiz-list-image-delete"><i class="flaticon-cross93" onclick="deleteImage('.$json->ImageID.')"></i></td>';
+                            echo '<td class="image-preview"><img class="image-thumbnail" src="../UploadedImages/'.$json->ImageFilename.'"/></td>';
+                            echo '<td class="title">'.$json->ImageName.'</td>';
+                            echo '<td class="delete"><i class="flaticon-cross93" onclick="deleteImage('.$json->ImageID.')"></i></td>';
                         echo '</tr>';
                     }
                     ?>

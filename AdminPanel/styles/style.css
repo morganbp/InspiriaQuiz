@@ -289,7 +289,7 @@ input[type=checkbox]:checked + label:before {
 }
 
 /* IMAGE DROPDOWN */
-.panel #question-list select {
+.panel #question-list select{
     padding: 10px;
     border: 2px solid #ddd;
     
@@ -341,17 +341,34 @@ input[type=checkbox]:checked + label:before {
 
 
 
-/* IMAGE LIST */
-.quiz-list-image-preview{
+/* IMAGE/EXHIBIT LIST */
+#quiz-list .image-preview{
     width: 250px;
 }
-.quiz-list-image-title{
+#quiz-list .title{
     width: auto;
 }
-.quiz-list-image-delete{
+#quiz-list .description{
+    width: auto;
+}
+#quiz-list .delete{
     width: 10%;
 }
-.quiz-list-image-preview .image-thumbnail{
+#quiz-list .image-preview .image-thumbnail{
     max-width: 200px;
     max-height: 150px;
+}
+
+#exhibit-image{
+    border: 2px solid #ddd;
+}
+#exhibit-create input[type="text"],
+#image-create input[type="text"],
+#exhibit-image{
+    padding: 10px;
+    font-size: 14px;
+}
+#exhibit-create input[type="submit"]{
+    padding: 11px;
+    height: 40px;
 }

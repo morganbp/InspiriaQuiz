@@ -1,3 +1,4 @@
+/* OLD*/
 @font-face {
 	font-family: "Flaticon";
 	src: url("flaticon.eot");
@@ -18,7 +19,8 @@
 
 .flaticon-cross93:before {
 	content: "\e000";
-	vertical-align: middle;
+    vertical-align: middle;
+    /*margin-left: 5px;*/
 }
 .flaticon-home63:before {
 	content: "\e001";
@@ -26,17 +28,17 @@
 .flaticon-log:before {
 	content: "\e002";
 }
-.flaticon-picture64:before {
+.flaticon-place4:before {
 	content: "\e003";
 }
-.flaticon-place4:before {
-	content: "\e004";
+.flaticon-picture64:before {
+	content: "\e005";
 }
 .flaticon-plus24:before {
-	content: "\e005";
-	vertical-align: middle;
+	content: "\e004";
+    vertical-align: middle;
     margin-left: 5px;
 }
 .flaticon-question1:before {
-	content: "\e006";
+	content: "\e005";
 }

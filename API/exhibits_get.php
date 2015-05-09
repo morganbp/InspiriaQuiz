@@ -3,9 +3,10 @@ header('Content-type: application/json');
 
 include("db_connect.php");
 
-if($stmt = $mysqli -> prepare("SELECT ImageID, ImageName, ImageFilename 
-    FROM Image WHERE Active = 1
-    ORDER BY ImageName ASC")) {
+if($stmt = $mysqli -> prepare("SELECT ExhibitID, ExhibitName, ExhibitDescription, Image.ImageID, Image.ImageFilename
+    FROM Exhibit JOIN Image
+    ON Exhibit.ImageID = Image.ImageID
+    ORDER BY ExhibitName ASC")) {
     
     $stmt -> execute();
     $result = $stmt -> get_result();
