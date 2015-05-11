@@ -133,9 +133,9 @@
         function makeQuestionTable(){
             $('.content').prepend("<h1>Endrer quizen: " + quizJSON.QuizName + "</h1>");
             var submitButton = "<button id='submit-quiz' type='button' onclick='submitQuiz()'>Lagre endringene</button>";
-            $('.panel').append("<div class='panel-header'>Quiz tittel: <input id='quiz-name' type='text' name='quizName' value='" + quizJSON.QuizName + "'/>" + submitButton + "</div>");
-            $('.panel').append("<table id='question-list'>");
-            $('.panel').append("</table>");
+            $('#question-panel').append("<div class='panel-header'>Quiz tittel: <input id='quiz-name' type='text' name='quizName' value='" + quizJSON.QuizName + "'/>" + submitButton + "</div>");
+            $('#question-panel').append("<table id='question-list'>");
+            $('#question-panel').append("</table>");
             
             
             var questionsJSON = quizJSON.Questions;
@@ -367,7 +367,9 @@
                     var questionText = $(this).find("input[name=NewQuestionText]").val();
                     var alternatives = [];
                     
+                    
                     $(this).find(".alternative-text").each(function(){
+                        console.log("cake");
                         var alternativeText = $(this).val();
                         var correctBoolean = $(this).next("input[type=checkbox]").prop("checked");
                         var correctValue = (correctBoolean==true)?1:0;
@@ -397,10 +399,20 @@
                             "ImageID": imageID
                         });
                     }
+                    
+                    // Add new alternatives and correct-values to submitJSON
+                    $(this).find("input[name^=NewAlternative]").each(function(index){
+                        var alt = $(this).val();
+                        var correctBoolean = $(this).next("input[name^=NewCorrect]").prop("checked");
+                        var cor = (correctBoolean==true)?1:0;
+                        var qID = $(this).closest("tr").prevAll(".question-single:first").find("input[name=QuestionID]").val();
+
+                        submitJSON.Insert.Alternatives.push({"QuestionID": qID, "AlternativeText": alt, "AlternativeCorrect": cor});
+                    });
                 }
                 
                 
-                // Check alternatives and correct
+                // Check existing alternatives and correct
                 $(this).find(".alternative-text:not(input[name^=NewAlternative])").each(function(){
                     // Find json array indexes
                     var nameProperty = $(this).prop("name");
@@ -428,19 +440,12 @@
                             });
                     }
                 });
+                
             });
             
-            // Add new alternatives and correct-values to submitJSON
-            $("input[name^=NewAlternative]").each(function(index){
-                var alt = $(this).val();
-                var correctBoolean = $(this).next("input[name^=NewCorrect]").prop("checked");
-                var cor = (correctBoolean==true)?1:0;
-                var qID = $(this).closest("tr").prevAll(".question-single:first").find("input[name=QuestionID]").val();
-                
-                submitJSON.Insert.Alternatives.push({"QuestionID": qID, "AlternativeText": alt, "AlternativeCorrect": cor});
-            });
+            
             // Debug:
-            //console.log(submitJSON);
+            console.log(submitJSON);
             //return;
             
             $.ajax({
@@ -479,7 +484,7 @@
         
         
         <div class='content'>
-            <div class='panel'>
+            <div id='question-panel' class='panel'>
                 <!-- Javascript incoming -->
             </div>
         </div>

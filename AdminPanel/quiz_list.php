@@ -10,6 +10,27 @@
         function quizSingleClick(quizID){
             document.location = "quiz_single.php?QuizID=" + quizID;
         }
+        
+        function deleteQuiz(quizID){
+            
+            if(!confirm("Er du sikker på du vil slette denne quizen?")) {
+                return;
+            }
+            
+            $.ajax({
+                url: "http://localhost/InspiriaQuiz/API/quiz_delete.php",
+                type: "POST",
+                data: {QuizID: quizID},
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    console.log(errorThrown);
+                    alert("Quizen kunne ikke bli slettet.");
+                },
+                success: function(data){
+                    console.log(data);
+                    location.reload();
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -29,25 +50,35 @@
             <p>Her ser du en oversikt over de quizene som finnes i systemet.</p>
             
             <div class='panel'>
+                <div class='panel-header'>Ny quiz</div>
+                <div class='panel-body'>
+                    <form action="../API/quiz_post.php" method="POST" id='exhibit-create'>
+                        <input type="text" name="QuizName" placeholder="Quiz navn" />
+                        <input type="submit" value="Opprett"></input>
+                    </form>
+                </div>
+            </div>
+            
+            <div class='panel'>
                 <div class='panel-header'>Quizer</div>
                 
                     <table id='quiz-list'>
                         <tr class='quiz-top'>
-                            <th class='quiz-list-id'>Quiz ID</th>
-                            <th class='quiz-list-title'>Tittel</th>
-                            <th class='quiz-list-questions'>Antall spørsmål</th>
+                            <th class='title'>Tittel</th>
+                            <th class='questions'>Antall spørsmål</th>
+                            <th class='delete'>Slett</th>
                         </tr>
                         <?php
                         // Get the quizes and feed it into the table
-                        $jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/quiz_list_get.php');
+                        $jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/quizes_get.php');
                         $jsonQuiz = json_decode($jsonString);
                         //var_dump($jsonQuiz);
                         
                         foreach($jsonQuiz as $json){
-                            echo '<tr class="quiz-single" onclick=\'quizSingleClick('.$json->QuizID.');\'>';
-                                echo '<td class="quiz-list-id">'.$json->QuizID.'</a></td>';
-                                echo '<td class="quiz-list-title">'.$json->QuizName.'</td>';
-                                echo '<td class="quiz-list-questions">'.$json->Questions.'</td>';
+                            echo '<tr class="quiz-single">';
+                                echo '<td class="title" onclick="quizSingleClick('.$json->QuizID.');">'.$json->QuizName.'</td>';
+                                echo '<td class="questions">'.$json->Questions.'</td>';
+                                echo '<td class="delete"><i class="flaticon-cross93" onclick="deleteQuiz('.$json->QuizID.')"></i></td>';
                             echo '</tr>';
                         }
                         ?>

@@ -5,7 +5,9 @@ include("db_connect.php");
 
 if($stmt = $mysqli -> prepare("SELECT QuizID, QuizName, 
         (SELECT COUNT(*) FROM Question WHERE Quiz.QuizID = Question.QuizID) AS Questions 
-        FROM Quiz")) {
+        FROM Quiz
+        WHERE Active = 1
+        ORDER BY Quiz.QuizName")) {
     
     $stmt -> execute();
 

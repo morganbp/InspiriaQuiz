@@ -108,16 +108,18 @@ if(isset($insert)){
             }
 
             // Then insert alternatives
-            if($stmt = $mysqli -> prepare('INSERT INTO Alternative(QuestionID, AlternativeText, AlternativeCorrect) VALUES(?, ?, ?);')) {
-                foreach($insert['Alternatives'] as $alt){
-                    $stmt -> bind_param("isi", $insertedQuestionID, $alt['AlternativeText'], $alt['AlternativeCorrect']);
-                    $stmt -> execute();
-                    print_r($alt);
+            if(isset($insert['Alternatives'])) {
+                if($stmt = $mysqli -> prepare('INSERT INTO Alternative(QuestionID, AlternativeText, AlternativeCorrect) VALUES(?, ?, ?);')) {
+                    foreach($insert['Alternatives'] as $alt){
+                        $stmt -> bind_param("isi", $insertedQuestionID, $alt['AlternativeText'], $alt['AlternativeCorrect']);
+                        $stmt -> execute();
+                        print_r($alt);
+                    }
+                }else{
+                    echo "Failed to prepare statement";
+                    http_response_code(500);
+                    die();
                 }
-            }else{
-                echo "Failed to prepare statement";
-                http_response_code(500);
-                die();
             }
         }
     }

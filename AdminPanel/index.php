@@ -22,24 +22,9 @@
             <p>Velkommen til admin-panelet for Inspirias Quizer!</p>
             
             <div class='panel'>
-                <div class='panel-header'>Nyeste quiz</div>
+                <div class='panel-header'>...</div>
                 <div class='panel-body'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum molestie risus quis cursus. Aenean aliquam massa vel massa ullamcorper, sit amet pellentesque diam consequat. In sit amet enim quis dui facilisis interdum. Cras ut varius dui. Etiam ullamcorper in ligula nec pulvinar. 
-                </div>
-            </div>
-            
-            <div class='panel'>
-                <div class='panel-header'>Nyeste quiz</div>
-                <div class='panel-body'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum molestie risus quis cursus. Aenean aliquam massa vel massa ullamcorper, sit amet pellentesque diam consequat. In sit amet enim quis dui facilisis interdum. Cras ut varius dui. Etiam ullamcorper in ligula nec pulvinar. 
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum molestie risus quis cursus. Aenean aliquam massa vel massa ullamcorper, sit amet pellentesque diam consequat. In sit amet enim quis dui facilisis interdum. Cras ut varius dui. Etiam ullamcorper in ligula nec pulvinar. 
-                </div>
-            </div>
-            
-            <div class='panel'>
-                <div class='panel-header'>Nyeste quiz</div>
-                <div class='panel-body'>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum molestie risus quis cursus. Aenean aliquam massa vel massa ullamcorper, sit amet pellentesque diam consequat. In sit amet enim quis dui facilisis interdum. Cras ut varius dui. Etiam ullamcorper in ligula nec pulvinar. 
+                    ...
                 </div>
             </div>
         </div>
