@@ -7,34 +7,8 @@ if(!isset($_POST['QuizID'])){
     http_response_code(404);
     die();
 }
-$inputQuizID = $_POST['QuizID'];
+$quizID = $_POST['QuizID'];
 
-<<<<<<< HEAD
-
-if($stmt = $mysqli -> prepare("SELECT QuizID, QuizName FROM Quiz WHERE QuizID = ?")){
-    $stmt -> bind_param("i", $inputQuizID);
-    $stmt -> execute();
-
-    $stmt -> bind_result($quizID, $quizName);
-    while($stmt->fetch()){
-        $output["QuizID"] = $quizID;
-        $output["QuizName"] = $quizName;
-    }
-    $stmt -> close();
-    
-}else{
-    echo "Failed to prepare statement";
-    http_response_code(500);
-}
-
-if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, 
-    Question.QuestionID, Question.QuestionText, Question.ImageID, 
-    AlternativeText, AlternativeCorrect, AlternativeID FROM Question 
-    JOIN Alternative ON Question.QuestionID = Alternative.QuestionID  
-	JOIN Quiz ON Quiz.QuizID = Question.QuizID
-    WHERE Question.QuizID = ?")) {
-    $stmt -> bind_param("i", $inputQuizID);
-=======
 if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Quiz.QuizOfTheDay, Quiz.Active, Question.QuestionID, QuestionText, AlternativeText, AlternativeCorrect, AlternativeID, QuestionImage.ImageFilename AS QuestionImageFilename, QuestionImage.ImageName AS QuestionImageName, ExhibitName, ExhibitImage.ImageFilename AS ExhibitImageFilename, ExhibitImage.ImageName AS ExhibitImageName FROM Question 
     LEFT JOIN Alternative ON Question.QuestionID = Alternative.QuestionID  
 	RIGHT JOIN Quiz ON Quiz.QuizID = Question.QuizID
@@ -43,7 +17,6 @@ if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Quiz.QuizOfThe
 	LEFT JOIN Image AS ExhibitImage ON ExhibitImage.ImageID = Exhibit.ImageID
     WHERE Quiz.QuizID = ?")) {
     $stmt -> bind_param("i", $quizID);
->>>>>>> 51d73952d2ac1c28b4d57a69ed16cf4328ee9795
     $stmt -> execute();
 
     $result = $stmt -> get_result();
@@ -54,66 +27,45 @@ if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Quiz.QuizOfThe
     }
     $stmt -> free_result();
     $stmt -> close();
-<<<<<<< HEAD
-	
+
     
-=======
->>>>>>> 51d73952d2ac1c28b4d57a69ed16cf4328ee9795
     if(empty($mysql_data)){
         $output["Questions"] = [];
     }else{
+        //var_dump($mysql_data);
+        // Add the the quizname
+        $output["QuizID"] = $mysql_data[0]['QuizID'];
+        $output["QuizName"] = $mysql_data[0]['QuizName'];
+        $output["QuizOfTheDay"] = $mysql_data[0]['QuizOfTheDay'];
+        $output["Active"] = $mysql_data[0]['Active'];
+
         // Structure the JSON based on QuestionID
         foreach($mysql_data as $key => $alternative){
+            if($alternative['QuestionID'] == null)
+                break;
+            
             $temporary_data[$alternative['QuestionID']] = array(
                 'QuestionID' => $alternative['QuestionID'], 
                 'QuestionText' => $alternative['QuestionText'],
-                'ImageID' => $alternative['ImageID']);
+                'QuestionImageFilename' => $alternative['QuestionImageFilename'],
+                'QuestionImageName' => $alternative['QuestionImageName'],
+                'ExhibitName' => $alternative['ExhibitName'],
+                'ExhibitImageFilename' => $alternative['ExhibitImageFilename'],
+                'ExhibitImageName' => $alternative['ExhibitImageName'],
+                'Alternatives' => array());
         }
 
-<<<<<<< HEAD
-        foreach($mysql_data as $key => $alternative){
-            $temporary_data[$alternative['QuestionID']]['Alternatives'][] = array(
+        /*foreach($mysql_data as $key => $alternative){
+            array_push($temporary_data[$alternative['QuestionID']]['Alternatives'], array(
                     'AlternativeText' => $alternative['AlternativeText'],
                     'AlternativeCorrect' => $alternative['AlternativeCorrect'],
-                    'AlternativeID' => $alternative['AlternativeID']);
-        }
+                    'AlternativeID' => $alternative['AlternativeID']));
+        }*/
 
         // Remove unwanted indexes used for structuring the JSON.
         foreach($temporary_data as $temp){
             $output["Questions"][] = $temp;
         }
-=======
-    //var_dump($mysql_data);
-	// Add the the quizname
-	$output["QuizID"] = $mysql_data[0]['QuizID'];
-	$output["QuizName"] = $mysql_data[0]['QuizName'];
-	$output["QuizOfTheDay"] = $mysql_data[0]['QuizOfTheDay'];
-	$output["Active"] = $mysql_data[0]['Active'];
-	
-    // Structure the JSON based on QuestionID
-    foreach($mysql_data as $key => $alternative){
-        $temporary_data[$alternative['QuestionID']] = array(
-            'QuestionID' => $alternative['QuestionID'], 
-            'QuestionText' => $alternative['QuestionText'],
-			'QuestionImageFilename' => $alternative['QuestionImageFilename'],
-			'QuestionImageName' => $alternative['QuestionImageName'],
-			'ExhibitName' => $alternative['ExhibitName'],
-			'ExhibitImageFilename' => $alternative['ExhibitImageFilename'],
-			'ExhibitImageName' => $alternative['ExhibitImageName'],
-			'Alternatives' => array());
-    }
-	
-    foreach($mysql_data as $key => $alternative){
-        array_push($temporary_data[$alternative['QuestionID']]['Alternatives'], array(
-                'AlternativeText' => $alternative['AlternativeText'],
-                'AlternativeCorrect' => $alternative['AlternativeCorrect'],
-                'AlternativeID' => $alternative['AlternativeID']));
-    }
-	
-    // Remove unwanted indexes used for structuring the JSON.
-    foreach($temporary_data as $temp){
-        $output["Questions"][] = $temp;
->>>>>>> 51d73952d2ac1c28b4d57a69ed16cf4328ee9795
     }
 }else{
     echo "Failed to prepare statement";
