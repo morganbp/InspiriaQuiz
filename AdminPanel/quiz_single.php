@@ -54,7 +54,7 @@
                 type: "POST",
                 data: {QuizID: quizId},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
-                    alert("Quiz not found."); //No quiz found, or QuizID invalid.
+                    alert("Quiz with ID " + quizId + " was not found."); //No quiz found, or QuizID invalid.
                 },
                 success: function(data){
                     quizJSON = data;
@@ -99,7 +99,9 @@
                         if(imageIndex == null)
                             imageIndex = -1;
 
+                        console.log(imageIndex);
                         $(this).val(imageIndex);
+                        console.log($(this).val());
                         $(this).change(refreshImagePreview);
                     });
                 }
