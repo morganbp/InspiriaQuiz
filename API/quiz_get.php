@@ -30,7 +30,7 @@ if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Quiz.QuizOfThe
 
     
     if(empty($mysql_data)){
-        $output["Questions"] = [];
+        $output["Questions"] = []; 
     }else{
         //var_dump($mysql_data);
         // Add the the quizname
