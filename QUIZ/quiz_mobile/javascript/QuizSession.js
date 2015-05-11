@@ -1,5 +1,5 @@
-function QuizSession(quizId, quizData){
-	quizData = typeof quizData !== 'undefined' ? quizData : null;
+function QuizSession(quizId, user){
+	user = typeof user !== 'undefined' ? user : null;
 	// Maximum points for each question
 	this.maxPoints = 1000;
 	// Minimum points for each question
@@ -25,6 +25,11 @@ function QuizSession(quizId, quizData){
 	this.quiz;
 	
 	this.quizGuiHandler; 
+	// user who takes the quiz
+	this.user;
+	
+	// Is the quiz active
+	this.active = true;
 	
 	/**
 	*
@@ -38,6 +43,30 @@ function QuizSession(quizId, quizData){
 		this.totalScore += Math.round(points);
 	}
 	
+	this.pauseQuiz = function(){
+		if(this.active){
+			this.active = false;
+		}
+		
+	}
+	
+	this.continueQuiz = function(){
+		this.active = true;
+	}
+	
+	this.nextQuestion = function(){
+		// get next question in quiz
+		this.currentQuestion = this.quiz.getQuestion();
+		
+		if(this.currentQuestion == null){
+			if(this.user !== null)
+				this.endQuizSession();
+			else
+				this.quizGuiHandler.showRegisterScheme();
+			return;
+		}
+		this.quizGuiHandler.showReadyNextQuestion(this.currentQuestion);
+	}
 	/**
 	*
 	*	Get a new question and set up GUI for question
@@ -46,21 +75,7 @@ function QuizSession(quizId, quizData){
 	this.startQuestion = function(){
 		this.hasAnswered = false;
 		this.answer = -1;
-		
-		
-		removeSpinner();
-		
-		// get next question in quiz
-		this.currentQuestion = this.quiz.getQuestion();
-		if(this.currentQuestion == null){
-			this.endQuizSession();
-			return;
-		}
-		
-		this.quizGuiHandler.showQuestion();
-		this.quizGuiHandler.setQuestion(this.currentQuestion.QuestionText);
-		this.quizGuiHandler.setAlternatives(this.currentQuestion.Alternatives);
-
+		this.quizGuiHandler.showQuestion(this.currentQuestion);
 		this.countdown.initialTimer();
 	}
 	
@@ -69,10 +84,15 @@ function QuizSession(quizId, quizData){
 			this.hasAnswered = true;
 			this.answer = answer;	
 			this.countdown.stop();
+			if(this.user !== null){
+				var dbHandler = new QuizDBHandler();
+				dbHandler.postAnswer(this.currentQuestion.Alternatives[this.answer].AlternativeID, this.user.UserID);
+			}
 		}
 	}
 	
 	this.endQuestion = function(){
+		this.hasAnswered = true;
 		// If answer is correct
 		if(this.answer !== -1 && this.currentQuestion.Alternatives[this.answer].AlternativeCorrect === 1){
 			this.updateScore();	
@@ -82,26 +102,30 @@ function QuizSession(quizId, quizData){
 		setTimeout(function(){window.quizSession.quizGuiHandler.showScore(score);}, 2000);
 	}
 	
-	this.endQuizSession = function(){
-		// Submit score
-		var dbHandler = new QuizDBHandler();
-		var userID = 3;
-		dbHandler.submitQuizResults(this.quiz.quizJson.QuizID, userID, this.totalScore);
-		
+	this.endQuizSession = function(abort){
+		var isaborting = (typeof abort === "undefined") ? false : abort;
+		if(!abort){
+			// Submit score
+			var dbHandler = new QuizDBHandler();
+
+			dbHandler.submitQuizResults(this.quiz.quizJson.QuizID, this.user.UserID, this.totalScore);
+				// navigate back to main screen
+			window.location.href = "#";
+		}else{
+			if(this.countdown.running)
+				this.countdown.stop(true);	
+			
+		}
 		window.quizSession = null;
-		startUpScreen();
+		
 	}
 		
-	this.QuizSession = function(id, quizData){
-		if(quizData == null){
-			this.quiz = new QuizData(id);
-			this.quizGuiHandler = new QuizGuiHandler();
-			this.countdown = new SpinnerCounter(document.getElementById("countdown"), function(){window.quizSession.endQuestion()});
-		}else{
-			this.quiz = quizData;
-			this.quizGuiHandler = new HostGuiHandler();
-		}
+	this.QuizSession = function(id, user){
+		this.quiz = new QuizData(id);
+		this.user = user;
+		this.quizGuiHandler = new QuizGuiHandler();
+		this.countdown = new SpinnerCounter(document.getElementById("countdown"),function(){window.quizSession.endQuestion();});
 	}
 	
-	this.QuizSession(quizId, quizData);
+	this.QuizSession(quizId, user);
 }

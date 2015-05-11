@@ -5,10 +5,12 @@
         <title>Inspiria quiz</title>
         <meta name="viewport" content="initial-scale=1, maximum-scale=1">
         <!--jQuery-->
-        <script src="../../LIBS/javascript/jquery-mobile/jquery-1.11.1.min.js"></script>
-        <script src="../../LIBS/javascript/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
-        <link rel="stylesheet" href="../../LIBS/javascript/jquery-mobile/jquery.mobile-1.4.5.min.css" />
-		<link rel="stylesheet" href="../../LIBS/css/themes/jquery.mobile.icons.min.css" />
+        <script src="/inspiriaQuiz/LIBS/javascript/jquery-mobile/jquery-1.11.1.min.js"></script>
+        <script src="/inspiriaQuiz/LIBS/javascript/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
+		
+        <link rel="stylesheet" href="/inspiriaQuiz/LIBS/javascript/jquery-mobile/jquery.mobile-1.4.5.min.css" />
+		<link rel="stylesheet" href="/inspiriaQuiz/LIBS/css/inspiriaTheme.min.css" />
+		<link rel="stylesheet" href="/inspiriaQuiz/LIBS/css/themes/jquery.mobile.icons.min.css" />
         <!--stylesheets-->
         <link rel="stylesheet" href="css/sidepanelStyle.css" />
         <link rel="stylesheet" href="css/contentListviewStyle.css" />
@@ -24,24 +26,81 @@
 		<script src="javascript/QuizGuiHandler.js"></script>
 		<script src="javascript/QuizDBHandler.js"></script>
 	    <script src="javascript/SpinnerCounter.js"></script>
+		
     </head>
     <body>
+		
         <div data-role="page" data-theme="a" id="homescreen">
             <?php include 'menuAndHeader.php'; ?>
+
             <div data-role="content" id="content">
-                <form style="max-width:600px; margin:0 auto;" action="javascript::">
-                    <input type="text" placeholder="Bruker id" style="text-align:center;" />
-                    <Button type="submit" style="margin:0 auto; max-width:200px;" >Start quiz</Button>
+				<div data-role="popup" id="errorMessage"></div>
+                <form style="max-width:600px; margin:0 auto;" action="javascript:">
+                    <input type="text" placeholder="Bruker id" style="text-align:center;" id="userCode"/>
+                    <Button type="button" id="startQuizBtn" style="margin:0 auto; max-width:200px;">Start quiz</Button>
                 </form>
-                <form action="javascript::">
-                    <h3 style="margin:50px auto 0 auto; max-width:500px; text-align:center;">Ta dagens quiz ved å klikke på knappen under.</h3>
-                    <Button type="submit" style="margin:0 auto; max-width:200px;">Ta dagens quiz</Button>
+                <form action="javascript:">
+                    <h2 style="margin:50px auto 20px auto; max-width:500px; text-align:center;">Dagens quiz</h2>
+                    <Button type="button" style="margin:0 auto; max-width:200px;" id="quizOfTheDay">Ta dagens quiz</Button>
                 </form>
+				<img src="images/Inspiria_kunnskapendreralt.png" style="margin: 30px auto; display:block; width: auto; height:120px; " />
             </div>
         </div>
         <?php
 			include 'publicQuiz.php';
-            include 'dialogs/quizNotFoundErrorDialog.php';
         ?>
+		<script>
+			$("#startQuizBtn").click(function(){
+				$.mobile.loading('show');
+				var input = document.getElementById("userCode").value;
+				var dbHandler = new QuizDBHandler();
+				// Collect the user data 
+				dbHandler.getUserData(function(data){
+					$.mobile.loading('hide');
+					if(!data.hasOwnProperty('Error')){
+						// START QUIZ
+						startQuiz(data.QuizID, data);
+						var url = window.location.href.split("#");
+						window.location.href = url[0] + "#publicQuiz";
+					}else{
+						showErrorMessage(data, "#errorMessage");
+					}
+
+				},null, input);
+				
+			});
+			
+			$("#quizOfTheDay").click(function(){
+				$.mobile.loading('show');
+				var dbHandler = new QuizDBHandler();
+				dbHandler.getListOfQuizzes(function(data){
+					$.mobile.loading('hide');
+					if(!data.hasOwnProperty('Error')){
+						var quizID = getQuizOfTheDayID(data);
+						if(quizID !== null){
+							// startQuiz
+							startQuiz(quizID, null);
+							var url = window.location.href.split("#");
+							window.location.href = url[0] + "#publicQuiz";
+						}else
+							showErrorMessage({Error:"Dagens Quiz er ikke tilgjengelig"}, "#errorMessage");	
+						
+					}else
+						showErrorMessage(data, "#errorMessage");	
+				});
+			});
+			
+			
+			
+			function getQuizOfTheDayID(quizzes){
+				for(key in quizzes){
+					if(quizzes[key].QuizOfTheDay){
+						return quizzes[key].QuizID;
+					}
+				}
+				return null;
+			}
+			
+		</script>
     </body>
 </html>

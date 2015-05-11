@@ -54,9 +54,15 @@
                 type: "POST",
                 data: {QuizID: quizId},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
+<<<<<<< HEAD
                     alert("Quiz with ID " + quizId + " was not found."); //No quiz found, or QuizID invalid.
+=======
+                    alert("Quiz not found."); //No quiz found, or QuizID invalid.
+					window.location.href = "quiz_list.php";
+>>>>>>> 51d73952d2ac1c28b4d57a69ed16cf4328ee9795
                 },
                 success: function(data){
+					submitJSON.QuizID = data.QuizID;
                     quizJSON = data;
                     highestQuestionIndex = quizJSON.Questions.length;
                     makeQuestionTable();
@@ -339,7 +345,7 @@
         /* SUBMIT */
         function submitQuiz(){
             $("#submit-quiz").html("Lagrer...");
-            
+            submitJSON.Update.QuizOfTheDay = 1;
             // Check quiz name
             var quizName = $("#quiz-name").val();
             if(quizJSON.QuizName != quizName){
@@ -449,15 +455,16 @@
             //return;
             
             $.ajax({
-                url: "http://localhost/InspiriaQuiz/API/quiz_update.php",
+                url: "/inspiriaQuiz/API/quiz_update.php",
                 type: "POST",
                 data: {SubmitJSON: submitJSON},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
-                    console.log(errorThrown);
+                    console.log(XMLHttpRequest);
                     $("#submit-quiz").html("Lagre endringene");
                     alert("Quiz could not be updated.");
                 },
                 success: function(data){
+					console.log("update");
                     console.log(data);
                     $("#submit-quiz").html("Lagret");
                     //alert("Quiz has been updated.");

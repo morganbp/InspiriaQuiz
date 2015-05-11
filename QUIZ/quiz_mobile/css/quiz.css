@@ -5,7 +5,7 @@ body{
 .centerHorizontal{
 	text-align:center;
 }
-			
+
 #alternatives{
 	position: absolute;
     bottom:0;
@@ -107,4 +107,39 @@ body{
 	right:-5px;
 }
 
+#image {
+	display: block;
+	width: auto;
+	max-width: 300px;
+	height: auto;
+	max-height: 170px;
+	margin: 0 auto;
+}
+
+#exhibitImage {
+	display:block;
+	width: auto;
+	max-width: 300px;
+	height: auto;
+	max-height: 200px;
+	margin: 0 auto;
+}
+
+.bold{
+	font-weight: 800;
+}
 		
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #000;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #000;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #000;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #000;
+}

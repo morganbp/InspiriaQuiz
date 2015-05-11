@@ -3,7 +3,7 @@ header('Content-type: application/json');
 
 include("db_connect.php");
 
-if($stmt = $mysqli -> prepare("SELECT QuizID, QuizName, 
+if($stmt = $mysqli -> prepare("SELECT QuizID, QuizName, CreatedOn, Active, QuizOfTheDay,
         (SELECT COUNT(*) FROM Question WHERE Quiz.QuizID = Question.QuizID) AS Questions 
         FROM Quiz
         WHERE Active = 1
@@ -24,6 +24,6 @@ if($stmt = $mysqli -> prepare("SELECT QuizID, QuizName,
     else
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
 }else{
-    echo "Failed to prepare statement";
+	echo json_encode('{"Error":"Failed to prepare statement"}', JSON_UNESCAPED_UNICODE);
 }
 ?>
