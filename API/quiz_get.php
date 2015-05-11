@@ -28,45 +28,44 @@ if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Quiz.QuizOfThe
     $stmt -> free_result();
     $stmt -> close();
 
-    
-    if(empty($mysql_data)){
-        $output["Questions"] = [];
-    }else{
-        //var_dump($mysql_data);
-        // Add the the quizname
-        $output["QuizID"] = $mysql_data[0]['QuizID'];
-        $output["QuizName"] = $mysql_data[0]['QuizName'];
-        $output["QuizOfTheDay"] = $mysql_data[0]['QuizOfTheDay'];
-        $output["Active"] = $mysql_data[0]['Active'];
+    // Add the the quizname
+    $output["QuizID"] = $mysql_data[0]['QuizID'];
+    $output["QuizName"] = $mysql_data[0]['QuizName'];
+    $output["QuizOfTheDay"] = $mysql_data[0]['QuizOfTheDay'];
+    $output["Active"] = $mysql_data[0]['Active'];
 
-        // Structure the JSON based on QuestionID
-        foreach($mysql_data as $key => $alternative){
-            if($alternative['QuestionID'] == null)
-                break;
-            
-            $temporary_data[$alternative['QuestionID']] = array(
-                'QuestionID' => $alternative['QuestionID'], 
-                'QuestionText' => $alternative['QuestionText'],
-                'QuestionImageFilename' => $alternative['QuestionImageFilename'],
-                'QuestionImageName' => $alternative['QuestionImageName'],
-                'ExhibitName' => $alternative['ExhibitName'],
-                'ExhibitImageFilename' => $alternative['ExhibitImageFilename'],
-                'ExhibitImageName' => $alternative['ExhibitImageName'],
-                'Alternatives' => array());
+    // Structure the JSON based on QuestionID
+    foreach($mysql_data as $key => $alternative){
+        if($alternative['QuestionID'] == null){
+            $output['Questions'] = [];
+            break;
         }
 
-        /*foreach($mysql_data as $key => $alternative){
-            array_push($temporary_data[$alternative['QuestionID']]['Alternatives'], array(
+        $temporary_data[$alternative['QuestionID']] = array(
+            'QuestionID' => $alternative['QuestionID'], 
+            'QuestionText' => $alternative['QuestionText'],
+            'QuestionImageFilename' => $alternative['QuestionImageFilename'],
+            'QuestionImageName' => $alternative['QuestionImageName'],
+            'ExhibitName' => $alternative['ExhibitName'],
+            'ExhibitImageFilename' => $alternative['ExhibitImageFilename'],
+            'ExhibitImageName' => $alternative['ExhibitImageName'],
+            'Alternatives' => array());
+    }
+    
+    foreach($mysql_data as $key => $alternative){
+        if(!isset($output['Questions']))
+        array_push($temporary_data[$alternative['QuestionID']]['Alternatives'], array(
                     'AlternativeText' => $alternative['AlternativeText'],
                     'AlternativeCorrect' => $alternative['AlternativeCorrect'],
                     'AlternativeID' => $alternative['AlternativeID']));
-        }*/
-
-        // Remove unwanted indexes used for structuring the JSON.
-        foreach($temporary_data as $temp){
-            $output["Questions"][] = $temp;
-        }
     }
+    
+    // Remove unwanted indexes used for structuring the JSON.
+    if(!isset($output['Questions']))
+    foreach($temporary_data as $temp){
+        $output["Questions"][] = $temp;
+    }
+    
 }else{
     echo "Failed to prepare statement";
     http_response_code(500);

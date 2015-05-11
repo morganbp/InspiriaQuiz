@@ -54,12 +54,8 @@
                 type: "POST",
                 data: {QuizID: quizId},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
-<<<<<<< HEAD
                     alert("Quiz with ID " + quizId + " was not found."); //No quiz found, or QuizID invalid.
-=======
-                    alert("Quiz not found."); //No quiz found, or QuizID invalid.
 					window.location.href = "quiz_list.php";
->>>>>>> 51d73952d2ac1c28b4d57a69ed16cf4328ee9795
                 },
                 success: function(data){
 					submitJSON.QuizID = data.QuizID;
@@ -105,9 +101,7 @@
                         if(imageIndex == null)
                             imageIndex = -1;
 
-                        console.log(imageIndex);
                         $(this).val(imageIndex);
-                        console.log($(this).val());
                         $(this).change(refreshImagePreview);
                     });
                 }
@@ -375,7 +369,6 @@
                     
                     
                     $(this).find(".alternative-text").each(function(){
-                        console.log("cake");
                         var alternativeText = $(this).val();
                         var correctBoolean = $(this).next("input[type=checkbox]").prop("checked");
                         var correctValue = (correctBoolean==true)?1:0;
@@ -459,7 +452,7 @@
                 type: "POST",
                 data: {SubmitJSON: submitJSON},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
-                    console.log(XMLHttpRequest);
+                    console.log(errorThrown);
                     $("#submit-quiz").html("Lagre endringene");
                     alert("Quiz could not be updated.");
                 },
