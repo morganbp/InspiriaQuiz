@@ -56,7 +56,7 @@ function QuizDBHandler(){
 	this.getListOfQuizzes = function(endEvt){
 		"use strict";
 		$.ajax({
-			url: this.dbDIR + "quiz_list_get.php", 
+			url: this.dbDIR + "quizes_get.php", 
 			data: {},
 			type: 'POST',
 			error: function(XMLHttpRequest, textStatus, errorThrown){
