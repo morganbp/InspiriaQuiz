@@ -164,6 +164,16 @@ ul#nav li a:hover{
 }
 
 
+/* LOGIN */
+#login p{
+    margin: 10px auto;
+}
+#login input[type="text"],
+#login input[type="password"]{
+    width: 300px;
+}
+
+
 /* PANELS: QUIZ LITS & QUESTION LIST */
 .panel #quiz-list, .panel #question-list,
 .panel #question-list .question-section,
@@ -360,11 +370,15 @@ input[type=checkbox]:checked + label:before {
     max-height: 150px;
 }
 
-#exhibit-image{
+#exhibit-image,
+#login input[type="text"],
+#login input[type="password"]{
     border: 2px solid #ddd;
 }
 #exhibit-create input[type="text"],
 #image-create input[type="text"],
+#login input[type="text"],
+#login input[type="password"],
 #exhibit-image{
     padding: 10px;
     font-size: 14px;

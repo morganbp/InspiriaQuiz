@@ -10,7 +10,7 @@ do{
 $target_path = $target_path . $image_filename;
 
 if(move_uploaded_file($_FILES['ImageFile']['tmp_name'], $target_path)) {
-    echo "The file ".basename($_FILES['ImageFile']['name'])." has been saved to ".$target_path;
+    //echo "The file ".basename($_FILES['ImageFile']['name'])." has been saved to ".$target_path;
 }else{
     die("There was an error uploading the file, please try again.");
 }
@@ -29,9 +29,6 @@ if($stmt = $mysqli -> prepare('INSERT INTO Image(ImageName, ImageFilename) VALUE
 }
 
 
-
-
-
 function generateRandomString($length = 20) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
@@ -41,4 +38,6 @@ function generateRandomString($length = 20) {
     }
     return $randomString;
 }
+
+header("Location: ../AdminPanel/image_upload.php");
 ?>

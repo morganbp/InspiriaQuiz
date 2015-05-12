@@ -1,32 +1,5 @@
 <?php
-<<<<<<< HEAD
-header('Content-type: application/json');
 
-include("db_connect.php");
-
-if (!isset($_POST['QuizName'])){
-    http_response_code(400);
-    die();
-}
-
-$quizName = $_POST['QuizName'];
-
-
-if($stmt = $mysqli -> prepare("INSERT INTO Quiz(QuizName) VALUES(?);")) {
-
-    $stmt -> bind_param("s", $quizName);
-    $stmt -> execute();
-    
-    $quizID = $stmt -> insert_id;
-    
-    $stmt -> close();
-    
-}else{
-    echo "Failed to prepare statement";
-}
-
-header("Location: ../AdminPanel/quiz_single.php?QuizID=".$quizID);
-=======
 header('Content-type: application/json; charset=utf-8;');
 
 include("db_connect.php"); // Make connection as $stmt
@@ -53,6 +26,4 @@ if($stmt = $mysqli -> prepare("INSERT INTO Quiz (QuizName, CreatedOn, Active, Qu
 	echo json_encode(array("Error" => "Failed to prepare statement"), JSON_UNESCAPED_UNICODE);
 	http_response_code(500);
 }
-
->>>>>>> 51d73952d2ac1c28b4d57a69ed16cf4328ee9795
 ?>
