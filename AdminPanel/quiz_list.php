@@ -18,6 +18,7 @@
             }
             
             $.ajax({
+                //url: "http://frigg.hiof.no/bo15-g21/API/quiz_delete.php",
                 url: "http://localhost/InspiriaQuiz/API/quiz_delete.php",
                 type: "POST",
                 data: {QuizID: quizID},
@@ -70,7 +71,8 @@
                         </tr>
                         <?php
                         // Get the quizes and feed it into the table
-                        $jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/quizes_get.php');
+                        //$jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/quizes_get.php');
+                        $jsonString = file_get_contents('http://frigg.hiof.no/bo15-g21/API/quizes_get.php');
                         $jsonQuiz = json_decode($jsonString);
                         //var_dump($jsonQuiz);
                         

@@ -50,7 +50,8 @@
         // GET data from database
         function fetchQuiz(quizId){
             $.ajax({
-                url: "http://localhost/InspiriaQuiz/API/quiz_get.php", //"http://frigg.hiof.no/bo15-g21/API/quiz_get.php",
+                //url: "http://localhost/InspiriaQuiz/API/quiz_get.php",
+				url: "http://frigg.hiof.no/bo15-g21/API/quiz_get.php",
                 type: "POST",
                 data: {QuizID: quizId},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -81,7 +82,8 @@
         
         function fetchImages(){
             $.ajax({
-                url: "http://localhost/InspiriaQuiz/API/images_get.php",
+                //url: "http://localhost/InspiriaQuiz/API/images_get.php",
+                url: "http://frigg.hiof.no/bo15-g21/API/images_get.php",
                 error: function(XMLHttpRequest, textStatus, errorThrown){
                     alert("Images not found.");
                 },

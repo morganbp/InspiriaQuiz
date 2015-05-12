@@ -9,7 +9,8 @@
     <script type="text/javascript">
         function deleteImage(imageID){
             $.ajax({
-                url: "http://localhost/InspiriaQuiz/API/images_delete.php",
+                //url: "http://localhost/InspiriaQuiz/API/images_delete.php",
+                url: "http://frigg.hiof.no/bo15-g21/API/images_delete.php",
                 type: "POST",
                 data: {ImageID: imageID},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -61,7 +62,8 @@
                     </tr>
                     <?php
                     // Get the quizes and feed it into the table
-                    $jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/images_get.php');
+                    //$jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/images_get.php');
+                    $jsonString = file_get_contents('http://frigg.hiof.no/bo15-g21/API/images_get.php');
                     $jsonQuiz = json_decode($jsonString);
                     //var_dump($jsonQuiz);
 

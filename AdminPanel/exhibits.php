@@ -15,7 +15,8 @@
         
         function deleteExhibit(exhibitID){
             $.ajax({
-                url: "http://localhost/InspiriaQuiz/API/exhibits_delete.php",
+                //url: "http://localhost/InspiriaQuiz/API/exhibits_delete.php",
+                url: "http://frigg.hiof.no/bo15-g21/API/exhibits_delete.php",
                 type: "POST",
                 data: {ExhibitID: exhibitID},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -31,7 +32,7 @@
         
         function fetchImages(){
             $.ajax({
-                url: "http://localhost/InspiriaQuiz/API/images_get.php",
+                url: "http://frigg.hiof.no/bo15-g21/API/images_get.php",
                 error: function(XMLHttpRequest, textStatus, errorThrown){
                     alert("Images not found.");
                 },
@@ -86,7 +87,8 @@
                     </tr>
                     <?php
                     // Get the quizes and feed it into the table
-                    $jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/exhibits_get.php');
+                    //$jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/exhibits_get.php');
+                    $jsonString = file_get_contents('http://frigg.hiof.no/bo15-g21/API/exhibits_get.php');
                     $jsonExhibits = json_decode($jsonString);
 
                     foreach($jsonExhibits as $json){
