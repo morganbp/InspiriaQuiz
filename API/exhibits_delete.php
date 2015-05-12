@@ -9,13 +9,13 @@ if (!isset($_POST['ExhibitID'])){
 }
 
 
-$exhibitID = $_POST['ExhibitID'];
+$exhibitID = intval($_POST['ExhibitID']);
 
 
 if($stmt = $mysqli -> prepare("DELETE FROM Exhibit WHERE ExhibitID = ?;")) {
-
+    
     $stmt -> bind_param("i", $exhibitID);
-    $stmt -> execute();
+    echo $stmt -> execute();
     $stmt -> close();
     
 }else{

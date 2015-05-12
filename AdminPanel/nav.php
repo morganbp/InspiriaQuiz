@@ -7,14 +7,14 @@ if($activepage == "login.php"){
 }else{
     $icons["index.php"] = "<i class='flaticon-home63'></i>";
     $icons["quiz_list.php"] = "<i class='flaticon-question1'></i>";
-    $icons["image_upload.php"] = "<i class='flaticon-picture64'></i>";
+    $icons["images.php"] = "<i class='flaticon-picture64'></i>";
     $icons["exhibits.php"] = "<i class='flaticon-place4'></i>";
     $icons["logout.php"] = "<i class='flaticon-log'></i>";
 
     $pages["index.php"] = "Dashboard";
     $pages["quiz_list.php"] = "Quizer";
     $pages["exhibits.php"] = "Stasjoner";
-    $pages["image_upload.php"] = "Bilder";
+    $pages["images.php"] = "Bilder";
     $pages["logout.php"] = "Logg ut";
 }
 

@@ -18,8 +18,8 @@
             }
             
             $.ajax({
-                //url: "http://frigg.hiof.no/bo15-g21/API/quiz_delete.php",
-                url: "http://localhost/InspiriaQuiz/API/quiz_delete.php",
+                url: "../API/quiz_delete.php",
+                //url: "http://localhost/InspiriaQuiz/API/quiz_delete.php",
                 type: "POST",
                 data: {QuizID: quizID},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
