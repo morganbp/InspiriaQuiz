@@ -96,7 +96,9 @@
                         $(this).html(optionList);
                         var questionID = $(this).closest('.question-section').find('input[name=QuestionID]').val();
                         var questionIndex = findQuestionIndexByID(questionID);
-                        var imageIndex = quizJSON.Questions[questionIndex].ImageID;
+                        var imageIndex = quizJSON.Questions[questionIndex].QuestionImageID;
+                        
+                        console.log(imageIndex);
                         
                         if(imageIndex == null)
                             imageIndex = -1;

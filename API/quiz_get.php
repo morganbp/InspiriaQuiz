@@ -9,7 +9,11 @@ if(!isset($_POST['QuizID'])){
 }
 $quizID = $_POST['QuizID'];
 
-if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Quiz.QuizOfTheDay, Quiz.Active, Question.QuestionID, QuestionText, AlternativeText, AlternativeCorrect, AlternativeID, QuestionImage.ImageFilename AS QuestionImageFilename, QuestionImage.ImageName AS QuestionImageName, ExhibitName, ExhibitImage.ImageFilename AS ExhibitImageFilename, ExhibitImage.ImageName AS ExhibitImageName FROM Question 
+if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Quiz.QuizOfTheDay, Quiz.Active, Question.QuestionID, QuestionText, 
+    AlternativeText, AlternativeCorrect, AlternativeID, 
+    QuestionImage.ImageFilename AS QuestionImageFilename, QuestionImage.ImageName AS QuestionImageName, QuestionImage.ImageID AS QuestionImageID, 
+    ExhibitName, ExhibitImage.ImageFilename AS ExhibitImageFilename, ExhibitImage.ImageName AS ExhibitImageName, ExhibitImage.ImageID AS ExhibitImageID
+    FROM Question 
     LEFT JOIN Alternative ON Question.QuestionID = Alternative.QuestionID  
 	RIGHT JOIN Quiz ON Quiz.QuizID = Question.QuizID
 	LEFT JOIN Exhibit ON Exhibit.ExhibitID = Question.ExhibitID 
@@ -44,9 +48,11 @@ if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Quiz.QuizOfThe
         $temporary_data[$alternative['QuestionID']] = array(
             'QuestionID' => $alternative['QuestionID'], 
             'QuestionText' => $alternative['QuestionText'],
+            'QuestionImageID' => $alternative['QuestionImageID'],
             'QuestionImageFilename' => $alternative['QuestionImageFilename'],
             'QuestionImageName' => $alternative['QuestionImageName'],
             'ExhibitName' => $alternative['ExhibitName'],
+            'ExhibitImageID' => $alternative['ExhibitImageID'],
             'ExhibitImageFilename' => $alternative['ExhibitImageFilename'],
             'ExhibitImageName' => $alternative['ExhibitImageName'],
             'Alternatives' => array());
