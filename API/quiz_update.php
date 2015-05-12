@@ -8,6 +8,7 @@ if(empty($_POST['SubmitJSON'])){
 }else{
     $submitJSON = $_POST['SubmitJSON'];
     //print_r($_POST['SubmitJSON']);
+    //die();
 }
 
 
@@ -108,9 +109,10 @@ if(isset($insert)){
             }
 
             // Then insert alternatives
-            if(isset($insert['Alternatives'])) {
+            if(isset($question['Alternatives'])) {
+                echo "yepyep  ";
                 if($stmt = $mysqli -> prepare('INSERT INTO Alternative(QuestionID, AlternativeText, AlternativeCorrect) VALUES(?, ?, ?);')) {
-                    foreach($insert['Alternatives'] as $alt){
+                    foreach($question['Alternatives'] as $alt){
                         $stmt -> bind_param("isi", $insertedQuestionID, $alt['AlternativeText'], $alt['AlternativeCorrect']);
                         $stmt -> execute();
                         print_r($alt);
