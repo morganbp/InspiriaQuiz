@@ -67,7 +67,7 @@
             <div class='panel'>
                 <div class='panel-header'>Ny stasjon</div>
                 <div class='panel-body'>
-                    <form action="../API/exhibits_post.php" method="POST" id='exhibit-create'>
+                    <form action="../API/exhibits_post.php" method="POST" id='create-form'>
                         <select id="exhibit-image" name="ImageID"></select>
                         <input type="text" name="ExhibitName" placeholder="Stasjonsnavn" />
                         <input type="text" name="ExhibitDescription" placeholder="Beskrivelse" />

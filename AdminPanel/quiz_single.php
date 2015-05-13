@@ -1,4 +1,3 @@
-
 <html>
 <head>
     <title>Inspiria Quiz Admin</title>

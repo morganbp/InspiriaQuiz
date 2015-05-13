@@ -31,7 +31,7 @@
                 <div class='panel-body'>
                     <form id="login" method="post" action="login_check.php">
                         <p>E-mail</p>
-                        <p><input type="text" name="LoginEmail" /></p>
+                        <p><input type="email" name="LoginEmail" /></p>
                         <p>Passord</p>
                         <p><input type="password" name="LoginPassword" /></p>
                         <p><input type="submit" value="Logg inn" /></p>

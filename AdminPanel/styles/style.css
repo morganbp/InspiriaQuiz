@@ -355,10 +355,9 @@ input[type=checkbox]:checked + label:before {
 #quiz-list .image-preview{
     width: 250px;
 }
-#quiz-list .title{
-    width: auto;
-}
-#quiz-list .description{
+#quiz-list .title,
+#quiz-list .description,
+#quiz-list .email{
     width: auto;
 }
 #quiz-list .delete,
@@ -375,15 +374,16 @@ input[type=checkbox]:checked + label:before {
 #login input[type="password"]{
     border: 2px solid #ddd;
 }
-#exhibit-create input[type="text"],
-#image-create input[type="text"],
-#login input[type="text"],
+#create-form input[type="text"],
+#create-form input[type="email"],
+#create-form input[type="password"],
+#login input[type="email"],
 #login input[type="password"],
 #exhibit-image{
     padding: 10px;
     font-size: 14px;
 }
-#exhibit-create input[type="submit"]{
+#create-form input[type="submit"]{
     padding: 11px;
     height: 40px;
 }

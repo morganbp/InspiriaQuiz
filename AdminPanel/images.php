@@ -44,7 +44,7 @@
             <div class='panel'>
                 <div class='panel-header'>Last opp</div>
                 <div class='panel-body'>
-                    <form enctype="multipart/form-data" action="../API/image_uploader.php" method="POST" id="image-create">
+                    <form enctype="multipart/form-data" action="../API/image_uploader.php" method="POST" id="create-form">
                         <input type="text" name="ImageName" placeholder="Bildetittel" />
                         <input type="file" name="ImageFile" accept="image/*" />
                         <input type="submit" value="Last opp"></input>

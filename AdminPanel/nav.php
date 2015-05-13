@@ -9,12 +9,14 @@ if($activepage == "login.php"){
     $icons["quiz_list.php"] = "<i class='flaticon-question1'></i>";
     $icons["images.php"] = "<i class='flaticon-picture64'></i>";
     $icons["exhibits.php"] = "<i class='flaticon-place4'></i>";
+    $icons["users.php"] = "<i class='flaticon-home63'></i>";
     $icons["logout.php"] = "<i class='flaticon-log'></i>";
 
     $pages["index.php"] = "Dashboard";
     $pages["quiz_list.php"] = "Quizer";
     $pages["exhibits.php"] = "Stasjoner";
     $pages["images.php"] = "Bilder";
+    $pages["users.php"] = "Brukere";
     $pages["logout.php"] = "Logg ut";
 }
 
