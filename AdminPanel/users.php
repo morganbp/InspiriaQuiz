@@ -59,25 +59,25 @@
             <div class='panel'>
                 <div class='panel-header'>Quizer</div>
                 
-                    <table id='quiz-list'>
-                        <tr class='quiz-top'>
-                            <th class='email'>E-mail</th>
-                            <th class='delete'>Slett</th>
-                        </tr>
-                        <?php
-                        // Get the quizes and feed it into the table
-                        $jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/inspiriausers_get.php');
-                        //$jsonString = file_get_contents('http://frigg.hiof.no/bo15-g21/API/inspiriausers_get.php');
-                        $jsonQuiz = json_decode($jsonString);
-                        
-                        foreach($jsonQuiz as $json){
-                            echo '<tr class="quiz-single">';
-                                echo '<td class="title">'.$json->UserEmail.'</td>';
-                                echo '<td class="delete"><i class="flaticon-cross93" onclick="deleteUser('.$json->UserID.')"></i></td>';
-                            echo '</tr>';
-                        }
-                        ?>
-                    </table>
+                <table id='quiz-list'>
+                    <tr class='quiz-top'>
+                        <th class='email'>E-mail</th>
+                        <th class='delete'>Slett</th>
+                    </tr>
+                    <?php
+                    // Get the quizes and feed it into the table
+                    //$jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/inspiriausers_get.php');
+                    $jsonString = file_get_contents('http://frigg.hiof.no/bo15-g21/API/inspiriausers_get.php');
+                    $jsonQuiz = json_decode($jsonString);
+
+                    foreach($jsonQuiz as $json){
+                        echo '<tr class="quiz-single">';
+                            echo '<td class="title">'.$json->UserEmail.'</td>';
+                            echo '<td class="delete"><i class="flaticon-cross93" onclick="deleteUser('.$json->UserID.')"></i></td>';
+                        echo '</tr>';
+                    }
+                    ?>
+                </table>
                 
             </div>
         </div>

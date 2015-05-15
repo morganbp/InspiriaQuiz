@@ -4,13 +4,13 @@ header('Content-type: application/json; charset=utf-8;');
 
 include("db_connect.php"); // Make connection as $stmt
 
-if(!isset($_GET['QuizName'])){ 
+if(!isset($_POST['QuizName'])){ 
 	echo json_encode(array("Error" => "Invalid url arguments"), JSON_UNESCAPED_UNICODE);
     http_response_code(404);
     die();
 }
-$quizName = $_GET['QuizName'];
-$createdOn = (isset($_GET['CreatedOn'])) ? $_GET['CreatedOn'] : date("Y-m-d H:i:s"); 
+$quizName = $_POST['QuizName'];
+$createdOn = (isset($_POST['CreatedOn'])) ? $_POST['CreatedOn'] : date("Y-m-d H:i:s"); 
 $active = 1;
 $quizOfTheDay = 0;
 
