@@ -44,6 +44,7 @@ if($stmt = $mysqli -> prepare("INSERT INTO UserGroup (GroupName, GroupLeaderName
 }else{ 	
     echo json_encode(array("Error" => "Failed to prepare statement"), JSON_UNESCAPED_UNICODE);
     http_response_code(500);
+    die();
 }
 
 if($stmt = $mysqli -> prepare("INSERT INTO User (UserFirstName, UserLastName, UserAge, GroupID) VALUES (?,?,?,?)")) {
@@ -54,6 +55,7 @@ if($stmt = $mysqli -> prepare("INSERT INTO User (UserFirstName, UserLastName, Us
 }else{ 	
     echo json_encode(array("Error" => "Failed to prepare statement"), JSON_UNESCAPED_UNICODE);
     http_response_code(500);
+    die();
 }
 
 if($stmt = $mysqli -> prepare("UPDATE RegistrationCode SET Active = 0 WHERE RegistrationCode LIKE ?")) {
@@ -62,8 +64,10 @@ if($stmt = $mysqli -> prepare("UPDATE RegistrationCode SET Active = 0 WHERE Regi
 }else{ 	
     echo json_encode(array("Error" => "Failed to prepare statement"), JSON_UNESCAPED_UNICODE);
     http_response_code(500);
+    die();
 }
 
+echo json_encode(array("Success" => "Group inserted"), JSON_UNESCAPED_UNICODE);
 http_response_code(201);
 
 ?>
