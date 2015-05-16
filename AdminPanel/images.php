@@ -10,7 +10,7 @@
         function deleteImage(imageID){
             $.ajax({
                 //url: "http://localhost/InspiriaQuiz/API/images_delete.php",
-                url: "http://frigg.hiof.no/bo15-g21/API/images_delete.php",
+                url: "../API/images_delete.php",
                 type: "POST",
                 data: {ImageID: imageID},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -44,7 +44,7 @@
             <div class='panel'>
                 <div class='panel-header'>Last opp</div>
                 <div class='panel-body'>
-                    <form enctype="multipart/form-data" action="../API/image_uploader.php" method="POST" id="image-create">
+                    <form enctype="multipart/form-data" action="../API/image_uploader.php" method="POST" id="create-form">
                         <input type="text" name="ImageName" placeholder="Bildetittel" />
                         <input type="file" name="ImageFile" accept="image/*" />
                         <input type="submit" value="Last opp"></input>

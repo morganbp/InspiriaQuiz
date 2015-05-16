@@ -21,6 +21,7 @@ a {
 /* BUTTON STYLE */
 button, 
 input[type="submit"]{
+    cursor: pointer;
     height: 32px;
     text-decoration: none;
     background-color: #78d4f2;
@@ -34,6 +35,11 @@ input[type="submit"]:hover{
 button:active
 input[type="submit"]:active{
     background-color: #15a6d6;
+}
+input[type="text"],
+input[type="tel"],
+input[type="number"]{
+    border: 2px solid #ddd;
 }
 
 
@@ -321,9 +327,6 @@ input[type=checkbox]:checked + label:before {
     /*padding: 2px 5px;*/
     float: right;
 }
-.add-question{
-    
-}
 
 /* MEDIA QUERIES */
 @media (max-width: 885px) {
@@ -355,10 +358,9 @@ input[type=checkbox]:checked + label:before {
 #quiz-list .image-preview{
     width: 250px;
 }
-#quiz-list .title{
-    width: auto;
-}
-#quiz-list .description{
+#quiz-list .title,
+#quiz-list .description,
+#quiz-list .email{
     width: auto;
 }
 #quiz-list .delete,
@@ -370,20 +372,63 @@ input[type=checkbox]:checked + label:before {
     max-height: 150px;
 }
 
-#exhibit-image,
+#create-form input[type="text"],
+#create-form input[type="email"],
+#create-form input[type="password"],
 #login input[type="text"],
-#login input[type="password"]{
-    border: 2px solid #ddd;
-}
-#exhibit-create input[type="text"],
-#image-create input[type="text"],
-#login input[type="text"],
+#login input[type="email"],
 #login input[type="password"],
 #exhibit-image{
     padding: 10px;
     font-size: 14px;
+    border: 2px solid #ddd;
 }
-#exhibit-create input[type="submit"]{
+#create-form input[type="submit"]{
     padding: 11px;
     height: 40px;
+}
+
+/* LINK GENERATION PAGE */
+#link-displayer {
+    display: none;
+}
+#link-textbox{
+    width: 100%;
+    font-size: 20px;
+    padding: 10px;
+}
+
+/* GROUP REGISTRATION */
+.center-content{
+    margin: 0 auto;
+    width: 80%;
+    max-width: 900px;
+    background-color: #eaeaea;
+    padding-top: 20px;
+}
+
+#register-group .group-info{
+    margin-bottom: 30px;
+}
+#register-group h2{
+    line-height: 2em;
+}
+#register-group p{
+    font-size: 14px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+#register-group table{
+    width: 100%;
+}
+#register-group tr {
+    border-bottom: 2px solid #000;
+}
+#register-group input[type="text"],
+#register-group input[type="tel"],
+#register-group input[type="number"]{
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    font-size: 16px;
 }

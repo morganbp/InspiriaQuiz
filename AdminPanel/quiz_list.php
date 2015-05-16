@@ -18,8 +18,7 @@
             }
             
             $.ajax({
-                //url: "http://frigg.hiof.no/bo15-g21/API/quiz_delete.php",
-                url: "http://localhost/InspiriaQuiz/API/quiz_delete.php",
+                url: "../API/quiz_delete.php",
                 type: "POST",
                 data: {QuizID: quizID},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -30,6 +29,15 @@
                     console.log(data);
                     location.reload();
                 }
+            });
+        }
+        
+        function createQuiz(){
+            $.post("../API/quiz_post.php" , $("#create-form").serialize(), function(data) {
+                window.location.href = "quiz_single.php?QuizID="+data.QuizID;
+            })
+            .fail(function() {
+                alert("Kunne ikke opprette quizen.");
             });
         }
     </script>
@@ -53,9 +61,9 @@
             <div class='panel'>
                 <div class='panel-header'>Ny quiz</div>
                 <div class='panel-body'>
-                    <form action="../API/quiz_post.php" method="POST" id='exhibit-create'>
+                    <form action="../API/quiz_post.php" method="POST" id='create-form'>
                         <input type="text" name="QuizName" placeholder="Quiz navn" />
-                        <input type="submit" value="Opprett"></input>
+                        <button type="button" onclick="createQuiz()">Opprett</button>
                     </form>
                 </div>
             </div>

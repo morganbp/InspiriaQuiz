@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^Register/([^/\.]+)/?$ Register/register.php?RegistrationCode=$1 [L]

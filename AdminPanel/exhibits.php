@@ -16,7 +16,7 @@
         function deleteExhibit(exhibitID){
             $.ajax({
                 //url: "http://localhost/InspiriaQuiz/API/exhibits_delete.php",
-                url: "http://frigg.hiof.no/bo15-g21/API/exhibits_delete.php",
+                url: "../API/exhibits_delete.php",
                 type: "POST",
                 data: {ExhibitID: exhibitID},
                 error: function(XMLHttpRequest, textStatus, errorThrown){
@@ -32,7 +32,7 @@
         
         function fetchImages(){
             $.ajax({
-                url: "http://frigg.hiof.no/bo15-g21/API/images_get.php",
+                url: "../API/images_get.php",
                 error: function(XMLHttpRequest, textStatus, errorThrown){
                     alert("Images not found.");
                 },
@@ -67,7 +67,7 @@
             <div class='panel'>
                 <div class='panel-header'>Ny stasjon</div>
                 <div class='panel-body'>
-                    <form action="../API/exhibits_post.php" method="POST" id='exhibit-create'>
+                    <form action="../API/exhibits_post.php" method="POST" id='create-form'>
                         <select id="exhibit-image" name="ImageID"></select>
                         <input type="text" name="ExhibitName" placeholder="Stasjonsnavn" />
                         <input type="text" name="ExhibitDescription" placeholder="Beskrivelse" />

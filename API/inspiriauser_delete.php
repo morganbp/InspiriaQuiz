@@ -3,17 +3,16 @@ header('Content-type: application/json');
 
 include("db_connect.php");
 
-if (!isset($_POST['ExhibitID'])){
+if (!isset($_POST['UserID'])){
     echo json_encode(array("Error" => "Invalid arguments"), JSON_UNESCAPED_UNICODE);
     http_response_code(400);
     die();
 }
 
-$exhibitID = intval($_POST['ExhibitID']);
+$userID = intval($_POST['UserID']);
 
-
-if($stmt = $mysqli -> prepare("DELETE FROM Exhibit WHERE ExhibitID = ?;")) {
-    $stmt -> bind_param("i", $exhibitID);
+if($stmt = $mysqli -> prepare("DELETE FROM InspiriaUser WHERE UserID = ?;")) {   
+    $stmt -> bind_param("i", $userID);
     $stmt -> execute();
     $stmt -> close();
     
