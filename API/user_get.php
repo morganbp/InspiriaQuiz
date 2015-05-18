@@ -4,7 +4,7 @@ header('Content-type: application/json; charset=utf-8;');
 include("db_connect.php"); // Make connection as $stmt
 
 // The base select statement 
-$statement = "SELECT UserID, UserAge, UserFirstName, UserLastName, UserCode, UserEmail, UserPhone, UserGEnder, bo15g21.Group.GroupID, GroupName, GroupLeaderName, GroupLeaderEmail, GroupLeaderPhone, QuizID FROM User JOIN bo15g21.Group ON User.GroupID = bo15g21.Group.GroupID";
+$statement = "SELECT UserID, UserAge, UserFirstName, UserLastName, UserCode, UserEmail, UserPhone, UserGender, UserGroup.GroupID, GroupName, GroupLeaderName, GroupLeaderEmail, GroupLeaderPhone, QuizID FROM User JOIN UserGroup ON User.GroupID = UserGroup.GroupID";
 
 // The data collected from post 
 $data;
@@ -24,6 +24,7 @@ if(isset($_POST['UserID'])){
 	http_response_code(404);
     die();
 }
+
 
 if($stmt = $mysqli -> prepare($statement)) {
     $stmt -> bind_param($datatype, $data);
@@ -60,7 +61,7 @@ if($stmt = $mysqli -> prepare($statement)) {
     
     http_response_code(200);
 }else{
-	$output["Error"] = "Failed to prepare statement";
+	$output["Error"] = "Feil på server.";
 	echo json_encode($output, JSON_UNESCAPED_UNICODE);
     http_response_code(500);
 }

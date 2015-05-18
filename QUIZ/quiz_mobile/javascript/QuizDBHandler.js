@@ -35,7 +35,6 @@ function QuizDBHandler(){
 	this.getUserData = function(endEvt, userID, userCode){
 		"use strict";
 		var postData = {};
-
 		if(userID !== "undefined" && userID !== null)
 			postData.UserID=userID;
 		if(userCode !== "undefined" && userCode !== null)
