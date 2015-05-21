@@ -36,7 +36,7 @@
         <div class='sidebar'>
             <nav>
                 <ul id='nav'>
-                    <?php $activepage = 'quiz_list.php'; ?>
+                    <?php $activepage = 'users.php'; ?>
                     <?php include 'nav.php'; ?>
                 </ul>
             </nav>

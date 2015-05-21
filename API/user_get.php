@@ -21,7 +21,7 @@ if(isset($_POST['UserID'])){
 }else{
 	$output["Error"] = "Ugyldig input";
 	echo json_encode($output, JSON_UNESCAPED_UNICODE);
-	http_response_code(404);
+	http_response_code(400);
     die();
 }
 

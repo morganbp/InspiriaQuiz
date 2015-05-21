@@ -6,7 +6,7 @@ include("db_connect.php"); // Make connection as $stmt
 
 if(!isset($_POST['QuizName'])){ 
 	echo json_encode(array("Error" => "Invalid url arguments"), JSON_UNESCAPED_UNICODE);
-    http_response_code(404);
+    http_response_code(400);
     die();
 }
 $quizName = $_POST['QuizName'];

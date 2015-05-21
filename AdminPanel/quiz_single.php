@@ -447,7 +447,7 @@
             
             
             // Debug:
-            //console.log(submitJSON);
+            console.log(submitJSON);
             //return;
             
             $.ajax({

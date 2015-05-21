@@ -17,7 +17,7 @@ if($stmt = $mysqli -> prepare("UPDATE Quiz SET Active = 0 WHERE QuizID = ?;")) {
     $stmt -> execute();
     $stmt -> close();
     
-    http_response_code(200);
+    http_response_code(204);
 }else{
     echo "Failed to prepare statement";
 }

@@ -4,7 +4,7 @@ header('Content-type: application/json; charset=utf-8;');
 include("db_connect.php"); // Make connection as $stmt
 
 if(!isset($_POST['QuizID'])){
-    http_response_code(404);
+    http_response_code(400);
     die();
 }
 $quizID = $_POST['QuizID'];

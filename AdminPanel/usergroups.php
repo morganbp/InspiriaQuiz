@@ -34,7 +34,7 @@
         <div class='sidebar'>
             <nav>
                 <ul id='nav'>
-                    <?php $activepage = 'index.php'; ?>
+                    <?php $activepage = 'usergroups.php'; ?>
                     <?php include 'nav.php'; ?>
                 </ul>
             </nav>

@@ -24,6 +24,7 @@ if($stmt = $mysqli -> prepare("SELECT QuizID, QuizName, CreatedOn, Active, QuizO
     else
         echo json_encode($output, JSON_UNESCAPED_UNICODE);
 }else{
-	echo json_encode('{"Error":"Failed to prepare statement"}', JSON_UNESCAPED_UNICODE);
+	echo json_encode(array("Error" => "Failed to prepare statement"), JSON_UNESCAPED_UNICODE);
+	http_response_code(500);
 }
 ?>
