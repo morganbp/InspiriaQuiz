@@ -68,31 +68,72 @@
                 </div>
             </div>
             
+            <?php
+            // Get the quizes to feed it into the table
+            $quizOfTheDayExists = false;
+            $jsonString = file_get_contents('http://localhost/bo15-g21/API/quizes_get.php');
+            //$jsonString = file_get_contents('http://frigg.hiof.no/bo15-g21/API/quizes_get.php');
+
+            $jsonQuiz = json_decode($jsonString);
+            //var_dump($jsonQuiz);
+            ?>
+            
             <div class='panel'>
-                <div class='panel-header'>Quizer</div>
+                <div class='panel-header'>Dagens quiz</div>
                 
-                    <table id='quiz-list'>
-                        <tr class='quiz-top'>
-                            <th class='title'>Tittel</th>
-                            <th class='questions'>Antall spørsmål</th>
-                            <th class='delete'>Slett</th>
-                        </tr>
-                        <?php
-                        // Get the quizes and feed it into the table
-                        $jsonString = file_get_contents('http://localhost/InspiriaQuiz/API/quizes_get.php');
-                        //$jsonString = file_get_contents('http://frigg.hiof.no/bo15-g21/API/quizes_get.php');
-                        $jsonQuiz = json_decode($jsonString);
-                        //var_dump($jsonQuiz);
-                        
-                        foreach($jsonQuiz as $json){
-                            echo '<tr class="quiz-single">';
-                                echo '<td class="title" onclick="quizSingleClick('.$json->QuizID.');">'.$json->QuizName.'</td>';
-                                echo '<td class="questions">'.$json->Questions.'</td>';
-                                echo '<td class="delete"><i class="flaticon-cross93" onclick="deleteQuiz('.$json->QuizID.')"></i></td>';
-                            echo '</tr>';
+                <table id='quiz-list'>
+                    <tr class='quiz-top'>
+                        <th class='title'>Tittel</th>
+                        <th class='questions'>Antall spørsmål</th>
+                        <th class='delete'>Slett</th>
+                    </tr>
+                    <?php
+                    foreach($jsonQuiz as $json){
+                        if($json->QuizOfTheDay == 0){
+                            continue;
                         }
-                        ?>
-                    </table>
+
+                        echo '<tr class="quiz-single">';
+                            echo '<td class="title" onclick="quizSingleClick('.$json->QuizID.');">'.$json->QuizName.'</td>';
+                            echo '<td class="questions">'.$json->Questions.'</td>';
+                            echo '<td class="delete"><i class="flaticon-cross93" onclick="deleteQuiz('.$json->QuizID.')"></i></td>';
+                        echo '</tr>';
+                        $quizOfTheDayExists = true;
+                    }
+                    if($quizOfTheDayExists == false){
+                        echo '<tr class="quiz-single">';
+                            echo '<td class="no-quizoftheday" colspan="3">Ingen dagens quiz er angitt</td>';
+                        echo '</tr>';
+                    }
+                    ?>
+                </table>
+            </div>
+            
+            <div class='panel'>
+                <div class='panel-header'>Alle quizer</div>
+                
+                <table id='quiz-list'>
+                    <tr class='quiz-top'>
+                        <th class='title'>Tittel</th>
+                        <th class='questions'>Antall spørsmål</th>
+                        <th class='delete'>Slett</th>
+                    </tr>
+                    <?php
+                    // Get the quizes and feed it into the table
+                    $jsonString = file_get_contents('http://localhost/bo15-g21/API/quizes_get.php');
+                    //$jsonString = file_get_contents('http://frigg.hiof.no/bo15-g21/API/quizes_get.php');
+                    $jsonQuiz = json_decode($jsonString);
+                    //var_dump($jsonQuiz);
+
+                    foreach($jsonQuiz as $json){
+                        echo '<tr class="quiz-single">';
+                            echo '<td class="title" onclick="quizSingleClick('.$json->QuizID.');">'.$json->QuizName.'</td>';
+                            echo '<td class="questions">'.$json->Questions.'</td>';
+                            echo '<td class="delete"><i class="flaticon-cross93" onclick="deleteQuiz('.$json->QuizID.')"></i></td>';
+                        echo '</tr>';
+                    }
+                    ?>
+                </table>
                 
             </div>
         </div>

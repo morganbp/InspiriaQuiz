@@ -235,6 +235,9 @@ ul#nav li a:hover{
 .panel #quiz-list tr{
     border-bottom: 1px #eaeaea solid;
 }
+.panel #quiz-list tr td.no-quizoftheday{
+    color: #999;
+}
 
 /* QUESTION LIST */
 .panel #question-list tr.question-single{
@@ -299,9 +302,12 @@ input[type=checkbox]:checked + label:before {
     /*text-shadow: 0px 0px 3px #eee;*/
 }
 
-
 .alternative-text-correct{
     font-weight: bold;
+}
+
+.quizoftheday-checkbox{
+    display: none;
 }
 
 /* IMAGE DROPDOWN */
@@ -326,30 +332,6 @@ input[type=checkbox]:checked + label:before {
 .delete-question{
     /*padding: 2px 5px;*/
     float: right;
-}
-
-/* MEDIA QUERIES */
-@media (max-width: 885px) {
-    .sidebar #nav li a span{
-        display: none;
-        
-        transition: 0.2s;
-        -webkit-transition: 0.2s;
-        -moz-transition: 0.2s;
-        -o-transition: 0.2s;
-    }
-    .sidebar{
-        width: 50px;
-    }
-    .sidebar:hover{
-        width: 280px;
-    }
-    .sidebar:hover #nav li a span{
-        display: inline;
-    }
-    .content{
-        margin-left: 50px;
-    }
 }
 
 
@@ -431,4 +413,30 @@ input[type=checkbox]:checked + label:before {
     padding: 8px;
     margin: 5px 0;
     font-size: 16px;
+}
+
+
+
+/* MEDIA QUERIES */
+@media (max-width: 1020px) {
+    .sidebar #nav li a span{
+        display: none;
+        
+        transition: 0.2s;
+        -webkit-transition: 0.2s;
+        -moz-transition: 0.2s;
+        -o-transition: 0.2s;
+    }
+    .sidebar{
+        width: 50px;
+    }
+    .sidebar:hover{
+        width: 220px;
+    }
+    .sidebar:hover #nav li a span{
+        display: inline;
+    }
+    .content{
+        margin-left: 50px;
+    }
 }

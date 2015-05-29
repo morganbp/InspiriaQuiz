@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <html>
 <head>
     <title>Inspiria Quiz Admin</title>
@@ -99,7 +101,7 @@
                         var questionIndex = findQuestionIndexByID(questionID);
                         var imageIndex = quizJSON.Questions[questionIndex].QuestionImageID;
                         
-                        console.log(imageIndex);
+                        //console.log(imageIndex);
                         
                         if(imageIndex == null)
                             imageIndex = -1;
@@ -136,7 +138,11 @@
         function makeQuestionTable(){
             $('.content').prepend("<h1>Endrer quizen: " + quizJSON.QuizName + "</h1>");
             var submitButton = "<button id='submit-quiz' type='button' onclick='submitQuiz()'>Lagre endringene</button>";
-            $('#question-panel').append("<div class='panel-header'>Quiz tittel: <input id='quiz-name' type='text' name='quizName' value='" + quizJSON.QuizName + "'/>" + submitButton + "</div>");
+            var quizOfTheDayCheckbox = "<input class='quizoftheday-checkbox' type='checkbox' id='QuizOfTheDay' name='QuizOfTheDay' " + (quizJSON.QuizOfTheDay?"checked='checked'":"") + ">";
+            var quizOfTheDayLabel = "<label class='quizoftheday-label' for='QuizOfTheDay'>Dagens quiz</label>";
+            var quizOfTheDay = quizOfTheDayCheckbox + quizOfTheDayLabel;
+            
+            $('#question-panel').append("<div class='panel-header'>Quiz tittel: <input id='quiz-name' type='text' name='quizName' value='" + quizJSON.QuizName + "'/>" + quizOfTheDay + submitButton + "</div>");
             $('#question-panel').append("<table id='question-list'>");
             $('#question-panel').append("</table>");
             
@@ -342,7 +348,7 @@
         /* SUBMIT */
         function submitQuiz(){
             $("#submit-quiz").html("Lagrer...");
-            submitJSON.Update.QuizOfTheDay = 1;
+            
             // Check quiz name
             var quizName = $("#quiz-name").val();
             if(quizJSON.QuizName != quizName){
@@ -350,7 +356,9 @@
                 submitJSON.Update.QuizName = quizName;
             }
             
-            
+            // Check quiz of the day checkbox
+            var quizOfTheDay = $("#QuizOfTheDay").prop("checked");
+            submitJSON.Update.QuizOfTheDay = (quizOfTheDay==true)?1:0;
             
             // Process questions with alternatives
             $(".question-section").each(function(outer){
@@ -472,9 +480,8 @@
     </script>
 </head>
 <body>
-    
     <?php include 'header.php'; ?>
-
+    
     <div id='container'>
         <div class='sidebar'>
             <nav>
@@ -484,7 +491,6 @@
                 </ul>
             </nav>
         </div>
-        
         
         <div class='content'>
             <div id='question-panel' class='panel'>

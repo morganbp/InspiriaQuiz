@@ -179,7 +179,31 @@ if(isset($update)){
         }
     }
 	
-	if(isset($update['QuizOfTheDay']) && $update['QuizOfTheDay'])
+    
+    //QUIZ OF THE DAY
+    if(isset($update['QuizOfTheDay'])){
+        if($update['QuizOfTheDay'] == 1){
+            if($stmt = $mysqli -> prepare('UPDATE Quiz SET QuizOfTheDay = 0 WHERE QuizOfTheDay = 1 AND QuizID != -1;')) {
+                print_r($update['QuizOfTheDay']);
+                $stmt -> execute();
+            }else{
+                echo "Failed to prepare statement";
+                http_response_code(500);
+                die();
+            }
+        }
+        if($stmt = $mysqli->prepare('UPDATE Quiz SET QuizOfTheDay = ? WHERE QuizID = ?')){
+            $stmt -> bind_param("ii", $update['QuizOfTheDay'], $submitJSON['QuizID']);
+            $stmt -> execute();
+        }else{
+            echo "Failed to prepare statement";
+            http_response_code(500);
+            die();
+        }
+    }
+    
+    // Old code for always setting "quiz of the day" to the latest one
+	/*if(isset($update['QuizOfTheDay']) && $update['QuizOfTheDay'])
 		if($stmt = $mysqli -> prepare('UPDATE Quiz SET QuizOfTheDay = 0 WHERE QuizOfTheDay = 1 AND QuizID != -1;')) {
             print_r($update);
             $stmt -> execute();
@@ -195,6 +219,6 @@ if(isset($update)){
             echo "Failed to prepare statement";
             http_response_code(500);
             die();
-        }
+        }*/
 }
 ?>
