@@ -38,7 +38,11 @@ if($stmt = $mysqli -> prepare("SELECT RegistrationCode
         
         function submitGroup(){
             $.post("../API/usergroup_post.php" , $("#register-group").serialize(), function(data) {
-                console.log(data);
+                
+                // Send the GroupID and go to the register success page
+                $('<form action="register_success.php" method="POST">' + 
+                    '<input type="hidden" name="GroupID" value="' + data.GroupID + '">' +
+                    '</form>').submit();
             })
             .fail(function(XMLHttpRequest, textStatus, errorThrown){
                 console.log(errorThrown);

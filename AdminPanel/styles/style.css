@@ -415,6 +415,24 @@ input[type=checkbox]:checked + label:before {
     font-size: 16px;
 }
 
+#group-overview{
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+}
+#group-overview tr{
+    border: none;
+}
+#group-overview tr:nth-child(odd){
+    background-color: #eee;
+}
+#group-overview tr:first-child{
+    background-color: #ccc;
+}
+#group-overview th, #group-overview td{
+    text-align: center;
+    height: 28px;
+}
 
 
 /* MEDIA QUERIES */
