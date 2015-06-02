@@ -10,8 +10,10 @@ if(!isset($_POST['QuizID']) || $_POST['QuizID'] == '' ||
 	die();
 }
 
-$quizID = $_POST['QuizID'];
 $groupID = $_POST['GroupID'];
+$quizID = $_POST['QuizID'];
+if($quizID == 0)
+    $quizID = null;
 
 if($stmt = $mysqli -> prepare("UPDATE UserGroup SET QuizID = ? WHERE GroupID = ?;")) {
     $stmt -> bind_param("ii", $quizID, $groupID);
@@ -22,5 +24,5 @@ if($stmt = $mysqli -> prepare("UPDATE UserGroup SET QuizID = ? WHERE GroupID = ?
     die();
 }
 
-echo json_encode(array("GroupID" => $groupID), JSON_UNESCAPED_UNICODE);
+echo json_encode(array("GroupID" => $groupID, "QuizID" => $quizID), JSON_UNESCAPED_UNICODE);
 ?>

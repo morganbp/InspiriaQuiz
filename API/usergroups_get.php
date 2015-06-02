@@ -6,7 +6,7 @@ include("db_connect.php"); // Make connection as $stmt
 if($stmt = $mysqli -> prepare('SELECT GroupID, GroupName, GroupLeaderName, QuizID, 
     (SELECT COUNT(*) FROM User AS t2 WHERE t2.GroupID = t1.GroupID) AS GroupUsers
     FROM UserGroup AS t1
-    ORDER BY QuizID, GroupName;')) {
+    ORDER BY GroupName;')) {
     
     $stmt -> execute();
     $result = $stmt -> get_result();

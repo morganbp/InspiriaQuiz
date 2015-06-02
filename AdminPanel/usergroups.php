@@ -28,6 +28,8 @@
         
         function updateGroupQuiz(element, groupID){
             var quizID = $(element).val();
+            var selectedOption = $(element).children(":selected");
+            var quizName = selectedOption.text();
             
             $.ajax({
                 url: "../API/usergroup_update.php",
@@ -39,6 +41,12 @@
                 },
                 success: function(data){
                     console.log(data);
+                    selectedOption.text("Quiz oppdatert!");
+                    
+                    var optionTimer = setInterval(function(){
+                        selectedOption.text(quizName);
+                        window.clearInterval(optionTimer);
+                    }, 1000);
                 }
             });
         }
