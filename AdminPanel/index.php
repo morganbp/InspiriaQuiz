@@ -114,7 +114,7 @@
             <p>Velkommen til adminpanelet for Inspirias Quizer!</p>
             <!-- Antal personer panel -->
             <div class='panel'>
-                <div class='panel-header'>Antall personer tatt quizen</div>
+                <div class='panel-header'>Quizdeltakelse</div>
                 <div class='panel-body' id="numTakenQuiz">
                     <table class="center-content-table">
 						<tr>
@@ -139,7 +139,7 @@
                 <div class='panel-header'>Statistikk</div>
                 <div class='panel-body' >
 					<div class="center-content-table">
-						<h3 >Korrekte svar</h3>
+						<h3>Korrekte svar</h3>
                     	<canvas id="pieCorrect" height="200" width="200" ></canvas>
 					</div>
                 </div>
