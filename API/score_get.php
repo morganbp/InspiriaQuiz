@@ -6,7 +6,7 @@ include("db_connect.php"); // Make connection as $stmt
 $argument = ""; // If there is a post argument, this will get stored here
 
 // The SQL statement
-$statement = "SELECT QuizScore.UserID, TotalScore, QuizScore.Date , UserAge, UserFirstName, UserLastName, UserCode, UserEmail, UserPhone, UserGender, GroupName, GroupLeaderName, GroupLeaderEmail, GroupLeaderPhone, Quiz.QuizID, QuizName, CreatedOn FROM QuizScore LEFT JOIN User ON QuizScore.UserID = User.UserID LEFT JOIN bo15g21.Group ON User.GroupID = bo15g21.Group.GroupID LEFT JOIN Quiz ON QuizScore.QuizID = Quiz.QuizID";
+$statement = "SELECT QuizScore.UserID, TotalScore, QuizScore.Date , UserAge, UserFirstName, UserLastName, UserCode, UserEmail, UserPhone, UserGender, GroupName, GroupLeaderName, GroupLeaderEmail, GroupLeaderPhone, Quiz.QuizID, QuizName, CreatedOn FROM QuizScore LEFT JOIN User ON QuizScore.UserID = User.UserID LEFT JOIN UserGroup ON User.GroupID = UserGroup.GroupID LEFT JOIN Quiz ON QuizScore.QuizID = Quiz.QuizID";
 
 
 // Checks whether QuizID or UserID is a post value. 
@@ -39,7 +39,7 @@ if($stmt = $mysqli -> prepare($statement)) {
     $stmt -> close();
 	
     if(empty($mysql_data)){
-        http_response_code(404);
+        echo json_encode(array("QuizScore"=>[]), JSON_UNESCAPED_UNICODE);
         die();
     }
 	
@@ -77,7 +77,8 @@ if($stmt = $mysqli -> prepare($statement)) {
     
     http_response_code(200);
 }else{
-    echo "Failed to prepare statement";
+    $output["Error"] = "Feil på server.";
+	echo json_encode($output, JSON_UNESCAPED_UNICODE);
     http_response_code(500);
 }
 ?>

@@ -94,4 +94,39 @@ function QuizDBHandler(){
 			}
 		});
 	}
+	
+	this.getScore = function(endEvt, quizID){
+		var params = {};
+		if(typeof quizID === "undefined" || quizID == null){
+			params.QuizID = quizID;
+		}
+		$.ajax({
+			url: this.dbDIR + "score_get.php", 
+			data: params,
+			type: 'POST',
+			error: function(XMLHttpRequest, textStatus, errorThrown){
+				endEvt(JSON.parse(XMLHttpRequest.responseText));
+			},
+			success: function(data){
+				endEvt(data);
+			}
+		});
+	}
+	
+	this.getAnswers = function(endEvt){
+		
+		$.ajax({
+			url: this.dbDIR + "answer_get.php", 
+			data: {},
+			type: 'POST',
+			error: function(XMLHttpRequest, textStatus, errorThrown){
+				endEvt(JSON.parse(XMLHttpRequest.responseText));
+			},
+			success: function(data){
+				
+				endEvt(data);
+			}
+		});
+	}
+	
 }
