@@ -434,6 +434,23 @@ input[type=checkbox]:checked + label:before {
     height: 28px;
 }
 
+/* GROUP LIST */
+.panel .group-list select{
+    padding: 10px;
+    border: 2px solid #ddd;
+    font-size: 14px;
+    width: 100%
+}
+.panel .group-list .group-name{
+    width: 35%;
+}
+.panel .group-list .group-leader-name{
+    width: 30%;
+}
+.panel .group-list .group-quiz-name{
+    width: 35%;
+}
+
 
 /* MEDIA QUERIES */
 @media (max-width: 1020px) {
