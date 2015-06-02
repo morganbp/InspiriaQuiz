@@ -458,3 +458,17 @@ input[type=checkbox]:checked + label:before {
         margin-left: 50px;
     }
 }
+
+.center-text{
+	text-align: center;
+}
+
+.center-content-table{
+	margin: 0 auto;
+    width: 80%;
+    max-width: 900px;
+}
+
+.big-text{
+	font-size: 40px;
+}
