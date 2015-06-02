@@ -11,8 +11,10 @@
     <script type='text/javascript'>
         var quizJSON = null;
         var imagesJSON = null;
+        var exhibitsJSON = null;
         var highestQuestionIndex = 0;
-        var optionList = "<option value='-1'>Ingen bilde valgt</option>";
+        var optionListImages = "<option value='-1'>Ingen bilde valgt</option>";
+        var optionListExhibits = "<option value='-1'>Ingen stasjon valgt</option>";
         
         var submitJSON = {
             QuizID: <?php echo $_GET['QuizID'];?>,
@@ -66,6 +68,7 @@
                     makeQuestionTable();
                     addCheckboxClickListeners();
                     fetchImages();
+                    fetchExhibits();
                     
                     console.log(quizJSON);
                 }
@@ -91,12 +94,12 @@
                 success: function(images){
                     imagesJSON = images;
                     for(var i=0; i<images.length; i++){
-                        optionList += "<option value='" + images[i].ImageID + "'>"
+                        optionListImages += "<option value='" + images[i].ImageID + "'>"
                             +images[i].ImageName
                             +"</option>";
                     }
                     $(".question-image select").each(function(){
-                        $(this).html(optionList);
+                        $(this).html(optionListImages);
                         var questionID = $(this).closest('.question-section').find('input[name=QuestionID]').val();
                         var questionIndex = findQuestionIndexByID(questionID);
                         var imageIndex = quizJSON.Questions[questionIndex].QuestionImageID;
@@ -108,6 +111,36 @@
 
                         $(this).val(imageIndex);
                         $(this).change(refreshImagePreview);
+                    });
+                }
+            });
+        }
+        
+        function fetchExhibits(){
+            $.ajax({
+                url: "../API/exhibits_get.php",
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("Exhibits not found.");
+                },
+                success: function(exhibits){
+                    exhibitsJSON = exhibits;
+                    for(var i=0; i<exhibits.length; i++){
+                        optionListExhibits += "<option value='" + exhibits[i].ExhibitID + "'>"
+                            +exhibits[i].ExhibitName
+                            +"</option>";
+                    }
+                    $(".question-exhibit select").each(function(){
+                        $(this).html(optionListExhibits);
+                        var questionID = $(this).closest('.question-section').find('input[name=QuestionID]').val();
+                        var questionIndex = findQuestionIndexByID(questionID);
+                        var exhibitIndex = quizJSON.Questions[questionIndex].ExhibitID;
+                        
+                        //console.log(imageIndex);
+                        
+                        if(exhibitIndex == null)
+                            exhibitIndex = -1;
+
+                        $(this).val(exhibitIndex);
                     });
                 }
             });
@@ -162,6 +195,7 @@
             return "<table class='question-section'>" 
                 + questionHeaderRow(i) 
                 + questionImageRow(i) 
+                + questionExhibitRow(i) 
                 + questionTextInputRow(i) 
                 + questionAlternatives(i) 
                 + "</table>";
@@ -180,6 +214,13 @@
                 + "<select><option>Loading images...</option></select>"
                 + "</td></tr>"
                 + "<tr class='question-image-preview'><td><img/></td></tr>";
+        }
+        
+        function questionExhibitRow(i){
+            return "<tr class='question-info'><td><div>Stasjon</div></td></tr>"
+                + "<tr class='question-exhibit'><td>"
+                + "<select><option>Laster stasjoner...</option></select>"
+                + "</td></tr>";
         }
         
         function questionTextInputRow(i){
@@ -309,9 +350,14 @@
                 
                 + "<tr class='question-info'><td><div>Bilde</div></td></tr>"
                 + "<tr class='question-image'><td>"
-                + "<select>" + optionList + "</select>"
+                + "<select>" + optionListImages + "</select>"
                 + "</td></tr>"
                 + "<tr class='question-image-preview'><td><img/></td></tr>"
+            
+                + "<tr class='question-info'><td><div>Stasjon</div></td></tr>"
+                + "<tr class='question-exhibit'><td>"
+                + "<select>" + optionListExhibits + "</select>"
+                + "</td></tr>"
             
                 + "<tr class='question-info'><td><div>Spørsmål</div></td></tr>"
                 + "<tr class='question-single'><td>"
@@ -371,6 +417,9 @@
                 $(this).find(".question-image select").each(function(){
                     imageID = $(this).val();
                 });
+                $(this).find(".question-exhibit select").each(function(){
+                    exhibitID = $(this).val();
+                });
                 //console.log("imageID = " + imageID);
                 
                 if(questionID == -1){
@@ -393,7 +442,8 @@
                     submitJSON.Insert.Questions.push({
                         "QuestionText": questionText,
                         "Alternatives": alternatives,
-                        "ImageID": imageID
+                        "ImageID": imageID,
+                        "ExhibitID": exhibitID
                     });
                 }else{
                     // This is an existing question
@@ -401,12 +451,14 @@
                     var questionIndex = questionTextTag.prop("name").match(pattern);
                     
                     if(newQuestionText != quizJSON.Questions[questionIndex].QuestionText
-                        || imageID != quizJSON.Questions[questionIndex].ImageID){
-                        //console.log(questionIndex + " is not the same");
+                        || imageID != quizJSON.Questions[questionIndex].ImageID
+                        || exhibitID != quizJSON.Questions[questionIndex].ExhibitID){
+                        
                         submitJSON.Update.Questions.push({
                             "QuestionID": questionID,
                             "QuestionText": newQuestionText,
-                            "ImageID": imageID
+                            "ImageID": imageID,
+                            "ExhibitID": exhibitID
                         });
                     }
                     

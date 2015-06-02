@@ -32,7 +32,7 @@
         <div class='sidebar'>
             <nav>
                 <ul id='nav'>
-                    <?php $activepage = 'image_upload.php'; ?>
+                    <?php $activepage = 'images.php'; ?>
                     <?php include 'nav.php'; ?>
                 </ul>
             </nav>

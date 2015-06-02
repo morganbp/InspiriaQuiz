@@ -94,12 +94,16 @@ if(isset($insert)){
     if(count($insert['Questions']) > 0){
         // First insert questions
         foreach($insert['Questions'] as $question){
-            if($stmt = $mysqli -> prepare('INSERT INTO Question(QuestionText, QuestionPosition, QuizID, ImageID) VALUES(?, 1, ?, ?);')) {
+            if($stmt = $mysqli -> prepare('INSERT INTO Question(QuestionText, QuestionPosition, QuizID, ImageID, ExhibitID) VALUES(?, 1, ?, ?,?);')) {
                 $imageID = intval($question['ImageID']);
                 if($imageID == -1)
                     $imageID = null;
                 
-                $stmt -> bind_param("sii", $question['QuestionText'], $quizID, $imageID);
+                $exhibitID = intval($question['ExhibitID']);
+                if($exhibitID == -1)
+                    $exhibitID = null;
+                
+                $stmt -> bind_param("siii", $question['QuestionText'], $quizID, $imageID, $exhibitID);
                 $stmt -> execute();
                 $insertedQuestionID = $stmt -> insert_id;
             }else{
@@ -145,13 +149,18 @@ if(isset($update)){
     // UPDATE QUESTION TEXT
     if(isset($update['Questions']))
     if(count($update['Questions']) > 0){
-        if($stmt = $mysqli -> prepare('UPDATE Question SET QuestionText = ?, ImageID = ? WHERE QuestionID = ?;')) {
+        if($stmt = $mysqli -> prepare('UPDATE Question SET QuestionText = ?, ImageID = ?, ExhibitID = ? WHERE QuestionID = ?;')) {
             print_r($update);
             foreach($update['Questions'] as $question){
                 $imageID = intval($question['ImageID']);
                 if($imageID == -1)
                     $imageID = null;
-                $stmt -> bind_param("sii", $question['QuestionText'], $imageID, $question['QuestionID']);
+                
+                $exhibitID = intval($question['ExhibitID']);
+                if($exhibitID == -1)
+                    $exhibitID = null;
+                
+                $stmt -> bind_param("siii", $question['QuestionText'], $imageID, $exhibitID, $question['QuestionID']);
                 $stmt -> execute();
             }
         }else{

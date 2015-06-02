@@ -174,7 +174,7 @@ ul#nav li a:hover{
 #login p{
     margin: 10px auto;
 }
-#login input[type="text"],
+#login input[type="email"],
 #login input[type="password"]{
     width: 300px;
 }
@@ -269,6 +269,10 @@ ul#nav li a:hover{
     width: 500px;
 }
 .panel #question-list input.alternative-text[type="text"] {
+    width: 300px;
+}
+
+.panel #question-list select{
     width: 300px;
 }
 

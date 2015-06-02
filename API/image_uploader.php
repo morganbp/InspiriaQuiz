@@ -39,5 +39,5 @@ function generateRandomString($length = 20) {
     return $randomString;
 }
 
-header("Location: ../AdminPanel/image_upload.php");
+header("Location: ../AdminPanel/images.php");
 ?>
