@@ -5,7 +5,6 @@
     <link rel='stylesheet' type='text/css' href='styles/style.css'/>
     <link rel='stylesheet' type='text/css' href='styles/flaticon/flaticon.css'/>
 	<script src="/inspiriaQuiz/LIBS/javascript/jquery-mobile/jquery-1.11.1.min.js"></script>
-	<script src="/inspiriaQuiz/LIBS/javascript/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
 	<script src="/inspiriaQuiz/LIBS/chartjs/Chart.js"></script>
 	<script src="/inspiriaQuiz/QUIZ/quiz_mobile/javascript/QuizDBHandler.js"></script>
 	<script>
@@ -120,15 +119,15 @@
                     <table class="center-content-table">
 						<tr>
 							<td class="center-text">
-								<div class="big-text" id="quizTod">0</div>
+								<div class="big-text" id="quizTod"></div>
 								<div>Quizer tatt idag</div>
 							</td>
 							<td class="center-text">
-								<div class="big-text" id="quizMon">0</div>
+								<div class="big-text" id="quizMon"></div>
 								<div>Quizer tatt denne måneden</div>
 							</td>
 							<td class="center-text">
-								<div class="big-text" id="quizTot">0</div>
+								<div class="big-text" id="quizTot"></div>
 								<div>Quizer tatt totalt</div>
 							</td>
 						</tr>
@@ -140,6 +139,7 @@
                 <div class='panel-header'>Statistikk</div>
                 <div class='panel-body' >
 					<div class="center-content-table">
+						<h3 >Korrekte svar</h3>
                     	<canvas id="pieCorrect" height="200" width="200" ></canvas>
 					</div>
                 </div>
@@ -147,7 +147,6 @@
         </div>
     </div>
 	<script>
-		
 		getScoreData();
 	</script>
 </body>

@@ -36,7 +36,7 @@
             <div data-role="content" id="content">
 				<div data-role="popup" id="errorMessage"></div>
                 <form style="max-width:600px; margin:0 auto;" action="javascript:">
-                    <input type="text" placeholder="Bruker id" style="text-align:center;" id="userCode"/>
+                    <input type="text" placeholder="Brukerkode" style="text-align:center;" id="userCode"/>
                     <Button type="button" id="startQuizBtn" style="margin:0 auto; max-width:200px;">Start quiz</Button>
                 </form>
                 <form action="javascript:">
