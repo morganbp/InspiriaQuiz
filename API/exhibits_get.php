@@ -4,7 +4,7 @@ header('Content-type: application/json');
 include("db_connect.php");
 
 if($stmt = $mysqli -> prepare("SELECT ExhibitID, ExhibitName, ExhibitDescription, Image.ImageID, Image.ImageFilename
-    FROM Exhibit JOIN Image
+    FROM Exhibit LEFT JOIN Image
     ON Exhibit.ImageID = Image.ImageID
     ORDER BY ExhibitName ASC")) {
     

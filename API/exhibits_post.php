@@ -8,7 +8,6 @@ if (!isset($_POST['ExhibitName']) || !isset($_POST['ExhibitDescription']) || !is
     die();
 }
 
-
 $exhibitName = $_POST['ExhibitName'];
 $exhibitDescription = $_POST['ExhibitDescription'];
 $imageID = ($_POST['ImageID'] == -1) ? null : $_POST['ImageID'];

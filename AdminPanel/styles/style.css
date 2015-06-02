@@ -272,6 +272,10 @@ ul#nav li a:hover{
     width: 300px;
 }
 
+.panel #question-list select{
+    width: 300px;
+}
+
 /* CORRECT CHECKBOX */
 .correct-checkbox{
     margin-left: 10px;

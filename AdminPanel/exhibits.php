@@ -93,7 +93,10 @@
 
                     foreach($jsonExhibits as $json){
                         echo '<tr class="quiz-single">';
-                            echo '<td class="image-preview"><img class="image-thumbnail" src="../UploadedImages/'.$json->ImageFilename.'"/></td>';
+                            echo '<td class="image-preview">';
+                            if($json->ImageFilename != null)
+                                echo '<img class="image-thumbnail" src="../UploadedImages/'.$json->ImageFilename.'"/>';
+                            echo '</td>';
                             echo '<td class="title">'.$json->ExhibitName.'</td>';
                             echo '<td class="description">'.$json->ExhibitDescription.'</td>';
                             echo '<td class="delete"><i class="flaticon-cross93" onclick="deleteExhibit('.$json->ExhibitID.')"></i></td>';

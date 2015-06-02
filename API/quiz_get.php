@@ -12,7 +12,7 @@ $quizID = $_POST['QuizID'];
 if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Quiz.QuizOfTheDay, Quiz.Active, Question.QuestionID, QuestionText, 
     AlternativeText, AlternativeCorrect, AlternativeID, 
     QuestionImage.ImageFilename AS QuestionImageFilename, QuestionImage.ImageName AS QuestionImageName, QuestionImage.ImageID AS QuestionImageID, 
-    ExhibitName, ExhibitImage.ImageFilename AS ExhibitImageFilename, ExhibitImage.ImageName AS ExhibitImageName, ExhibitImage.ImageID AS ExhibitImageID
+    Exhibit.ExhibitID, ExhibitName, ExhibitImage.ImageFilename AS ExhibitImageFilename, ExhibitImage.ImageName AS ExhibitImageName, ExhibitImage.ImageID AS ExhibitImageID
     FROM Question 
     LEFT JOIN Alternative ON Question.QuestionID = Alternative.QuestionID  
 	RIGHT JOIN Quiz ON Quiz.QuizID = Question.QuizID
@@ -51,6 +51,7 @@ if($stmt = $mysqli -> prepare("SELECT Quiz.QuizID, Quiz.QuizName, Quiz.QuizOfThe
             'QuestionImageID' => $alternative['QuestionImageID'],
             'QuestionImageFilename' => $alternative['QuestionImageFilename'],
             'QuestionImageName' => $alternative['QuestionImageName'],
+            'ExhibitID' => $alternative['ExhibitID'],
             'ExhibitName' => $alternative['ExhibitName'],
             'ExhibitImageID' => $alternative['ExhibitImageID'],
             'ExhibitImageFilename' => $alternative['ExhibitImageFilename'],
