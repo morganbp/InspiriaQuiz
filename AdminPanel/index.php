@@ -4,9 +4,9 @@
     <meta charset='utf-8'/>
     <link rel='stylesheet' type='text/css' href='styles/style.css'/>
     <link rel='stylesheet' type='text/css' href='styles/flaticon/flaticon.css'/>
-	<script src="/inspiriaQuiz/LIBS/javascript/jquery-mobile/jquery-1.11.1.min.js"></script>
-	<script src="/inspiriaQuiz/LIBS/chartjs/Chart.js"></script>
-	<script src="/inspiriaQuiz/QUIZ/quiz_mobile/javascript/QuizDBHandler.js"></script>
+	<script src="/bo15-g21/LIBS/javascript/jquery-mobile/jquery-1.11.1.min.js"></script>
+	<script src="/bo15-g21/LIBS/chartjs/Chart.js"></script>
+	<script src="/bo15-g21/quiz_mobile/javascript/QuizDBHandler.js"></script>
 	<script>
 		var quizScores;
 		var quizTakenTotal;
@@ -111,7 +111,7 @@
         </div>
         <div class='content'>
             <h1>Dashboard</h1>
-            <p>Velkommen til admin-panelet for Inspirias Quizer!</p>
+            <p>Velkommen til adminpanelet for Inspirias Quizer!</p>
             <!-- Antal personer panel -->
             <div class='panel'>
                 <div class='panel-header'>Antall personer tatt quizen</div>
